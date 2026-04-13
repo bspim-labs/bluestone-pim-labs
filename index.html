@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bluestone Labs</title>
+  <meta name="description" content="A community space for builders working on and for Bluestone PIM.">
+  <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bluestone Labs">
+  <meta property="og:description" content="A community space for builders working on and for Bluestone PIM. Open projects, forkable, built in the open.">
+  <meta property="og:image" content="/public/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bluestone Labs">
+  <meta name="twitter:description" content="A community space for builders working on and for Bluestone PIM. Open projects, forkable, built in the open.">
+  <meta name="twitter:image" content="/public/og-image.jpg">
+  <script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <style>
+    html { scroll-behavior: smooth; }
+
+    .card-hover {
+      transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.12);
+      border-color: #3b82f6;
+    }
+    .dark .card-hover:hover {
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.45);
+      border-color: #3b82f6;
+    }
+
+    .project-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      text-transform: uppercase;
+    }
+    .tag-live    { background: #dcfce7; color: #166534; }
+    .tag-planned { background: #f1f5f9; color: #475569; }
+    .dark .tag-live    { background: #14532d; color: #86efac; }
+    .dark .tag-planned { background: #1e293b; color: #94a3b8; }
+
+    .placeholder-card { border-style: dashed; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-8 w-auto object-contain shrink-0">
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-sm">Bluestone Labs 🧪</span>
+      </div>
+      <button id="theme-toggle" aria-label="Toggle dark mode"
+        class="p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+        </svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="block dark:hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Disclaimer — sits directly below header, scrolls with page -->
+  <div class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/60">
+    <div class="max-w-4xl mx-auto px-6 py-2 flex items-start gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+      </svg>
+      <p class="text-sm text-slate-500 dark:text-slate-400">
+        A Bluestone Labs community project. Not an official product. No SLA, no support commitments. Contributions and forks welcome.
+      </p>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="max-w-4xl mx-auto px-6 pt-16 pb-14">
+    <div class="max-w-2xl">
+      <p class="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">Bluestone Labs</p>
+      <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-slate-100 leading-tight mb-5">
+        A community space for builders working on and for Bluestone PIM
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+        Labs is where side projects, experiments, and community tools live. These are not official Bluestone products.
+        They are built by people who use and work with Bluestone PIM and want to push it further.
+        Everything here is open, forkable, and built in the open.
+      </p>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="max-w-4xl mx-auto px-6 mb-16">
+    <h2 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6">Projects</h2>
+    <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Populated by JS from projects.json -->
+    </div>
+  </section>
+
+  <!-- Contribute -->
+  <section id="contribute" class="max-w-4xl mx-auto px-6 mb-20">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl p-8">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-3">Add your project</h2>
+      <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        Built something on or for Bluestone PIM? It belongs here. Labs has no gating process: open a pull request
+        on the Labs GitHub repo, add your entry to <code class="text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-1.5 py-0.5 rounded text-sm font-mono">projects.json</code>,
+        and that is it. The page renders from that file.
+      </p>
+      <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+        Each project needs a name, short description, URL, and status. Take a look at the existing entry as a template.
+        If you are unsure whether something fits, open an issue and we can figure it out together.
+      </p>
+      <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+        Customers, SI partners, and independent builders are all welcome. The only requirement is that the project
+        relates to Bluestone PIM in some useful way.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <div class="relative inline-block" id="gh-btn-wrap">
+          <button onclick="document.getElementById('gh-soon').classList.toggle('hidden')"
+            class="inline-flex items-center gap-2 bg-slate-900 dark:bg-slate-100 text-slate-100 dark:text-slate-900 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-700 dark:hover:bg-white transition-colors cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+            </svg>
+            Open a PR on GitHub
+          </button>
+          <div id="gh-soon" class="hidden absolute left-0 top-full mt-2 bg-slate-900 dark:bg-slate-700 text-slate-100 text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg">
+            Coming soon
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <p class="text-sm text-slate-400 dark:text-slate-600">
+        Bluestone Labs &middot; Community projects, not official products
+      </p>
+      <p class="text-xs text-slate-400 dark:text-slate-600">
+        Built by people who use Bluestone PIM
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Icons by key
+    const icons = {
+      terminal: `<path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>`,
+      default:  `<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>`
+    };
+
+    function svgIcon(key, classes) {
+      return `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">${icons[key] || icons.default}</svg>`;
+    }
+
+    function projectCard(p) {
+      return `
+        <a href="${p.url}" target="_blank" rel="noopener noreferrer"
+          class="card-hover group block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl p-5 no-underline">
+          <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center shrink-0">
+              ${svgIcon(p.icon || 'default', 'w-5 h-5 text-blue-600 dark:text-blue-400')}
+            </div>
+            <span class="project-tag tag-live mt-1">Live</span>
+          </div>
+          <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            ${p.name}
+          </h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">${p.description}</p>
+          <div class="flex items-center gap-1.5 text-xs text-blue-600 dark:text-blue-400 font-medium">
+            <span>${p.cta || 'Learn more'}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>`;
+    }
+
+    function placeholderCard(n) {
+      return `
+        <div class="card-hover placeholder-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/40 rounded-xl p-5 cursor-default">
+          <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+              ${svgIcon('default', 'w-5 h-5 text-slate-400 dark:text-slate-500')}
+            </div>
+            <span class="project-tag tag-planned mt-1">Planned</span>
+          </div>
+          <h3 class="font-semibold text-slate-400 dark:text-slate-500 mb-2">Your project here</h3>
+          <p class="text-sm text-slate-400 dark:text-slate-600 leading-relaxed">
+            ${n === 1
+              ? 'Got an idea for a tool, integration, or utility that would help Bluestone users or partners? Open a PR and add it.'
+              : 'Labs is a place to ship things and learn what works. More projects are in the works.'}
+          </p>
+        </div>`;
+    }
+
+    fetch('projects.json')
+      .then(r => r.json())
+      .then(projects => {
+        const grid = document.getElementById('projects-grid');
+        let html = projects.map(projectCard).join('');
+        // Fill to at least 3 cards with placeholders
+        for (let i = projects.length; i < 3; i++) {
+          html += placeholderCard(i - projects.length + 1);
+        }
+        grid.innerHTML = html;
+      });
+  </script>
+
+</body>
+</html>

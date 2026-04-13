@@ -1,0 +1,11 @@
+[
+  {
+    "name": "MCP Server",
+    "description": "Connect Claude, Cursor, or ChatGPT to your Bluestone PIM organisation. Query products, read categories, and enrich data through natural language, live against your actual catalogue.",
+    "url": "https://bluestone-mcp-unofficial.vercel.app/connect",
+    "github": "https://github.com/leafleaf90/bluestone-pim-unofficial-mcp",
+    "status": "live",
+    "cta": "View setup guide",
+    "icon": "terminal"
+  }
+]

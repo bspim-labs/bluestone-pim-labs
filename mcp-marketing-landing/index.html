@@ -26,8 +26,6 @@
     .capability-row:hover { background-color: #f8faff; }
 
     .check { color: #16a34a; }
-    .cross { color: #dc2626; }
-    .partial { color: #d97706; }
 
     .query-example {
       font-family: 'SF Mono', 'Fira Mono', 'Cascadia Code', monospace;
@@ -102,7 +100,7 @@
 
   <!-- Nav -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-20">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-6 py-4 grid items-center" style="grid-template-columns: 1fr auto 1fr;">
       <div class="flex items-center gap-3">
         <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-8 w-auto object-contain shrink-0">
         <span style="color:#434850; font-weight:600; font-size:15px;">Bluestone PIM</span>
@@ -110,10 +108,12 @@
       <nav class="hidden md:flex items-center gap-8">
         <a href="#why" class="nav-link">Why now</a>
         <a href="#capabilities" class="nav-link">Capabilities</a>
-        <a href="#what-you-can-do" class="nav-link">What you can do</a>
+        <a href="#what-you-can-do" class="nav-link">Talk to your catalogue</a>
         <a href="#availability" class="nav-link">Availability</a>
       </nav>
-      <a href="#" class="btn-primary" style="padding: 9px 20px; font-size:14px;">Request demo</a>
+      <div class="flex justify-end">
+        <a href="https://www.bluestonepim.com/get-demo" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 9px 20px; font-size:14px;">Request demo</a>
+      </div>
     </div>
   </header>
 
@@ -173,8 +173,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
             </svg>
           </div>
-          <h3 class="text-lg font-bold" style="color:#0E05CC;">Multi-channel, multi-locale</h3>
-          <p class="text-slate-500 leading-relaxed">An agent can reason across channels and locales in a single session. Ask it to compare completeness across your German and French catalogues, or identify gaps before a channel goes live.</p>
+          <h3 class="text-lg font-bold" style="color:#0E05CC;">Multi-context, multi-catalogue</h3>
+          <p class="text-slate-500 leading-relaxed">An agent can reason across contexts and catalogs in a single session. Ask it to compare completeness across your German and French contexts, or identify gaps before a catalog goes live.</p>
         </div>
 
         <div class="flex flex-col gap-4">
@@ -278,7 +278,7 @@
             <span class="query-example">"Show me the publish diff: what has changed since the last sync?"</span>
             <span class="query-example">"Which products were last updated in the past 7 days?"</span>
             <span class="query-example">"List all products with open tasks assigned to the content team"</span>
-            <span class="query-example">"Show the change history for product SKU-4421"</span>
+            <span class="query-example">"Show the product history for SKU-4421"</span>
           </div>
         </div>
 
@@ -290,7 +290,7 @@
   <section id="capabilities" class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-6">
       <p class="section-label mb-3">Data model</p>
-      <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color:#0E05CC;">The full Bluestone data model</h2>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color:#0E05CC;">Deep access, by design</h2>
       <p class="text-lg text-slate-500 mb-12 max-w-2xl">
         The Bluestone MCP covers the full depth of the Bluestone data model: products, catalogs, attribute definitions, contexts, relations, assets, and the publishing pipeline.
       </p>
@@ -299,21 +299,19 @@
         <table class="w-full text-sm">
           <thead>
             <tr style="background:#E9EDF7;">
-              <th class="text-left px-5 py-3 font-semibold" style="color:#434850; width:55%;">Data concept</th>
+              <th class="text-left px-5 py-3 font-semibold" style="color:#434850; width:70%;">Data concept</th>
               <th class="text-center px-4 py-3 font-semibold" style="color:#434850;">Read</th>
               <th class="text-center px-4 py-3 font-semibold" style="color:#434850;">Write</th>
-              <th class="text-center px-4 py-3 font-semibold" style="color:#434850;">Create</th>
             </tr>
           </thead>
           <tbody>
 
             <!-- Products -->
             <tr style="background:#f8faff;">
-              <td colspan="4" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Products</td>
+              <td colspan="3" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Products</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product</code> <span class="ml-2 text-xs text-slate-400">SINGLE, GROUP, VARIANT</span></td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
@@ -321,11 +319,9 @@
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product variant</code> <span class="ml-2 text-xs text-slate-400">group assignment, promotion</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product attribute value</code> <span class="ml-2 text-xs text-slate-400">simple, dictionary, column, matrix</span></td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
@@ -333,46 +329,39 @@
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product connection</code> <span class="ml-2 text-xs text-slate-400">cross-sell, related, accessories</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
+            </tr>
+            <tr class="capability-row">
+              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product completeness score</code> <span class="ml-2 text-xs text-slate-400">scores per context/catalog; create and manage requirements</span></td>
+              <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
             <tr class="capability-row">
-              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product completeness score</code> <span class="ml-2 text-xs text-slate-400">per context, per catalog</span></td>
+              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product media</code> <span class="ml-2 text-xs text-slate-400">CDN preview URL; upload via presigned S3 flow</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-            </tr>
-            <tr class="capability-row">
-              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product media</code> <span class="ml-2 text-xs text-slate-400">CDN preview URL; binary upload not supported</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product label</code> <span class="ml-2 text-xs text-slate-400">tag-style grouping and filtering</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
             <tr class="capability-row">
-              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">change history</code> <span class="ml-2 text-xs text-slate-400">who changed what and when</span></td>
+              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">product history</code> <span class="ml-2 text-xs text-slate-400">who changed what and when</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 text-slate-300 text-lg">—</td>
             </tr>
 
             <!-- Catalog & Categories -->
             <tr style="background:#f8faff;">
-              <td colspan="4" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Catalog &amp; Categories</td>
+              <td colspan="3" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Catalog &amp; Categories</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">catalog</code> <span class="ml-2 text-xs text-slate-400">top-level organisational container</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">catalog node</code> <span class="ml-2 text-xs text-slate-400">nested category tree nodes</span></td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
@@ -380,96 +369,84 @@
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">category assignment</code> <span class="ml-2 text-xs text-slate-400">product-to-node membership</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
 
             <!-- Attribute definitions -->
             <tr style="background:#f8faff;">
-              <td colspan="4" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Attribute Definitions</td>
+              <td colspan="3" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Attribute Definitions</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">attribute definition</code> <span class="ml-2 text-xs text-slate-400">simple, dictionary, column, matrix, compound</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">dictionary attribute values</code> <span class="ml-2 text-xs text-slate-400">allowed option list per dictionary definition</span></td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">relation type</code> <span class="ml-2 text-xs text-slate-400">named connection types between products</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
 
             <!-- Contexts -->
             <tr style="background:#f8faff;">
-              <td colspan="4" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Contexts &amp; Localisation</td>
+              <td colspan="3" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Contexts &amp; Localisation</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">context</code> <span class="ml-2 text-xs text-slate-400">language/market combination; governs attribute values returned</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 text-slate-300 text-lg">—</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">context-scoped attribute value</code> <span class="ml-2 text-xs text-slate-400">read/write per language/market</span></td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
 
             <!-- Assets / Media bank -->
             <tr style="background:#f8faff;">
-              <td colspan="4" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Assets &amp; Media Bank</td>
+              <td colspan="3" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Assets &amp; Media Bank</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">asset</code> <span class="ml-2 text-xs text-slate-400">search and browse by name, product, label, type</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
             <tr class="capability-row">
-              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">asset media file</code> <span class="ml-2 text-xs text-slate-400">CDN preview URL; binary upload not supported</span></td>
+              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">asset media file</code> <span class="ml-2 text-xs text-slate-400">upload via presigned S3 flow; CDN URL for display</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
 
             <!-- Publishing -->
             <tr style="background:#f8faff;">
-              <td colspan="4" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Publishing &amp; Sync</td>
+              <td colspan="3" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Publishing &amp; Sync</td>
             </tr>
             <tr class="capability-row">
-              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">sync / publish</code> <span class="ml-2 text-xs text-slate-400">publish history and current sync state</span></td>
+              <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">sync / publish</code> <span class="ml-2 text-xs text-slate-400">trigger a sync, view publish history and state</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">publish diff</code> <span class="ml-2 text-xs text-slate-400">products changed since last sync</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 text-slate-300 text-lg">—</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">background / bulk operation</code> <span class="ml-2 text-xs text-slate-400">async task status polling</span></td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
-              <td class="text-center px-4 py-3 cross text-lg">✗</td>
+              <td class="text-center px-4 py-3 text-slate-300 text-lg">—</td>
             </tr>
 
             <!-- Workflow & Tasks -->
             <tr style="background:#f8faff;">
-              <td colspan="4" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Workflow &amp; Tasks</td>
+              <td colspan="3" class="px-5 py-2 text-xs font-bold uppercase tracking-widest" style="color:#3E74F4;">Workflow &amp; Tasks</td>
             </tr>
             <tr class="capability-row">
               <td class="px-5 py-3"><code style="font-family:monospace; color:#0E05CC; font-size:13px;">task</code> <span class="ml-2 text-xs text-slate-400">list, assign, update status</span></td>
-              <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
               <td class="text-center px-4 py-3 check text-lg">✓</td>
             </tr>
@@ -543,7 +520,7 @@
           <p class="leading-relaxed mb-5" style="color: rgba(255,255,255,0.65);">
             Getting onto Extensions Hub requires passing Bluestone's QA process, which checks for security, performance, and best practices. Labs makes that easier: community projects built here follow a lightweight version of the same standards, so there are fewer surprises when you go through formal review. Build in the open, learn what works, then bring it live.
           </p>
-          <a href="#" style="color:#93c5fd; font-size:14px; font-weight:500; display:inline-flex; align-items:center; gap:6px; text-decoration:none; transition: color 0.15s;"
+          <a href="https://www.bluestonepim.com/extension-hub" target="_blank" rel="noopener noreferrer" style="color:#93c5fd; font-size:14px; font-weight:500; display:inline-flex; align-items:center; gap:6px; text-decoration:none; transition: color 0.15s;"
             onmouseover="this.style.color='white'" onmouseout="this.style.color='#93c5fd'">
             Learn about Extensions Hub
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">

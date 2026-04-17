@@ -1,5 +1,6 @@
 {
   "outputDirectory": ".",
+  "cleanUrls": true,
   "rewrites": [
     { "source": "/blog/:slug", "destination": "/post.html?slug=:slug" }
   ]

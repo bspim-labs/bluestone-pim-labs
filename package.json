@@ -2,7 +2,8 @@
   "name": "bluestone-labs-landing",
   "private": true,
   "scripts": {
-    "dev": "node scripts/server.js",
+    "build": "node scripts/generate-posts-index.js",
+    "serve": "node scripts/server.js",
     "posts": "node scripts/generate-posts-index.js",
     "images": "node scripts/optimize-images.js"
   },

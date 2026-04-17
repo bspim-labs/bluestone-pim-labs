@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog — Bluestone PIM LABS</title>
+  <meta name="description" content="Dev log for Bluestone PIM LABS. Tools, patterns, and ideas from the community.">
+  <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blog — Bluestone PIM LABS">
+  <meta property="og:description" content="Dev log for Bluestone PIM LABS. Tools, patterns, and ideas from the community.">
+  <meta property="og:url" content="https://bluestone-labs-landing.vercel.app/blog">
+  <meta property="og:image" content="https://bluestone-labs-landing.vercel.app/public/og-image.jpg">
+  <script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <style>
+    html { scroll-behavior: smooth; }
+
+    .card-hover {
+      transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.10);
+      border-color: #3b82f6;
+    }
+    .dark .card-hover:hover {
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.45);
+      border-color: #3b82f6;
+    }
+
+    .post-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    .dark .post-tag {
+      background: #1e3a5f;
+      color: #93c5fd;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 no-underline shrink-0">
+        <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-8 w-auto object-contain">
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-sm">Bluestone PIM LABS 🧪</span>
+      </a>
+      <nav class="flex items-center gap-1 mr-1">
+        <a href="/"
+          class="text-sm px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          Projects
+        </a>
+        <a href="/blog"
+          class="text-sm px-3 py-1.5 rounded-lg font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">
+          Blog
+        </a>
+      </nav>
+      <button id="theme-toggle" aria-label="Toggle dark mode"
+        class="p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+        </svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="block dark:hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Disclaimer -->
+  <div class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/60">
+    <div class="max-w-4xl mx-auto px-6 py-2 flex items-start gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+      </svg>
+      <p class="text-sm text-slate-500 dark:text-slate-400">
+        A Bluestone PIM LABS community project. Not an official product. No SLA, no support commitments. Contributions and forks welcome.
+      </p>
+    </div>
+  </div>
+
+  <!-- Blog hero -->
+  <section class="max-w-4xl mx-auto px-6 pt-12 pb-10">
+    <p class="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">Blog</p>
+    <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 leading-tight mb-3">
+      Dev log
+    </h1>
+    <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-xl">
+      Tools, patterns, and ideas from the Labs community. Written by builders, for builders.
+    </p>
+  </section>
+
+  <!-- Posts list -->
+  <section class="max-w-4xl mx-auto px-6 pb-20">
+    <div id="posts-list" class="flex flex-col gap-4">
+      <!-- Populated by JS from posts.json -->
+    </div>
+    <div id="posts-empty" class="hidden text-slate-500 dark:text-slate-400 text-sm py-8">
+      No posts yet. Check back soon.
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <p class="text-sm text-slate-400 dark:text-slate-600">
+        Bluestone PIM LABS &middot; Community projects, not official products
+      </p>
+      <p class="text-xs text-slate-400 dark:text-slate-600">
+        Concept by Viktor Lövgren
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    function formatDate(iso) {
+      const d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function postCard(p) {
+      const tags = p.tags.map(t =>
+        `<span class="post-tag">${t}</span>`
+      ).join('');
+
+      return `
+        <a href="/blog/${p.slug}"
+          class="card-hover group block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl p-6 no-underline">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">${formatDate(p.date)}</span>
+            <span class="text-slate-300 dark:text-slate-700 text-xs">·</span>
+            <span class="text-xs text-slate-400 dark:text-slate-500">${p.readingTime}</span>
+            ${tags ? `<span class="text-slate-300 dark:text-slate-700 text-xs">·</span>${tags}` : ''}
+          </div>
+          <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
+            ${p.title}
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">${p.description}</p>
+          <div class="flex items-center gap-1.5 text-xs text-blue-600 dark:text-blue-400 font-medium">
+            <span>Read post</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>`;
+    }
+
+    fetch('/posts.json')
+      .then(r => r.json())
+      .then(posts => {
+        const list = document.getElementById('posts-list');
+        const empty = document.getElementById('posts-empty');
+        if (!posts.length) {
+          empty.classList.remove('hidden');
+          return;
+        }
+        list.innerHTML = posts.map(postCard).join('');
+      })
+      .catch(() => {
+        document.getElementById('posts-empty').classList.remove('hidden');
+      });
+  </script>
+
+</body>
+</html>

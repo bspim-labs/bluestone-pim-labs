@@ -1,3 +1,6 @@
 {
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/blog/:slug", "destination": "/post.html?slug=:slug" }
+  ]
 }

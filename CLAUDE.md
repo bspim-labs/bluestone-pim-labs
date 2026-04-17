@@ -65,11 +65,44 @@ If the domain changes, update the absolute URLs in the `og:image`, `twitter:imag
 ## Local development
 
 ```bash
-python3 -m http.server 8000
+npm run serve
 ```
 
-Open http://localhost:8000.
+Open http://localhost:8000. Handles clean URLs and blog routing locally. Do NOT use `python3 -m http.server` — it doesn't handle routing.
+
+Do NOT use `vercel dev` — this is a static site and vercel dev gets confused, tries yarn, and conflicts with the custom server.
+
+To test Vercel-specific routing, push to a branch and check the preview URL.
 
 ## Deploy
 
-Push to `main`. Vercel deploys automatically on push.
+Push to `main`. Vercel deploys automatically. The `build` script (`node scripts/generate-posts-index.js`) runs on Vercel at deploy time, so `posts.json` is always fresh.
+
+## Blog
+
+Posts live in `posts/*.md` with frontmatter:
+
+```markdown
+---
+title: Post Title
+date: 2026-04-17
+description: One sentence.
+tags: meta, community
+heroImage: /public/posts/slug/banner.webp
+---
+```
+
+To add a post:
+1. Write `posts/your-slug.md`
+2. Drop images in `public/posts/your-slug/`, run `node scripts/optimize-images.js` (needs `npm install` once for sharp)
+3. Run `npm run posts` to regenerate `posts.json`
+4. Push to main
+
+`posts.json` is also regenerated automatically by Vercel on deploy via the `build` script.
+
+## Routing (Vercel)
+
+Uses `routes` in `vercel.json` (not `rewrites` + `cleanUrls` — that combination had conflicts with static output). The routes array must come before `handle: filesystem`:
+
+- `/blog` → `blog.html`
+- `/blog/:slug` → `post.html` (slug read from `window.location.pathname` client-side)

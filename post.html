@@ -218,6 +218,20 @@
     }
     .dark .prose td { border-bottom-color: #1e293b; }
     .prose tr:last-child td { border-bottom: none; }
+
+    /* Heading anchor links */
+    .prose h2 .anchor,
+    .prose h3 .anchor {
+      opacity: 0;
+      margin-left: 0.4em;
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.85em;
+      transition: opacity 0.15s;
+    }
+    .prose h2:hover .anchor,
+    .prose h3:hover .anchor { opacity: 1; }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen">
@@ -308,6 +322,14 @@
 
       <!-- Prose body -->
       <div id="post-body" class="prose text-slate-700 dark:text-slate-300"></div>
+
+      <!-- Prev / next navigation -->
+      <nav id="post-nav" class="hidden mt-14 pt-8 border-t border-slate-200 dark:border-slate-800">
+        <div class="grid grid-cols-2 gap-6">
+          <div id="nav-prev"></div>
+          <div id="nav-next" class="text-right"></div>
+        </div>
+      </nav>
 
     </article>
   </main>
@@ -437,14 +459,51 @@
         pre.appendChild(btn);
       });
 
-      // Make images lazy after hero
-      document.querySelectorAll('#post-body img').forEach(img => {
-        img.loading = 'lazy';
-        // Wrap in picture if .webp sibling exists (naming convention: same basename)
+      // Make images lazy
+      document.querySelectorAll('#post-body img').forEach(img => { img.loading = 'lazy'; });
+
+      // Anchor links on headings
+      function slugify(text) {
+        return text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+      }
+      document.querySelectorAll('#post-body h2, #post-body h3').forEach(h => {
+        h.id = slugify(h.textContent);
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.className = 'anchor';
+        a.setAttribute('aria-hidden', 'true');
+        a.textContent = '#';
+        h.appendChild(a);
       });
 
       document.getElementById('post-loading').classList.add('hidden');
       document.getElementById('post-article').classList.remove('hidden');
+
+      // Prev / next navigation
+      fetch('/posts.json')
+        .then(r => r.json())
+        .then(posts => {
+          const idx = posts.findIndex(p => p.slug === slug);
+          if (idx === -1) return;
+          const older  = posts[idx + 1] || null;
+          const newer  = posts[idx - 1] || null;
+          if (!older && !newer) return;
+          document.getElementById('post-nav').classList.remove('hidden');
+          if (older) {
+            document.getElementById('nav-prev').innerHTML = `
+              <a href="/blog/${older.slug}" class="group block no-underline">
+                <div class="text-xs text-slate-400 dark:text-slate-500 mb-1">← Older</div>
+                <div class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">${older.title}</div>
+              </a>`;
+          }
+          if (newer) {
+            document.getElementById('nav-next').innerHTML = `
+              <a href="/blog/${newer.slug}" class="group block no-underline">
+                <div class="text-xs text-slate-400 dark:text-slate-500 mb-1">Newer →</div>
+                <div class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">${newer.title}</div>
+              </a>`;
+          }
+        });
     }
 
     // Load post from ?slug= param

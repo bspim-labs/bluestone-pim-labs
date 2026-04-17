@@ -126,6 +126,15 @@
     </div>
   </section>
 
+  <!-- Latest from the blog -->
+  <section class="max-w-4xl mx-auto px-6 mb-16">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Latest from the blog</h2>
+      <a href="/blog" class="text-xs text-blue-600 dark:text-blue-400 font-medium hover:underline">All posts →</a>
+    </div>
+    <div id="latest-post"></div>
+  </section>
+
   <!-- Contribute -->
   <section id="contribute" class="max-w-4xl mx-auto px-6 mb-20">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl p-8">
@@ -229,6 +238,43 @@
           </p>
         </div>`;
     }
+
+    // Latest blog post
+    fetch('posts.json')
+      .then(r => r.json())
+      .then(posts => {
+        if (!posts.length) return;
+        const p = posts[0];
+        const tags = p.tags.map(t =>
+          `<span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">${t}</span>`
+        ).join('');
+        const d = new Date(p.date + 'T00:00:00');
+        const date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        const hero = p.heroImage
+          ? `<div class="overflow-hidden rounded-t-xl" style="height:180px"><img src="${p.heroImage}" alt="${p.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"></div>`
+          : '';
+        document.getElementById('latest-post').innerHTML = `
+          <a href="/blog/${p.slug}"
+            class="card-hover group block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl ${p.heroImage ? 'pb-6' : 'p-6'} no-underline overflow-hidden">
+            ${hero}
+            <div class="${p.heroImage ? 'px-6 pt-5' : ''}">
+              <div class="flex flex-wrap items-center gap-2 mb-3">
+                <span class="text-xs text-slate-400 dark:text-slate-500">${date}</span>
+                <span class="text-slate-300 dark:text-slate-700 text-xs">·</span>
+                <span class="text-xs text-slate-400 dark:text-slate-500">${p.readingTime}</span>
+                ${tags ? `<span class="text-slate-300 dark:text-slate-700 text-xs">·</span>${tags}` : ''}
+              </div>
+              <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">${p.title}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">${p.description}</p>
+              <div class="flex items-center gap-1.5 text-xs text-blue-600 dark:text-blue-400 font-medium">
+                <span>Read post</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </div>
+          </a>`;
+      });
 
     fetch('projects.json')
       .then(r => r.json())

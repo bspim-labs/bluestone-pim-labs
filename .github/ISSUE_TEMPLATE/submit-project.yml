@@ -1,0 +1,43 @@
+name: Submit a project
+description: Not ready to open a PR? Describe your project here and we can help get it listed.
+labels: ["project-submission"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Project name
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: One or two sentences describing what it does.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: Live URL for the project.
+    validations:
+      required: true
+  - type: input
+    id: github
+    attributes:
+      label: GitHub repo (optional)
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - live
+        - beta
+        - wip
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: Context, caveats, or questions.

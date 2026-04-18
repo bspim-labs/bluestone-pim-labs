@@ -1,0 +1,17 @@
+name: Validate projects.json
+
+on:
+  pull_request:
+    paths:
+      - projects.json
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install check-jsonschema
+      - run: check-jsonschema --schemafile .github/projects.schema.json projects.json

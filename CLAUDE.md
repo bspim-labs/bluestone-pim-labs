@@ -32,7 +32,7 @@ Matches the visual language of the MCP server page (`bluestone-pim-unofficial-mc
 
 ## Adding a project
 
-Edit `projects.json` and open a PR. Each entry takes:
+Edit `projects.json` and open a PR. The `.github/workflows/validate-projects.yml` GitHub Actions check runs automatically on any PR that touches `projects.json`, validating against `.github/projects.schema.json`. Each entry takes:
 
 ```json
 {

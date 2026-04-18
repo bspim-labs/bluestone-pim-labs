@@ -60,7 +60,7 @@ The page always renders at least 3 cards, filling with placeholders if fewer pro
 - `public/bluestone_pim_logo.png`: Bluestone PIM logo, used in navbar and as favicon
 - `public/og-image.jpg`: OG image (1200x630), referenced with absolute URLs in meta tags
 
-If the domain changes, update the absolute URLs in the `og:image`, `twitter:image`, and `og:url` meta tags in `index.html` and `post.html`. The OG image is generated dynamically by `api/og.jsx` (Vercel Edge Function) — the meta tags point to `[domain]/api/og`.
+If the domain changes, update the absolute URLs in the `og:image`, `twitter:image`, and `og:url` meta tags in `index.html` and `post.html`. The OG image is generated at build time by `scripts/generate-og-image.js` (uses `sharp`) and output to `public/og-image.jpg`.
 
 ## Local development
 

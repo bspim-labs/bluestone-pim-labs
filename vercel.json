@@ -1,7 +1,11 @@
 {
   "outputDirectory": ".",
+  "functions": {
+    "api/og.jsx": {
+      "runtime": "edge"
+    }
+  },
   "routes": [
-    { "src": "^/api/og$", "dest": "/api/og.jsx" },
     { "src": "^/blog/([^/]+)$", "dest": "/post.html" },
     { "src": "^/blog$",         "dest": "/blog.html" },
     { "handle": "filesystem" }

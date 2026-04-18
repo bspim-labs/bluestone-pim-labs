@@ -1,11 +1,7 @@
 {
   "outputDirectory": ".",
-  "functions": {
-    "api/og.jsx": {}
-  },
-  "routes": [
-    { "src": "^/blog/([^/]+)$", "dest": "/post.html" },
-    { "src": "^/blog$",         "dest": "/blog.html" },
-    { "handle": "filesystem" }
+  "rewrites": [
+    { "source": "/blog/:slug", "destination": "/post.html" },
+    { "source": "/blog", "destination": "/blog.html" }
   ]
 }

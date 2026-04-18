@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Run: npm install  (once, to get sharp)
 // Then: node scripts/optimize-images.js
-// Processes public/posts/**/*.{jpg,jpeg,png} -> WebP + resized originals
+// Processes public/posts/**/*.{jpg,jpeg,png} -> WebP + deletes originals
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
@@ -37,11 +37,9 @@ async function run() {
     let pipeline = sharp(file);
     if (meta.width > MAX_WIDTH) pipeline = pipeline.resize({ width: MAX_WIDTH });
     await pipeline.webp({ quality: 85 }).toFile(webpOut);
+    fs.unlinkSync(file);
     const rel = f => path.relative(process.cwd(), f);
-    console.log(`  ${rel(file)} → ${rel(webpOut)}`);
-  }
-
-  console.log(`\nDone. ${files.length} image(s) processed.`);
+    console.log(`  ${rel(file)} → ${rel(webpOut)} (original deleted)`);
 }
 
 run().catch(err => { console.error(err.message); process.exit(1); });

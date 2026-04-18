@@ -1,6 +1,6 @@
-# Bluestone PIM LABS Landing Page
+# Bluestone PIM Labs Landing Page
 
-Landing page for Bluestone PIM LABS, a community space for builders working on and for Bluestone PIM.
+Landing page for Bluestone PIM Labs, a community space for builders working on and for Bluestone PIM.
 
 ## What this is
 

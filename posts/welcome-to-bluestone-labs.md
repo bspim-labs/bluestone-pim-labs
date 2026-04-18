@@ -1,12 +1,12 @@
 ---
-title: Welcome to Bluestone PIM LABS
+title: Welcome to Bluestone PIM Labs
 date: 2026-04-17
 description: What Labs is, why it exists, and what you can look forward to as we keep building.
 tags: meta, community
 heroImage: /public/posts/welcome-to-bluestone-labs/banner.webp
 ---
 
-Bluestone PIM LABS is a community space for builders working on and for Bluestone PIM. Not an official product, not a roadmap item: a place where people who use and work with Bluestone PIM can ship things, share them, and learn together.
+Bluestone PIM Labs is a community space for builders working on and for Bluestone PIM. Not an official product, not a roadmap item: a place where people who use and work with Bluestone PIM can ship things, share them, and learn together.
 
 ## Why Labs exists
 

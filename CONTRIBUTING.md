@@ -31,6 +31,14 @@ Not ready to open a PR? [Open an issue](https://github.com/bspim-labs/bluestone-
 
 Any project that relates to Bluestone PIM in a useful way. Customers, SI partners, and independent builders are all welcome. The only requirement is that the project is real and accessible via the URL you provide.
 
+## Naming conventions
+
+If you are building a new community repo under `bspim-labs`, follow this pattern:
+
+- Use the prefix `bluestone-pim-unofficial-` for all community-built tools and integrations
+- Name by function, not technology: `bluestone-pim-unofficial-mcp-catalogue` rather than `bluestone-pim-unofficial-mcp-2`
+- Keep "unofficial" in the name to make clear it is a community project, not an official Bluestone PIM product
+
 ## Other contributions
 
 Bug reports and improvements to the site itself are welcome too. Use the bug report issue template or open a PR directly.

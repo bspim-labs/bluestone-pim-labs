@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Bluestone PIM Labs — Bluestone PIM Labs</title>
+  <meta name="description" content="What Labs is, why it exists, and what you can look forward to as we keep building.">
+  <link rel="canonical" href="https://bluestone-labs-landing.vercel.app/blog/welcome-to-bluestone-labs">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Bluestone PIM Labs">
+  <meta property="og:title" content="Welcome to Bluestone PIM Labs — Bluestone PIM Labs">
+  <meta property="og:description" content="What Labs is, why it exists, and what you can look forward to as we keep building.">
+  <meta property="og:url" content="https://bluestone-labs-landing.vercel.app/blog/welcome-to-bluestone-labs">
+  <meta property="og:image" content="https://bluestone-labs-landing.vercel.app/public/posts/welcome-to-bluestone-labs/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Welcome to Bluestone PIM Labs — Bluestone PIM Labs">
+  <meta name="twitter:description" content="What Labs is, why it exists, and what you can look forward to as we keep building.">
+  <meta name="twitter:image" content="https://bluestone-labs-landing.vercel.app/public/posts/welcome-to-bluestone-labs/og-image.jpg">
+  <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
+  <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <link id="hljs-dark"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" disabled>
+  <script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('hljs-light').disabled = true;
+        document.getElementById('hljs-dark').disabled  = false;
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    #reading-progress { position:fixed; top:0; left:0; height:2px; width:0%; background:#3b82f6; z-index:50; transition:width 0.1s linear; }
+    .prose { max-width:68ch; color:inherit; line-height:1.8; }
+    .prose > * + * { margin-top:1.25em; }
+    .prose h2 { font-size:1.45em; font-weight:700; line-height:1.3; margin-top:2.25em; margin-bottom:0.6em; color:inherit; padding-bottom:0.3em; border-bottom:1px solid #e2e8f0; }
+    .dark .prose h2 { border-bottom-color:#1e293b; }
+    .prose h3 { font-size:1.2em; font-weight:600; line-height:1.4; margin-top:2em; margin-bottom:0.4em; color:inherit; }
+    .prose h4 { font-size:1em; font-weight:600; margin-top:1.75em; margin-bottom:0.3em; color:inherit; }
+    .prose p { margin-bottom:0; }
+    .prose a { color:#2563eb; text-decoration:underline; text-underline-offset:2px; text-decoration-color:#93c5fd; transition:color 0.15s; }
+    .dark .prose a { color:#60a5fa; text-decoration-color:#1e3a5f; }
+    .prose a:hover { color:#1d4ed8; }
+    .dark .prose a:hover { color:#93c5fd; }
+    .prose strong { font-weight:600; }
+    .prose em { font-style:italic; }
+    .prose ul { list-style-type:disc; padding-left:1.5em; margin-top:0.75em; margin-bottom:0.75em; }
+    .prose ol { list-style-type:decimal; padding-left:1.5em; margin-top:0.75em; margin-bottom:0.75em; }
+    .prose li { line-height:1.7; }
+    .prose li + li { margin-top:0.3em; }
+    .prose code:not(pre code) { font-family:ui-monospace,'Cascadia Code','Fira Code',monospace; font-size:0.875em; background:#f1f5f9; color:#0f172a; padding:0.15em 0.45em; border-radius:4px; border:1px solid #e2e8f0; }
+    .dark .prose code:not(pre code) { background:#1e293b; color:#e2e8f0; border-color:#334155; }
+    .prose pre { border-radius:10px; overflow-x:auto; font-size:0.875em; line-height:1.7; border:1px solid #e2e8f0; margin-top:1.5em; margin-bottom:1.5em; position:relative; }
+    .dark .prose pre { border-color:#1e293b; }
+    .prose pre > code.hljs { padding:1.25em 1.5em; border-radius:10px; }
+    .prose pre code { font-family:ui-monospace,'Cascadia Code','Fira Code',monospace; font-size:inherit; }
+    .copy-btn { position:absolute; top:0.6rem; right:0.6rem; font-size:11px; font-weight:500; padding:3px 9px; border-radius:5px; cursor:pointer; font-family:system-ui,sans-serif; transition:background 0.15s,color 0.15s; background:rgba(0,0,0,0.07); color:#64748b; border:1px solid rgba(0,0,0,0.10); line-height:1.6; }
+    .dark .copy-btn { background:rgba(255,255,255,0.08); color:#94a3b8; border-color:rgba(255,255,255,0.10); }
+    .copy-btn:hover { background:rgba(0,0,0,0.13); color:#334155; }
+    .dark .copy-btn:hover { background:rgba(255,255,255,0.15); color:#e2e8f0; }
+    .prose blockquote { border-left:3px solid #3b82f6; padding:0.5em 0 0.5em 1.25em; color:#475569; font-style:italic; margin-top:1.5em; margin-bottom:1.5em; }
+    .dark .prose blockquote { color:#94a3b8; }
+    .prose hr { border:none; border-top:1px solid #e2e8f0; margin-top:3em; margin-bottom:3em; }
+    .dark .prose hr { border-top-color:#1e293b; }
+    .prose img { max-width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-top:1.5em; margin-bottom:1.5em; display:block; }
+    .dark .prose img { border-color:#1e293b; }
+    .prose table { width:100%; border-collapse:collapse; font-size:0.9em; margin-top:1.75em; margin-bottom:1.75em; display:block; overflow-x:auto; }
+    .prose th { text-align:left; padding:0.5em 1em; border-bottom:2px solid #e2e8f0; font-weight:600; white-space:nowrap; }
+    .dark .prose th { border-bottom-color:#334155; }
+    .prose td { padding:0.5em 1em; border-bottom:1px solid #f1f5f9; }
+    .dark .prose td { border-bottom-color:#1e293b; }
+    .prose tr:last-child td { border-bottom:none; }
+    .prose h2 .anchor, .prose h3 .anchor { opacity:0; margin-left:0.4em; color:#94a3b8; text-decoration:none; font-weight:400; font-size:0.85em; transition:opacity 0.15s; }
+    .prose h2:hover .anchor, .prose h3:hover .anchor { opacity:1; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+
+  <div id="reading-progress"></div>
+
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 no-underline shrink-0">
+        <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-8 w-auto object-contain">
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-sm hidden sm:inline">Bluestone PIM Labs 🧪</span>
+      </a>
+      <nav class="flex items-center gap-1 mr-1">
+        <a href="/" class="text-sm px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Projects</a>
+        <a href="/blog" class="text-sm px-3 py-1.5 rounded-lg font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">Blog</a>
+      </nav>
+      <button id="theme-toggle" aria-label="Toggle dark mode" class="p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="block dark:hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/60">
+    <div class="max-w-4xl mx-auto px-6 py-2 flex items-start gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+      <p class="text-sm text-slate-500 dark:text-slate-400">A Bluestone PIM Labs community project. Not an official product. No SLA, no support commitments. Contributions and forks welcome.</p>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors mb-10 no-underline group">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+
+    <article>
+      <div class="mb-10"><img src="/public/posts/welcome-to-bluestone-labs/banner.webp" alt="Welcome to Bluestone PIM Labs" class="w-full rounded-xl object-cover border border-slate-200 dark:border-slate-700/60" style="max-height:420px;" loading="eager"></div>
+      <header class="mb-10">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="text-sm text-slate-400 dark:text-slate-500">17 Apr 2026</span><span class="text-slate-300 dark:text-slate-700">·</span>
+        <span class="text-sm text-slate-400 dark:text-slate-500">3 min read</span>
+        <span class="text-slate-300 dark:text-slate-700">·</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">meta</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">community</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 leading-tight mb-4">Welcome to Bluestone PIM Labs</h1>
+        <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">What Labs is, why it exists, and what you can look forward to as we keep building.</p>
+      </header>
+
+      <div class="border-t border-slate-200 dark:border-slate-800 mb-10"></div>
+
+      <div id="post-body" class="prose text-slate-700 dark:text-slate-300">
+        <p>Bluestone PIM Labs is a community space for builders working on and for Bluestone PIM. Not an official product, not a roadmap item: a place where people who use and work with Bluestone PIM can ship things, share them, and learn together.</p>
+<h2>Why Labs exists</h2>
+<p>Bluestone PIM is a flexible platform. A lot of what makes it genuinely useful in production comes from the integrations, automations, and tooling that teams build around it: custom import pipelines, enrichment scripts, AI-assisted workflows, internal dashboards.</p>
+<p>Most of that work stays internal. It solves one team&#39;s problem, lives in a private repo, and never gets shared. Labs is a nudge in the other direction. Build it in the open, put it here, let others build on it.</p>
+<p>There is no formal review process, no approval committee. If it relates to Bluestone PIM and it works, it belongs here.</p>
+<h2>The first project: MCP Server</h2>
+<p>The first project is an unofficial MCP server for Bluestone PIM. MCP (Model Context Protocol) is the standard that lets AI assistants like Claude, Cursor, and others connect to external tools and data sources.</p>
+<p>With the Bluestone MCP Server, you can point an AI assistant directly at your Bluestone PIM organisation and interact with your catalogue through natural language:</p>
+<pre><code class="language-bash"># Ask your AI assistant:
+&quot;Show me all products in the Electronics category missing a description&quot;
+&quot;Which products were updated in the last 7 days?&quot;
+&quot;Find all variants of SKU ABC-123&quot;
+</code></pre>
+<p>It connects over your existing Bluestone API credentials, runs entirely client-side, and does not store or proxy your data. You can read the setup guide and connect in under five minutes.</p>
+<p>For Cursor, add this to your <code>~/.cursor/mcp.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;bluestone-pim&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;bluestone-pim-mcp&quot;],
+      &quot;env&quot;: {
+        &quot;BLUESTONE_BASE_URL&quot;: &quot;https://your-org.bluestonepim.com&quot;,
+        &quot;BLUESTONE_USERNAME&quot;: &quot;your-username&quot;,
+        &quot;BLUESTONE_PASSWORD&quot;: &quot;your-password&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>For chat clients like Claude.ai or ChatGPT, use their dedicated MCP configuration UI: no config file needed, just paste your credentials when prompted.</p>
+<p>That is it. Restart your client and your catalogue is available as context.</p>
+<p><a href="https://bluestone-mcp-unofficial.vercel.app/connect">See the full setup guide on the MCP server site.</a></p>
+<h2>What to look forward to</h2>
+<p>Labs is early. The MCP server is project one. Here is the direction we are heading:</p>
+<p><strong>More integration patterns.</strong> Connectors, import/export utilities, and patterns for common Bluestone workflows that teams keep rebuilding from scratch.</p>
+<p><strong>AI-native tools.</strong> The MCP server is the foundation. On top of it: enrichment agents, bulk-edit assistants, automated QA checks for catalogue data quality.</p>
+<p><strong>Community contributions.</strong> If you have built something useful on Bluestone PIM, Labs is the right place for it. The contribution bar is low: open a PR, add your entry to <code>projects.json</code>, done.</p>
+<p>This blog is where we document what gets built, explain the decisions behind the tools, and share patterns worth knowing. Not a marketing channel: a dev log.</p>
+<h2>Get involved</h2>
+<p>Everything Labs is open source. The Labs landing page and the MCP server are both on GitHub. If you have built something or have an idea, open an issue or a pull request.</p>
+<p>If you are a Bluestone PIM customer, SI partner, or independent builder: this is your space too.</p>
+
+      </div>
+
+      
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 mt-16">
+    <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <p class="text-sm text-slate-400 dark:text-slate-600">Bluestone PIM Labs &middot; Community projects, not official products</p>
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode
+    const themeBtn  = document.getElementById('theme-toggle');
+    const hljsLight = document.getElementById('hljs-light');
+    const hljsDark  = document.getElementById('hljs-dark');
+    themeBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      hljsLight.disabled = isDark;
+      hljsDark.disabled  = !isDark;
+    });
+
+    // Reading progress
+    window.addEventListener('scroll', () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      document.getElementById('reading-progress').style.width =
+        (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+    }, { passive: true });
+
+    // Syntax highlight
+    document.querySelectorAll('#post-body pre code').forEach(el => hljs.highlightElement(el));
+
+    // Copy buttons
+    document.querySelectorAll('#post-body pre').forEach(pre => {
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(pre.querySelector('code').textContent).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        }).catch(() => {
+          btn.textContent = 'Failed';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        });
+      });
+      pre.appendChild(btn);
+    });
+
+    // Lazy images
+    document.querySelectorAll('#post-body img').forEach(img => { img.loading = 'lazy'; });
+
+    // Anchor links on headings
+    function slugify(t) { return t.toLowerCase().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').trim(); }
+    document.querySelectorAll('#post-body h2, #post-body h3').forEach(h => {
+      h.id = slugify(h.textContent);
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.className = 'anchor';
+      a.setAttribute('aria-hidden', 'true');
+      a.textContent = '#';
+      h.appendChild(a);
+    });
+  </script>
+</body>
+</html>

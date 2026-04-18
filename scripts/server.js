@@ -33,9 +33,11 @@ function send(res, filePath, status = 200) {
 http.createServer((req, res) => {
   const pathname = new URL(req.url, 'http://localhost').pathname;
 
-  // /blog/:slug → post.html (slug read from pathname client-side)
+  // /blog/:slug → static generated page if it exists, otherwise post.html fallback
   if (/^\/blog\/[^/]+$/.test(pathname)) {
-    return send(res, path.join(ROOT, 'post.html'));
+    const slug = pathname.split('/')[2];
+    const staticPage = path.join(ROOT, 'blog', slug, 'index.html');
+    return send(res, fs.existsSync(staticPage) ? staticPage : path.join(ROOT, 'post.html'));
   }
 
   // Clean URLs: strip .html or match bare name

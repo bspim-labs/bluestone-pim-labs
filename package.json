@@ -2,12 +2,13 @@
   "name": "bluestone-labs-landing",
   "private": true,
   "scripts": {
-    "build": "node scripts/generate-posts-index.js && node scripts/generate-og-image.js",
+    "build": "node scripts/generate-posts-index.js && node scripts/generate-og-image.js && node scripts/generate-post-pages.js",
     "serve": "node scripts/server.js",
     "posts": "node scripts/generate-posts-index.js",
     "images": "node scripts/optimize-images.js"
   },
   "devDependencies": {
+    "marked": "^18.0.2",
     "sharp": "^0.33.0"
   }
 }

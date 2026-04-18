@@ -95,8 +95,8 @@ heroImage: /public/posts/slug/banner.webp
 To add a post:
 1. Write `posts/your-slug.md`
 2. Drop images in `public/posts/your-slug/`, run `node scripts/optimize-images.js` (needs `npm install` once for sharp)
-3. Run `npm run posts` to regenerate `posts.json`
-4. Push to main
+3. Run `npm run build` to regenerate `posts.json`, `public/og-image.jpg`, and `blog/{slug}/index.html` (static page with baked-in meta for crawlers)
+4. Push to main — commit the generated `blog/` and `public/posts/` files alongside the post
 
 `posts.json` is also regenerated automatically by Vercel on deploy via the `build` script.
 

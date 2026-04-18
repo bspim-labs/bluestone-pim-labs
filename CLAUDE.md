@@ -7,13 +7,13 @@ Landing page for Bluestone PIM Labs, a community space for builders working on a
 A stakeholder mockup / community landing page. Single static HTML file, no framework, no build step. Deployed on Vercel.
 
 - Live URL: https://bluestone-labs-landing.vercel.app
-- GitHub: https://github.com/leafleaf90/bluestone-labs-landing
+- GitHub: https://github.com/bspim-labs/bluestone-pim-labs
 
 ## Related projects
 
 - **MCP Server** — the first Labs project, design reference for this page
   - Site: https://bluestone-mcp-unofficial.vercel.app/connect
-  - GitHub: https://github.com/leafleaf90/bluestone-pim-unofficial-mcp
+  - GitHub: https://github.com/bspim-labs/bluestone-pim-unofficial-mcp
   - The `public/connect/index.html` in that repo is the visual reference for this page: same color palette, card patterns, disclaimer banner, and Tailwind setup. When making design changes here, check alignment with that file.
 
 ## Stack

@@ -7,5 +7,14 @@
     "status": "live",
     "cta": "View setup guide",
     "icon": "terminal"
+  },
+  {
+    "name": "Site Template",
+    "description": "Single-file documentation site template matching the Labs visual identity. Fork it to get a sidebar, dark mode, copyable markdown source, and consistent design across your Labs project.",
+    "url": "https://github.com/leafleaf90/bluestone-pim-labs-site-template",
+    "github": "https://github.com/leafleaf90/bluestone-pim-labs-site-template",
+    "status": "live",
+    "cta": "Fork template",
+    "icon": "default"
   }
 ]

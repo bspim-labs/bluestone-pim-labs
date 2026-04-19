@@ -17,7 +17,9 @@
 }
 ```
 
-**Required fields:** `name`, `description`, `url`, `status`
+**Required fields:** `name`, `description`, `github`, `status`
+
+The project card links to `url` if provided, otherwise falls back to `github`. Include `url` only if your project has a separate landing page or documentation site.
 
 **`status` options:** `live`, `beta`, `wip`, `archived`
 

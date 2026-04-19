@@ -38,13 +38,15 @@ Edit `projects.json` and open a PR. The `.github/workflows/validate-projects.yml
 {
   "name": "Project Name",
   "description": "One or two sentences.",
-  "url": "https://...",
   "github": "https://github.com/...",
+  "url": "https://...",
   "status": "live",
   "cta": "View setup guide",
   "icon": "terminal"
 }
 ```
+
+Required: `name`, `description`, `github`, `status`. The card links to `url` if provided, otherwise falls back to `github`.
 
 Available icons: `terminal`, `default` (plus icon). Add more in the `icons` object in `index.html`.
 The page always renders at least 3 cards, filling with placeholders if fewer projects exist.

@@ -13,7 +13,7 @@
       "github": { "type": "string", "pattern": "^https://github\\.com/", "minLength": 1 },
       "status": { "type": "string", "enum": ["live", "beta", "wip", "archived"] },
       "cta": { "type": "string", "minLength": 1 },
-      "icon": { "type": "string", "enum": ["terminal", "default"] }
+      "icon": { "type": "string", "enum": ["terminal", "template", "default"] }
     }
   }
 }

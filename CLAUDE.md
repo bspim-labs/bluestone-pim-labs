@@ -13,7 +13,7 @@ A stakeholder mockup / community landing page. Single static HTML file, no frame
 
 - **MCP Server** — the first Labs project, design reference for this page
   - Site: https://bluestone-mcp-unofficial.vercel.app/connect
-  - GitHub: https://github.com/bspim-labs/bluestone-pim-unofficial-mcp
+  - GitHub: https://github.com/leafleaf90/bluestone-pim-unofficial-mcp
   - The `public/connect/index.html` in that repo is the visual reference for this page: same color palette, card patterns, disclaimer banner, and Tailwind setup. When making design changes here, check alignment with that file.
 
 ## Stack

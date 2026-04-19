@@ -22,7 +22,7 @@ A stakeholder mockup / community landing page. Single static HTML file, no frame
 
 ## Org and contribution model
 
-`bspim-labs` is the hub: it owns the landing page repo and the org profile README. Contributed projects live on the contributor's personal or org GitHub account and are listed on the landing page via `projects.json`. Viktor contributes as `leafleaf90`, the same as any external developer would. The MCP server and site template both live under `leafleaf90` for this reason.
+`bspim-labs` is the hub: it owns the landing page repo and the org profile README. Contributed projects live on the contributor's personal or org GitHub account and are listed on the landing page via `projects.json`. The org is a directory, not a host.
 
 ## Stack
 

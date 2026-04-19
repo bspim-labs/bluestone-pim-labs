@@ -16,6 +16,14 @@ A stakeholder mockup / community landing page. Single static HTML file, no frame
   - GitHub: https://github.com/leafleaf90/bluestone-pim-unofficial-mcp
   - The `public/connect/index.html` in that repo is the visual reference for this page: same color palette, card patterns, disclaimer banner, and Tailwind setup. When making design changes here, check alignment with that file.
 
+- **Site Template** — single-file documentation site template for Labs projects
+  - Site: https://bluestone-pim-labs-site-template.vercel.app
+  - GitHub: https://github.com/leafleaf90/bluestone-pim-labs-site-template
+
+## Org and contribution model
+
+`bspim-labs` is the hub: it owns the landing page repo and the org profile README. Contributed projects live on the contributor's personal or org GitHub account and are listed on the landing page via `projects.json`. Viktor contributes as `leafleaf90`, the same as any external developer would. The MCP server and site template both live under `leafleaf90` for this reason.
+
 ## Stack
 
 - `index.html`: single file, all styles inline via a `<style>` block + Tailwind CSS from CDN
@@ -104,7 +112,7 @@ To add a post:
 
 ## Routing (Vercel)
 
-Uses `routes` in `vercel.json` (not `rewrites` + `cleanUrls` — that combination had conflicts with static output). The routes array must come before `handle: filesystem`:
+Uses `rewrites` in `vercel.json` (not `routes` — that caused Edge Function detection conflicts, and not `cleanUrls` — that conflicted with static output):
 
 - `/blog` → `blog.html`
 - `/blog/:slug` → `post.html` (slug read from `window.location.pathname` client-side)

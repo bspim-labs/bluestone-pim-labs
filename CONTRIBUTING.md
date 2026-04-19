@@ -39,6 +39,10 @@ If you are building a new community repo under `bspim-labs`, follow this pattern
 - Name by function, not technology: `bluestone-pim-unofficial-mcp-catalogue` rather than `bluestone-pim-unofficial-mcp-2`
 - Keep "unofficial" in the name to make clear it is a community project, not an official Bluestone PIM product
 
+## Building a docs site for your project
+
+If your project needs a documentation page beyond what GitHub offers, the [Site Template](https://github.com/leafleaf90/bluestone-pim-labs-site-template) is the starting point. Fork it, replace the content, and deploy to Vercel. It gives you a sidebar, dark mode, copyable markdown source, and the same visual identity as other Labs projects, all in a single HTML file.
+
 ## Other contributions
 
 Bug reports and improvements to the site itself are welcome too. Use the bug report issue template or open a PR directly.

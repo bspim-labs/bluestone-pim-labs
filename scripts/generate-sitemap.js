@@ -18,7 +18,8 @@ function escXml(s) {
 const posts = JSON.parse(fs.readFileSync(postsPath, 'utf8'));
 const staticUrls = [
   { loc: `${BASE}/`, changefreq: 'weekly', priority: 1.0 },
-  { loc: `${BASE}/blog`, changefreq: 'weekly', priority: 0.9 }
+  { loc: `${BASE}/blog`, changefreq: 'weekly', priority: 0.9 },
+  { loc: `${BASE}/llms.txt`, changefreq: 'monthly', priority: 0.5 }
 ];
 const postUrls = posts.map(p => ({
   loc: `${BASE}/blog/${p.slug}`,

@@ -68,8 +68,9 @@ The page always renders at least 3 cards, filling with placeholders if fewer pro
 
 - `public/bluestone_pim_logo.png`: Bluestone PIM logo, used in navbar and as favicon
 - `public/og-image.jpg`: OG image (1200x630), referenced with absolute URLs in meta tags
+- `llms.txt` (site root): Markdown-oriented summary for AI discovery (see common `llms.txt` conventions). Listed in `sitemap.xml`. Update when scope, contact paths, or key URLs change.
 
-If the domain changes, update the absolute URLs in the `og:image`, `twitter:image`, and `og:url` meta tags in `index.html`, `blog.html`, and `post.html`, set `BASE_URL` in `scripts/generate-post-pages.js` and `scripts/generate-sitemap.js`, update the `Sitemap:` line in `robots.txt`, then run `npm run build` to refresh `blog/**/index.html` and `sitemap.xml`. The OG image is generated at build time by `scripts/generate-og-image.js` (uses `sharp`) and output to `public/og-image.jpg`.
+If the domain changes, update the absolute URLs in the `og:image`, `twitter:image`, and `og:url` meta tags in `index.html`, `blog.html`, and `post.html`, set `BASE_URL` in `scripts/generate-post-pages.js` and `scripts/generate-sitemap.js`, update the `Sitemap:` line in `robots.txt`, edit all links in `llms.txt`, then run `npm run build` to refresh `blog/**/index.html` and `sitemap.xml`. The OG image is generated at build time by `scripts/generate-og-image.js` (uses `sharp`) and output to `public/og-image.jpg`.
 
 ## Local development
 

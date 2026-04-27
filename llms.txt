@@ -1,0 +1,30 @@
+# Bluestone PIM Labs
+
+> Bluestone PIM Labs is a community directory and blog for tools, experiments, and documentation built by people who work with Bluestone PIM. It is not an official Bluestone product, has no support SLA, and lists projects that live in their own repositories.
+
+Labs is a discovery layer: the landing page at labs.bluestonepim.com shows project cards from public data, and the blog posts updates and guidance for contributors. Official product information belongs on bluestonepim.com and vendor channels.
+
+## Key information
+
+- [Home and project index](https://labs.bluestonepim.com/): Community projects, status, and links to each project’s site or GitHub repository
+- [Blog](https://labs.bluestonepim.com/blog): News and long-form posts about Labs and community tools
+- [GitHub repository (this site)](https://github.com/bspim-labs/bluestone-pim-labs): Source for the landing page, `projects.json`, and contribution workflows
+- [bspim-labs on GitHub](https://github.com/bspim-labs): Organization that hosts the Labs index repository and related community hubs
+
+## What we do not do
+
+Bluestone PIM Labs does not provide official Bluestone PIM support, product roadmaps, contracts, or SLAs. It does not replace Bluestone documentation or sales. Listings are community-sourced, forkable, and may change when maintainers update their projects or this index.
+
+## Contact
+
+- Project ideas, website bugs, and submissions: open an issue on [bluestone-pim-labs issues](https://github.com/bspim-labs/bluestone-pim-labs/issues)
+- This site does not list a phone number or street address, it is a public web and GitHub presence
+
+## AI discovery files
+
+- [Sitemap](https://labs.bluestonepim.com/sitemap.xml): URLs we recommend for indexing
+- [Robots](https://labs.bluestonepim.com/robots.txt): Crawler access and sitemap location
+
+## Optional
+
+- [Project submission (GitHub new issue, templates)](https://github.com/bspim-labs/bluestone-pim-labs/issues/new/choose)

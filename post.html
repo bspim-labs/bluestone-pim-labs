@@ -3,19 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Loading — Bluestone PIM Labs</title>
-  <meta name="description" content="">
-  <link rel="canonical" id="meta-canonical" href="https://bluestone-labs-landing.vercel.app/blog">
+  <title>Blog — Bluestone PIM Labs</title>
+  <meta name="description" content="Dev log for Bluestone PIM Labs. Tools, patterns, and ideas from the community.">
+  <link rel="canonical" id="meta-canonical" href="https://labs.bluestonepim.com/blog">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Bluestone PIM Labs">
-  <meta id="meta-og-title"       property="og:title"       content="Bluestone PIM Labs">
-  <meta id="meta-og-description" property="og:description" content="">
-  <meta id="meta-og-url"         property="og:url"         content="https://bluestone-labs-landing.vercel.app/blog">
-  <meta id="meta-og-image"       property="og:image"       content="https://bluestone-labs-landing.vercel.app/public/og-image.jpg">
+  <meta id="meta-og-title"       property="og:title"       content="Blog — Bluestone PIM Labs">
+  <meta id="meta-og-description" property="og:description" content="Dev log for Bluestone PIM Labs. Tools, patterns, and ideas from the community.">
+  <meta id="meta-og-url"         property="og:url"         content="https://labs.bluestonepim.com/blog">
+  <meta id="meta-og-image"       property="og:image"       content="https://labs.bluestonepim.com/public/og-image.jpg">
+  <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta id="meta-tw-title"       name="twitter:title"       content="Bluestone PIM Labs">
-  <meta id="meta-tw-description" name="twitter:description" content="">
-  <meta id="meta-tw-image"       name="twitter:image"       content="https://bluestone-labs-landing.vercel.app/public/og-image.jpg">
+  <meta id="meta-tw-title"       name="twitter:title"       content="Blog — Bluestone PIM Labs">
+  <meta id="meta-tw-description" name="twitter:description" content="Dev log for Bluestone PIM Labs. Tools, patterns, and ideas from the community.">
+  <meta id="meta-tw-image"       name="twitter:image"       content="https://labs.bluestonepim.com/public/og-image.jpg">
+  <script id="json-ld-post" type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Bluestone PIM Labs blog","url":"https://labs.bluestonepim.com/blog","isPartOf":{"@type":"WebSite","name":"Bluestone PIM Labs","url":"https://labs.bluestonepim.com/"}}</script>
   <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
   <!-- highlight.js themes: swap disabled attr based on dark mode -->
   <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
@@ -390,10 +392,10 @@
       // Meta tags
       const pageTitle = (meta.title || slug) + ' — Bluestone PIM Labs';
       const pageDesc  = meta.description || '';
-      const pageUrl   = `https://bluestone-labs-landing.vercel.app/blog/${slug}`;
+      const pageUrl   = `https://labs.bluestonepim.com/blog/${slug}`;
       const pageImage = meta.heroImage
-        ? `https://bluestone-labs-landing.vercel.app${meta.heroImage}`
-        : 'https://bluestone-labs-landing.vercel.app/public/og-image.jpg';
+        ? `https://labs.bluestonepim.com${meta.heroImage}`
+        : 'https://labs.bluestonepim.com/public/og-image.jpg';
 
       document.title = pageTitle;
       document.querySelector('meta[name="description"]').content        = pageDesc;
@@ -405,6 +407,45 @@
       document.getElementById('meta-tw-title').content                  = pageTitle;
       document.getElementById('meta-tw-description').content            = pageDesc;
       document.getElementById('meta-tw-image').content                  = pageImage;
+
+      function setOrRemoveMetaProperty(property, value) {
+        let el = document.querySelector('meta[property="' + property + '"]');
+        if (!value) {
+          if (el) el.remove();
+          return;
+        }
+        if (!el) {
+          el = document.createElement('meta');
+          el.setAttribute('property', property);
+          document.head.appendChild(el);
+        }
+        el.setAttribute('content', value);
+      }
+      const publishedIso = meta.date ? meta.date + 'T12:00:00.000Z' : '';
+      const modifiedRaw = meta.updated || meta.date;
+      const modifiedIso = modifiedRaw ? modifiedRaw + 'T12:00:00.000Z' : '';
+      setOrRemoveMetaProperty('article:published_time', publishedIso);
+      setOrRemoveMetaProperty('article:modified_time', modifiedIso || publishedIso);
+
+      const blogLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: meta.title || slug,
+        url: pageUrl,
+        image: pageImage,
+        publisher: {
+          '@type': 'Organization',
+          name: 'Bluestone PIM Labs',
+          url: 'https://labs.bluestonepim.com/'
+        },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl }
+      };
+      if (pageDesc) blogLd.description = pageDesc;
+      if (publishedIso) {
+        blogLd.datePublished = publishedIso;
+        blogLd.dateModified = modifiedIso || publishedIso;
+      }
+      document.getElementById('json-ld-post').textContent = JSON.stringify(blogLd);
 
       // Hero image
       if (meta.heroImage) {

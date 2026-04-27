@@ -4,9 +4,9 @@ Landing page for Bluestone PIM Labs, a community space for builders working on a
 
 ## What this is
 
-A stakeholder mockup / community landing page. Single static HTML file, no framework, no build step. Deployed on Vercel.
+A stakeholder mockup / community landing page. Single static HTML file, no framework. **Hosting and build are configured in the AWS Amplify console** (not via files in this repo).
 
-- Live URL: https://bluestone-labs-landing.vercel.app
+- Live URL: https://labs.bluestonepim.com
 - GitHub: https://github.com/bspim-labs/bluestone-pim-labs
 
 ## Related projects
@@ -29,7 +29,6 @@ A stakeholder mockup / community landing page. Single static HTML file, no frame
 - `index.html`: single file, all styles inline via a `<style>` block + Tailwind CSS from CDN
 - `projects.json`: project cards data, rendered by JS at page load via `fetch('projects.json')`
 - `public/`: static assets (logo, og-image)
-- `vercel.json`: sets `outputDirectory` to `.` so Vercel serves from repo root, not the `public/` folder
 
 ## Design
 
@@ -70,7 +69,7 @@ The page always renders at least 3 cards, filling with placeholders if fewer pro
 - `public/bluestone_pim_logo.png`: Bluestone PIM logo, used in navbar and as favicon
 - `public/og-image.jpg`: OG image (1200x630), referenced with absolute URLs in meta tags
 
-If the domain changes, update the absolute URLs in the `og:image`, `twitter:image`, and `og:url` meta tags in `index.html` and `post.html`. The OG image is generated at build time by `scripts/generate-og-image.js` (uses `sharp`) and output to `public/og-image.jpg`.
+If the domain changes, update the absolute URLs in the `og:image`, `twitter:image`, and `og:url` meta tags in `index.html`, `blog.html`, and `post.html`, set `BASE_URL` in `scripts/generate-post-pages.js` and `scripts/generate-sitemap.js`, update the `Sitemap:` line in `robots.txt`, then run `npm run build` to refresh `blog/**/index.html` and `sitemap.xml`. The OG image is generated at build time by `scripts/generate-og-image.js` (uses `sharp`) and output to `public/og-image.jpg`.
 
 ## Local development
 
@@ -78,15 +77,11 @@ If the domain changes, update the absolute URLs in the `og:image`, `twitter:imag
 npm run serve
 ```
 
-Open http://localhost:8000. Handles clean URLs and blog routing locally. Do NOT use `python3 -m http.server` — it doesn't handle routing.
-
-Do NOT use `vercel dev` — this is a static site and vercel dev gets confused, tries yarn, and conflicts with the custom server.
-
-To test Vercel-specific routing, push to a branch and check the preview URL.
+Open http://localhost:8000. Handles clean URLs and blog routing locally. Do NOT use `python3 -m http.server` — it doesn't handle hosting rewrites, so `/blog/...` will not work like production.
 
 ## Deploy
 
-Push to `main`. Vercel deploys automatically. The `build` script (`node scripts/generate-posts-index.js`) runs on Vercel at deploy time, so `posts.json` is always fresh.
+Pushes to the connected branch trigger **Amplify**. The pipeline is owned and configured in the Amplify app. The `build` script in `package.json` is what the pipeline should run so `posts.json`, `public/og-image.jpg`, and `blog/**/index.html` stay fresh.
 
 ## Blog
 
@@ -108,11 +103,8 @@ To add a post:
 3. Run `npm run build` to regenerate `posts.json`, `public/og-image.jpg`, and `blog/{slug}/index.html` (static page with baked-in meta for crawlers)
 4. Push to main — commit the generated `blog/` and `public/posts/` files alongside the post
 
-`posts.json` is also regenerated automatically by Vercel on deploy via the `build` script.
+`posts.json` is also regenerated automatically on each Amplify build via the `build` script.
 
-## Routing (Vercel)
+## Hosting (AWS Amplify)
 
-Uses `rewrites` in `vercel.json` (not `routes` — that caused Edge Function detection conflicts, and not `cleanUrls` — that conflicted with static output):
-
-- `/blog` → `blog.html`
-- `/blog/:slug` → `post.html` (slug read from `window.location.pathname` client-side)
+No Amplify or routing settings live in the repo. URL rewrites and the build (install command, `npm run build`, artifact root) are **already** defined in the Amplify app. For how the app behaves, `post.html` loads the post slug from `window.location.pathname`, and `blog/{slug}/index.html` is the static page generated at build time for the same slugs.

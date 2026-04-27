@@ -1,6 +1,6 @@
 # Bluestone PIM Labs
 
-Landing page for [Bluestone PIM Labs](https://bluestone-labs-landing.vercel.app): a community space for open tools and experiments built by people who use and work with Bluestone PIM.
+Landing page for [Bluestone PIM Labs](https://labs.bluestonepim.com): a community space for open tools and experiments built by people who use and work with Bluestone PIM.
 
 ## What this is
 
@@ -16,14 +16,14 @@ Not ready for a PR? [Open an issue](https://github.com/bspim-labs/bluestone-pim-
 
 ## Building a docs site
 
-The [Site Template](https://github.com/leafleaf90/bluestone-pim-labs-site-template) is a single HTML file you can fork for your project: sidebar, dark mode, copyable markdown source, and consistent Labs visual identity. No build step, deploys to Vercel in one click.
+The [Site Template](https://github.com/leafleaf90/bluestone-pim-labs-site-template) is a single HTML file you can fork for your project: sidebar, dark mode, copyable markdown source, and consistent Labs visual identity. No build step, deploys in one click to common static hosts.
 
 ## Stack
 
 - `index.html`: single file, Tailwind CSS from CDN
 - `projects.json`: project data, rendered at page load
 - `blog/`: static blog post pages generated at build time
-- `vercel.json`: routes and output directory config
+- Production hosting is **AWS Amplify** (app settings live in the console, not in this repo; see [CLAUDE.md](CLAUDE.md))
 
 ## Local development
 
@@ -31,7 +31,7 @@ The [Site Template](https://github.com/leafleaf90/bluestone-pim-labs-site-templa
 npm run serve
 ```
 
-Opens at `http://localhost:8000`. Do not use `python3 -m http.server` or `vercel dev`.
+Opens at `http://localhost:8000`. Do not use `python3 -m http.server` for full routing parity (see [CLAUDE.md](CLAUDE.md)).
 
 ## Code of conduct
 

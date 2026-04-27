@@ -6,7 +6,7 @@ const path = require('path');
 const sharp = require('sharp');
 const { marked } = require('marked');
 
-const BASE_URL  = 'https://bluestone-labs-landing.vercel.app';
+const BASE_URL  = 'https://labs.bluestonepim.com';
 const POSTS_DIR = path.join(__dirname, '../posts');
 const BLOG_DIR  = path.join(__dirname, '../blog');
 const PUBLIC    = path.join(__dirname, '../public');
@@ -30,6 +30,40 @@ function parseFrontmatter(src) {
 
 function esc(s) {
   return (s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function buildArticleMetaTags(meta) {
+  if (!meta.date) return '';
+  const published = `${meta.date}T12:00:00.000Z`;
+  const modDate = meta.updated || meta.date;
+  const modified = `${modDate}T12:00:00.000Z`;
+  return `  <meta property="article:published_time" content="${published}">
+  <meta property="article:modified_time" content="${modified}">
+`;
+}
+
+function buildBlogPostingJsonLd(slug, meta, pageUrl, ogImage) {
+  const title = meta.title || slug;
+  const o = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    url: pageUrl,
+    image: ogImage,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Bluestone PIM Labs',
+      url: `${BASE_URL}/`
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl }
+  };
+  if (meta.description) o.description = meta.description;
+  if (meta.date) {
+    o.datePublished = `${meta.date}T12:00:00.000Z`;
+    o.dateModified = `${(meta.updated || meta.date)}T12:00:00.000Z`;
+  }
+  return `  <script type="application/ld+json">${JSON.stringify(o)}</script>
+`;
 }
 
 function formatDate(iso) {
@@ -104,6 +138,9 @@ function buildHtml(slug, meta, bodyHtml, ogImage, allPosts) {
     ? `<div class="mb-10"><img src="${esc(meta.heroImage)}" alt="${esc(title)}" class="w-full rounded-xl object-cover border border-slate-200 dark:border-slate-700/60" style="max-height:420px;" loading="eager"></div>`
     : '';
 
+  const articleMeta = buildArticleMetaTags(meta);
+  const jsonLd      = buildBlogPostingJsonLd(slug, meta, pageUrl, ogImage);
+
   const idx   = allPosts.findIndex(p => p.slug === slug);
   const older = allPosts[idx + 1] || null;
   const newer = allPosts[idx - 1] || null;
@@ -133,7 +170,8 @@ function buildHtml(slug, meta, bodyHtml, ogImage, allPosts) {
   <meta name="twitter:title" content="${esc(pageTitle)}">
   <meta name="twitter:description" content="${esc(desc)}">
   <meta name="twitter:image" content="${ogImage}">
-  <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
+  <meta property="og:locale" content="en_US">
+${articleMeta}${jsonLd}  <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
   <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
   <link id="hljs-dark"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" disabled>
   <script>

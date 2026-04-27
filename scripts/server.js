@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Local dev server with clean URLs and Vercel rewrite parity.
+// Local dev server with clean URLs and production-style blog rewrites.
 // Usage: node scripts/server.js  (or npm run dev)
 const http = require('http');
 const fs   = require('fs');
@@ -14,6 +14,8 @@ const MIME = {
   '.json': 'application/json',
   '.css':  'text/css',
   '.md':   'text/plain; charset=utf-8',
+  '.txt':  'text/plain; charset=utf-8',
+  '.xml':  'application/xml; charset=utf-8',
   '.png':  'image/png',
   '.jpg':  'image/jpeg',
   '.webp': 'image/webp',

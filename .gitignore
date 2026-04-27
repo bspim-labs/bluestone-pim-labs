@@ -1,8 +1,12 @@
 .DS_Store
 **/.DS_Store
 .vercel
+.env
 .env*.local
 node_modules
+
+# Local-only agent guidance (SEO/GEO strategy; not for the public repo)
+LOCAL_SEO_GEO.md
 
 # MCP marketing page is served from the official site; keep working copy out of this deploy
 mcp-marketing-landing/

@@ -3,3 +3,6 @@
 .vercel
 .env*.local
 node_modules
+
+# MCP marketing page is served from the official site; keep working copy out of this deploy
+mcp-marketing-landing/

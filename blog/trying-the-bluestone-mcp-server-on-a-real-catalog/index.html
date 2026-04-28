@@ -122,7 +122,7 @@
       <header class="mb-10">
         <div class="flex flex-wrap items-center gap-2 mb-4">
           <span class="text-sm text-slate-400 dark:text-slate-500">28 Apr 2026</span><span class="text-slate-300 dark:text-slate-700">·</span>
-        <span class="text-sm text-slate-400 dark:text-slate-500">7 min read</span>
+        <span class="text-sm text-slate-400 dark:text-slate-500">8 min read</span>
         <span class="text-slate-300 dark:text-slate-700">·</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">mcp</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">ai</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">examples</span>
         </div>
         <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 leading-tight mb-4">Trying The Bluestone MCP Server On A Real Catalog</h1>
@@ -132,7 +132,8 @@
       <div class="border-t border-slate-200 dark:border-slate-800 mb-10"></div>
 
       <div id="post-body" class="prose text-slate-700 dark:text-slate-300">
-        <p>The unofficial Bluestone PIM MCP server is meant to give partners and customers some inspiration. It is a working example of how an AI assistant can connect to Bluestone PIM, but the bigger goal is to help teams build their own versions, aligned with their own workflows, data model, client needs, and guardrails.</p>
+        <p>The <a href="https://bluestone-mcp-unofficial.vercel.app/connect">unofficial Bluestone PIM MCP server</a> is meant to give partners and customers some inspiration. It is a working example of how an AI assistant can connect to Bluestone PIM, but the bigger goal is to help teams build their own versions, aligned with their own workflows, data model, client needs, and guardrails.</p>
+<p>Bluestone PIM has also published its <a href="https://www.bluestonepim.com/mcp">official communication around MCP</a>, which is the best place to understand the product direction. This Labs project sits beside that as a community example: open, forkable, and intentionally practical.</p>
 <p>Think of it as a starting point. Fork it, change the tools, tune the descriptions, deploy it under your own URL, and make it behave the way your team needs it to behave.</p>
 <p>The server is intentionally small. The important piece is the reusable pattern: OAuth connection, encrypted session tokens, a remote MCP endpoint, and tool calls that can reach Bluestone PIM safely from an AI client. The current tools are examples on top of that foundation: browse catalogs, list products, switch language context, check published data, fetch a product image, and create products. Treat the rest as a blank canvas for the workflows you want to build.</p>
 <h2>Start by naming the source</h2>
@@ -216,6 +217,8 @@ Assistant: The image is available. You can open it directly here: T-shirt - Gree
 <h2>What works now</h2>
 <p>Today, the unofficial Bluestone PIM MCP server can browse catalogs, list products in a category, switch language context, read published products, compare published and draft state through conversation, fetch product images, and create products by name.</p>
 <p>That is not a full PIM interface. It is a foundation. The next step is for customers and partners to take the pattern, fork it, and make it fit the real workflows they know best.</p>
+<p><a href="https://bluestone-mcp-unofficial.vercel.app/connect">Open the unofficial MCP setup guide and examples.</a></p>
+<p>For the official Bluestone PIM perspective on MCP, see <a href="https://www.bluestonepim.com/mcp">bluestonepim.com/mcp</a>.</p>
 
       </div>
 

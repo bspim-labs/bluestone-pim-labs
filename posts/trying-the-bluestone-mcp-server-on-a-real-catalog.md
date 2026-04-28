@@ -6,7 +6,9 @@ tags: mcp, ai, examples
 heroImage: /public/posts/trying-the-bluestone-mcp-server-on-a-real-catalog/banner.webp
 ---
 
-The unofficial Bluestone PIM MCP server is meant to give partners and customers some inspiration. It is a working example of how an AI assistant can connect to Bluestone PIM, but the bigger goal is to help teams build their own versions, aligned with their own workflows, data model, client needs, and guardrails.
+The [unofficial Bluestone PIM MCP server](https://bluestone-mcp-unofficial.vercel.app/connect) is meant to give partners and customers some inspiration. It is a working example of how an AI assistant can connect to Bluestone PIM, but the bigger goal is to help teams build their own versions, aligned with their own workflows, data model, client needs, and guardrails.
+
+Bluestone PIM has also published its [official communication around MCP](https://www.bluestonepim.com/mcp), which is the best place to understand the product direction. This Labs project sits beside that as a community example: open, forkable, and intentionally practical.
 
 Think of it as a starting point. Fork it, change the tools, tune the descriptions, deploy it under your own URL, and make it behave the way your team needs it to behave.
 
@@ -140,3 +142,7 @@ Those versions should not all behave the same. Different teams need different au
 Today, the unofficial Bluestone PIM MCP server can browse catalogs, list products in a category, switch language context, read published products, compare published and draft state through conversation, fetch product images, and create products by name.
 
 That is not a full PIM interface. It is a foundation. The next step is for customers and partners to take the pattern, fork it, and make it fit the real workflows they know best.
+
+[Open the unofficial MCP setup guide and examples.](https://bluestone-mcp-unofficial.vercel.app/connect)
+
+For the official Bluestone PIM perspective on MCP, see [bluestonepim.com/mcp](https://www.bluestonepim.com/mcp).

@@ -3,7 +3,7 @@ title: Trying The Bluestone PIM MCP Server On A Real Catalog
 date: 2026-04-28
 description: What happens when an AI assistant can browse Bluestone PIM catalogs, compare draft and published data, switch language context, and fetch product images.
 tags: mcp, ai, examples
-heroImage: /public/posts/trying-the-bluestone-mcp-server-on-a-real-catalog/banner.webp
+heroImage: /public/posts/trying-the-bluestone-pim-mcp-server-on-a-real-catalog/banner.webp
 ---
 
 The [unofficial Bluestone PIM MCP server](https://bluestone-mcp-unofficial.vercel.app/connect) is meant to give partners and customers some inspiration. It is a working example of how an AI assistant can connect to Bluestone PIM, but the bigger goal is to help teams build their own versions, aligned with their own workflows, data model, client needs, and guardrails.

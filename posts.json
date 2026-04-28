@@ -1,5 +1,18 @@
 [
   {
+    "slug": "trying-the-bluestone-mcp-server-on-a-real-catalog",
+    "title": "Trying The Bluestone MCP Server On A Real Catalog",
+    "date": "2026-04-28",
+    "description": "What happens when an AI assistant can browse Bluestone catalogs, compare draft and published data, switch language context, and fetch product images.",
+    "tags": [
+      "mcp",
+      "ai",
+      "examples"
+    ],
+    "readingTime": "7 min read",
+    "heroImage": "/public/posts/trying-the-bluestone-mcp-server-on-a-real-catalog/banner.webp"
+  },
+  {
     "slug": "welcome-to-bluestone-labs",
     "title": "Welcome to Bluestone PIM Labs",
     "date": "2026-04-17",

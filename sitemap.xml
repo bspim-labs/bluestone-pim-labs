@@ -16,6 +16,11 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://labs.bluestonepim.com/blog/trying-the-bluestone-mcp-server-on-a-real-catalog</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://labs.bluestonepim.com/blog/welcome-to-bluestone-labs</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

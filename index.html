@@ -231,21 +231,26 @@
     }
 
     function placeholderCard(n) {
+      const isCta = n === 1;
+      const tag = isCta ? 'a' : 'div';
+      const href = isCta ? ' href="https://github.com/bspim-labs/bluestone-pim-labs/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer"' : '';
+      const cursor = isCta ? 'cursor-pointer no-underline group' : 'cursor-default';
+
       return `
-        <div class="card-hover placeholder-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/40 rounded-xl p-5 cursor-default">
+        <${tag}${href} class="card-hover placeholder-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/40 rounded-xl p-5 ${cursor}">
           <div class="flex items-start justify-between gap-3 mb-3">
             <div class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
               ${svgIcon('default', 'w-5 h-5 text-slate-400 dark:text-slate-500')}
             </div>
             <span class="project-tag tag-planned mt-1">Planned</span>
           </div>
-          <h3 class="font-semibold text-slate-400 dark:text-slate-500 mb-2">Your project here</h3>
+          <h3 class="font-semibold text-slate-400 dark:text-slate-500 mb-2 ${isCta ? 'group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors' : ''}">Your project here</h3>
           <p class="text-sm text-slate-400 dark:text-slate-600 leading-relaxed">
-            ${n === 1
+            ${isCta
               ? 'Got an idea for a tool, integration, or utility that would help Bluestone users or partners? Open a PR and add it.'
               : 'Labs is a place to ship things and learn what works. More projects are in the works.'}
           </p>
-        </div>`;
+        </${tag}>`;
     }
 
     // Latest blog post

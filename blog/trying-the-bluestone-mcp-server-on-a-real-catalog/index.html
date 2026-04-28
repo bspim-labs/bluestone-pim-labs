@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trying The Bluestone MCP Server On A Real Catalog — Bluestone PIM Labs</title>
+  <meta name="description" content="What happens when an AI assistant can browse Bluestone catalogs, compare draft and published data, switch language context, and fetch product images.">
+  <link rel="canonical" href="https://labs.bluestonepim.com/blog/trying-the-bluestone-mcp-server-on-a-real-catalog">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Bluestone PIM Labs">
+  <meta property="og:title" content="Trying The Bluestone MCP Server On A Real Catalog — Bluestone PIM Labs">
+  <meta property="og:description" content="What happens when an AI assistant can browse Bluestone catalogs, compare draft and published data, switch language context, and fetch product images.">
+  <meta property="og:url" content="https://labs.bluestonepim.com/blog/trying-the-bluestone-mcp-server-on-a-real-catalog">
+  <meta property="og:image" content="https://labs.bluestonepim.com/public/posts/trying-the-bluestone-mcp-server-on-a-real-catalog/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Trying The Bluestone MCP Server On A Real Catalog — Bluestone PIM Labs">
+  <meta name="twitter:description" content="What happens when an AI assistant can browse Bluestone catalogs, compare draft and published data, switch language context, and fetch product images.">
+  <meta name="twitter:image" content="https://labs.bluestonepim.com/public/posts/trying-the-bluestone-mcp-server-on-a-real-catalog/og-image.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-04-28T12:00:00.000Z">
+  <meta property="article:modified_time" content="2026-04-28T12:00:00.000Z">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Trying The Bluestone MCP Server On A Real Catalog","url":"https://labs.bluestonepim.com/blog/trying-the-bluestone-mcp-server-on-a-real-catalog","image":"https://labs.bluestonepim.com/public/posts/trying-the-bluestone-mcp-server-on-a-real-catalog/og-image.jpg","publisher":{"@type":"Organization","name":"Bluestone PIM Labs","url":"https://labs.bluestonepim.com/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://labs.bluestonepim.com/blog/trying-the-bluestone-mcp-server-on-a-real-catalog"},"description":"What happens when an AI assistant can browse Bluestone catalogs, compare draft and published data, switch language context, and fetch product images.","datePublished":"2026-04-28T12:00:00.000Z","dateModified":"2026-04-28T12:00:00.000Z"}</script>
+  <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
+  <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <link id="hljs-dark"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" disabled>
+  <script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('hljs-light').disabled = true;
+        document.getElementById('hljs-dark').disabled  = false;
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    #reading-progress { position:fixed; top:0; left:0; height:2px; width:0%; background:#3b82f6; z-index:50; transition:width 0.1s linear; }
+    .prose { max-width:68ch; color:inherit; line-height:1.8; }
+    .prose > * + * { margin-top:1.25em; }
+    .prose h2 { font-size:1.45em; font-weight:700; line-height:1.3; margin-top:2.25em; margin-bottom:0.6em; color:inherit; padding-bottom:0.3em; border-bottom:1px solid #e2e8f0; }
+    .dark .prose h2 { border-bottom-color:#1e293b; }
+    .prose h3 { font-size:1.2em; font-weight:600; line-height:1.4; margin-top:2em; margin-bottom:0.4em; color:inherit; }
+    .prose h4 { font-size:1em; font-weight:600; margin-top:1.75em; margin-bottom:0.3em; color:inherit; }
+    .prose p { margin-bottom:0; }
+    .prose a { color:#2563eb; text-decoration:underline; text-underline-offset:2px; text-decoration-color:#93c5fd; transition:color 0.15s; }
+    .dark .prose a { color:#60a5fa; text-decoration-color:#1e3a5f; }
+    .prose a:hover { color:#1d4ed8; }
+    .dark .prose a:hover { color:#93c5fd; }
+    .prose strong { font-weight:600; }
+    .prose em { font-style:italic; }
+    .prose ul { list-style-type:disc; padding-left:1.5em; margin-top:0.75em; margin-bottom:0.75em; }
+    .prose ol { list-style-type:decimal; padding-left:1.5em; margin-top:0.75em; margin-bottom:0.75em; }
+    .prose li { line-height:1.7; }
+    .prose li + li { margin-top:0.3em; }
+    .prose code:not(pre code) { font-family:ui-monospace,'Cascadia Code','Fira Code',monospace; font-size:0.875em; background:#f1f5f9; color:#0f172a; padding:0.15em 0.45em; border-radius:4px; border:1px solid #e2e8f0; }
+    .dark .prose code:not(pre code) { background:#1e293b; color:#e2e8f0; border-color:#334155; }
+    .prose pre { border-radius:10px; overflow-x:auto; font-size:0.875em; line-height:1.7; border:1px solid #e2e8f0; margin-top:1.5em; margin-bottom:1.5em; position:relative; }
+    .dark .prose pre { border-color:#1e293b; }
+    .prose pre > code.hljs { padding:1.25em 1.5em; border-radius:10px; }
+    .prose pre code { font-family:ui-monospace,'Cascadia Code','Fira Code',monospace; font-size:inherit; }
+    .copy-btn { position:absolute; top:0.6rem; right:0.6rem; font-size:11px; font-weight:500; padding:3px 9px; border-radius:5px; cursor:pointer; font-family:system-ui,sans-serif; transition:background 0.15s,color 0.15s; background:rgba(0,0,0,0.07); color:#64748b; border:1px solid rgba(0,0,0,0.10); line-height:1.6; }
+    .dark .copy-btn { background:rgba(255,255,255,0.08); color:#94a3b8; border-color:rgba(255,255,255,0.10); }
+    .copy-btn:hover { background:rgba(0,0,0,0.13); color:#334155; }
+    .dark .copy-btn:hover { background:rgba(255,255,255,0.15); color:#e2e8f0; }
+    .prose blockquote { border-left:3px solid #3b82f6; padding:0.5em 0 0.5em 1.25em; color:#475569; font-style:italic; margin-top:1.5em; margin-bottom:1.5em; }
+    .dark .prose blockquote { color:#94a3b8; }
+    .prose hr { border:none; border-top:1px solid #e2e8f0; margin-top:3em; margin-bottom:3em; }
+    .dark .prose hr { border-top-color:#1e293b; }
+    .prose img { max-width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-top:1.5em; margin-bottom:1.5em; display:block; }
+    .dark .prose img { border-color:#1e293b; }
+    .prose table { width:100%; border-collapse:collapse; font-size:0.9em; margin-top:1.75em; margin-bottom:1.75em; display:block; overflow-x:auto; }
+    .prose th { text-align:left; padding:0.5em 1em; border-bottom:2px solid #e2e8f0; font-weight:600; white-space:nowrap; }
+    .dark .prose th { border-bottom-color:#334155; }
+    .prose td { padding:0.5em 1em; border-bottom:1px solid #f1f5f9; }
+    .dark .prose td { border-bottom-color:#1e293b; }
+    .prose tr:last-child td { border-bottom:none; }
+    .prose h2 .anchor, .prose h3 .anchor { opacity:0; margin-left:0.4em; color:#94a3b8; text-decoration:none; font-weight:400; font-size:0.85em; transition:opacity 0.15s; }
+    .prose h2:hover .anchor, .prose h3:hover .anchor { opacity:1; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+
+  <div id="reading-progress"></div>
+
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 no-underline shrink-0">
+        <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-8 w-auto object-contain">
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-sm hidden sm:inline">Bluestone PIM Labs 🧪</span>
+      </a>
+      <nav class="flex items-center gap-1 mr-1">
+        <a href="/" class="text-sm px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Projects</a>
+        <a href="/blog" class="text-sm px-3 py-1.5 rounded-lg font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">Blog</a>
+      </nav>
+      <button id="theme-toggle" aria-label="Toggle dark mode" class="p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="block dark:hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/60">
+    <div class="max-w-4xl mx-auto px-6 py-2 flex items-start gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+      <p class="text-sm text-slate-500 dark:text-slate-400">A Bluestone PIM Labs community project. Not an official product. No SLA, no support commitments. Contributions and forks welcome.</p>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors mb-10 no-underline group">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+
+    <article>
+      <div class="mb-10"><img src="/public/posts/trying-the-bluestone-mcp-server-on-a-real-catalog/banner.webp" alt="Trying The Bluestone MCP Server On A Real Catalog" class="w-full rounded-xl object-cover border border-slate-200 dark:border-slate-700/60" style="max-height:420px;" loading="eager"></div>
+      <header class="mb-10">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="text-sm text-slate-400 dark:text-slate-500">28 Apr 2026</span><span class="text-slate-300 dark:text-slate-700">·</span>
+        <span class="text-sm text-slate-400 dark:text-slate-500">7 min read</span>
+        <span class="text-slate-300 dark:text-slate-700">·</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">mcp</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">ai</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">examples</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 leading-tight mb-4">Trying The Bluestone MCP Server On A Real Catalog</h1>
+        <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">What happens when an AI assistant can browse Bluestone catalogs, compare draft and published data, switch language context, and fetch product images.</p>
+      </header>
+
+      <div class="border-t border-slate-200 dark:border-slate-800 mb-10"></div>
+
+      <div id="post-body" class="prose text-slate-700 dark:text-slate-300">
+        <p>The unofficial Bluestone PIM MCP server is meant to give partners and customers some inspiration. It is a working example of how an AI assistant can connect to Bluestone PIM, but the bigger goal is to help teams build their own versions, aligned with their own workflows, data model, client needs, and guardrails.</p>
+<p>Think of it as a starting point. Fork it, change the tools, tune the descriptions, deploy it under your own URL, and make it behave the way your team needs it to behave.</p>
+<p>The server is intentionally small. The important piece is the reusable pattern: OAuth connection, encrypted session tokens, a remote MCP endpoint, and tool calls that can reach Bluestone PIM safely from an AI client. The current tools are examples on top of that foundation: browse catalogs, list products, switch language context, check published data, fetch a product image, and create products. Treat the rest as a blank canvas for the workflows you want to build.</p>
+<h2>Start by naming the source</h2>
+<p>The most reliable first prompt is explicit:</p>
+<pre><code class="language-text">Using Bluestone PIM, what catalogs do I have?
+</code></pre>
+<p>That opening matters. AI assistants often have several tool types available at the same time: code execution, web search, artifacts, local files, and MCP tools. If you ask &quot;show me my catalogs&quot;, the assistant may try the wrong path first. Starting with &quot;Using Bluestone PIM&quot; points it at the MCP tools.</p>
+<p>If it goes wrong mid-conversation, redirect it:</p>
+<pre><code class="language-text">Don&#39;t write code. Use the Bluestone PIM tools directly.
+</code></pre>
+<p>The same applies to images. Ask for &quot;the product image from Bluestone PIM&quot; rather than just &quot;show me the image&quot;, especially in clients where web search is also available.</p>
+<h2>Browse a working catalog</h2>
+<p>The basic flow is simple:</p>
+<pre><code class="language-text">User: Using Bluestone PIM, what catalogs do I have?
+Assistant: You have 5 catalogs: Enrichment Structure, Skincare, Clothes, Outputs, Intake - ERP.
+
+User: Show me products in Clothes
+Assistant: There is currently one product in the Clothes catalog: T-shirt - Green, type Single, status Draft.
+</code></pre>
+<p>By default, the server reads working data from Bluestone PIM (MAPI, for those familiar with the Bluestone PIM API structure). That means it can show changes your team has made today, including products that have not been published yet. For enrichment work, that is usually what you want. If you want only live data, ask for published products explicitly.</p>
+<p>This is a small example, but it shows the basic shape: the assistant is not answering from a static export. It is calling a tool, reading the catalog, and summarizing what it finds.</p>
+<h2>Create a product</h2>
+<p>The server can also create a product by name:</p>
+<pre><code class="language-text">User: Create &quot;T-shirt - Blue&quot;
+Assistant: To confirm, should I create a new product named &quot;T-shirt - Blue&quot; in the Clothes catalog?
+
+User: Yes
+Assistant: T-shirt - Blue has been created and added to the Clothes catalog.
+</code></pre>
+<p>The confirmation is intentional. Creating a product is a write operation, and the tool is marked so clients can treat it cautiously. Claude Desktop responds by inserting a confirmation turn before the tool call.</p>
+<p>There is still plenty missing here. The tool cannot add attributes or images at creation time. It also does not group variants. If &quot;T-shirt - Green&quot; and &quot;T-shirt - Blue&quot; should be variants under a product group, that logic needs either explicit user intent or a careful naming convention check. That is the kind of detail a partner-specific fork can improve.</p>
+<p>Another example from testing showed the same gap from a different angle. When asked to create &quot;Red T-shirt&quot; in the Clothes catalog, the assistant did not notice that the existing products followed the pattern &quot;T-shirt - Green&quot; and &quot;T-shirt - Blue&quot;. It had listed catalogs, but it had not listed products in the target catalog before creating. A better version of the tool flow could check neighboring product names first and suggest &quot;T-shirt - Red&quot; before committing.</p>
+<p>That is exactly the kind of behavior this project is meant to inspire.</p>
+<h2>Switch language context</h2>
+<p>Language switching is where the AI layer starts to add value beyond retrieval.</p>
+<pre><code class="language-text">User: Using Bluestone PIM, show me the Clothes catalog in Dutch
+Assistant: Here is the Kleren catalog in Dutch. 4 products found, all currently in Draft state:
+
+1. T-shirt - Groen
+2. T-shirt - Blauw
+3. T-shirt - Rood
+4. T-shirt - Yellow
+
+Worth noting: &quot;T-shirt - Yellow&quot; has not been translated to Dutch yet.
+</code></pre>
+<p>The tool returns data. The model notices the pattern. Three product names are localized, one is still in English, so it flags the gap without being asked.</p>
+<p>That is a useful shape for future QA tools. The server does not need a special &quot;find missing translations&quot; endpoint to make this possible in small catalogs. It needs to expose enough structured data for the model to reason over. For larger catalogs, a purpose-built audit tool would be better, but the principle is the same.</p>
+<p>What is missing today: the assistant can spot the missing translation, but it cannot write the Dutch name back to Bluestone PIM. Update tools are not implemented yet.</p>
+<h2>Compare draft and published data</h2>
+<p>Bluestone PIM has working data and published data. The MCP server keeps those paths separate, because they answer different questions.</p>
+<pre><code class="language-text">User: Using Bluestone PIM, show me only what&#39;s published in Clothes, not drafts
+Assistant: Only 1 published product in the Clothes catalog: T-shirt - Green.
+
+User: Compare to draft
+Assistant: Here is the comparison:
+
+T-shirt - Green is published, but the draft name is &quot;T-shirt - Green and Great!&quot;
+T-shirt - Blue is in draft and not published.
+T-shirt - Red is in draft and not published.
+T-shirt - Yellow is in draft and not published.
+</code></pre>
+<p>This is the kind of check that is awkward in a normal UI but natural in chat. You can ask what is live, then ask how it differs from working state, and the assistant can keep the thread of the task.</p>
+<p>It also surfaces a practical distinction for builders: read tools should be clear about which layer they use. An enrichment assistant usually wants working state. A storefront QA assistant usually wants published state. A migration assistant may need both.</p>
+<h2>Fetch a product image</h2>
+<p>The <code>get_product_image</code> tool was added so an assistant can fetch a product image from the Bluestone CDN:</p>
+<pre><code class="language-text">User: Show me the product image from Bluestone PIM
+Assistant: The image is available. You can open it directly here: T-shirt - Green.
+</code></pre>
+<p>There is a client limitation hiding behind that simple exchange. MCP can return image content, but Claude Desktop currently shows the image inside the collapsed tool result panel rather than inline in the chat. The server works around this by telling the model to provide the direct image URL, so the user has something useful to click.</p>
+<p>That kind of detail matters when designing MCP tools. You are not only shaping data for an API consumer. You are shaping data for a model, a client UI, and a person reading the final answer.</p>
+<h2>Why this matters for partners and customers</h2>
+<p>The shared server is intentionally modest. It proves the connection pattern: OAuth, encrypted session tokens, a remote MCP endpoint, tool descriptions, response shaping, and a few working Bluestone operations.</p>
+<p>The interesting part is what a team can build from there:</p>
+<ul>
+<li>An enrichment assistant that checks naming patterns, missing translations, and incomplete images before a product goes live.</li>
+<li>A migration assistant that validates incoming product data before import and explains what needs cleanup.</li>
+<li>A demo setup assistant that creates safe sample catalogs in a test environment.</li>
+<li>A partner-specific assistant that matches one client&#39;s approval flow and terminology.</li>
+</ul>
+<p>Those versions should not all behave the same. Different teams need different autonomy levels, different confirmations, different data access, and different write permissions. MCP makes that possible because the tool surface is yours to design.</p>
+<h2>What works now</h2>
+<p>Today, the unofficial Bluestone PIM MCP server can browse catalogs, list products in a category, switch language context, read published products, compare published and draft state through conversation, fetch product images, and create products by name.</p>
+<p>That is not a full PIM interface. It is a foundation. The next step is for customers and partners to take the pattern, fork it, and make it fit the real workflows they know best.</p>
+
+      </div>
+
+      
+      <nav class="mt-14 pt-8 border-t border-slate-200 dark:border-slate-800">
+        <div class="grid grid-cols-2 gap-6">
+          <div><a href="/blog/welcome-to-bluestone-labs" class="group block no-underline"><div class="text-xs text-slate-400 dark:text-slate-500 mb-1">← Older</div><div class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">Welcome to Bluestone PIM Labs</div></a></div>
+          <div class="text-right"></div>
+        </div>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 mt-16">
+    <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <p class="text-sm text-slate-400 dark:text-slate-600">Bluestone PIM Labs &middot; Community projects, not official products</p>
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode
+    const themeBtn  = document.getElementById('theme-toggle');
+    const hljsLight = document.getElementById('hljs-light');
+    const hljsDark  = document.getElementById('hljs-dark');
+    themeBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      hljsLight.disabled = isDark;
+      hljsDark.disabled  = !isDark;
+    });
+
+    // Reading progress
+    window.addEventListener('scroll', () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      document.getElementById('reading-progress').style.width =
+        (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+    }, { passive: true });
+
+    // Syntax highlight
+    document.querySelectorAll('#post-body pre code').forEach(el => hljs.highlightElement(el));
+
+    // Copy buttons
+    document.querySelectorAll('#post-body pre').forEach(pre => {
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(pre.querySelector('code').textContent).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        }).catch(() => {
+          btn.textContent = 'Failed';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        });
+      });
+      pre.appendChild(btn);
+    });
+
+    // Lazy images
+    document.querySelectorAll('#post-body img').forEach(img => { img.loading = 'lazy'; });
+
+    // Anchor links on headings
+    function slugify(t) { return t.toLowerCase().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').trim(); }
+    document.querySelectorAll('#post-body h2, #post-body h3').forEach(h => {
+      h.id = slugify(h.textContent);
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.className = 'anchor';
+      a.setAttribute('aria-hidden', 'true');
+      a.textContent = '#';
+      h.appendChild(a);
+    });
+  </script>
+</body>
+</html>

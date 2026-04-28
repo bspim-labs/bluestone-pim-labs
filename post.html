@@ -400,6 +400,16 @@
       return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
+    function escapeHtml(value) {
+      return String(value || '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
     // Render post
     function renderPost(slug, src) {
       const { meta, body } = parseFrontmatter(src);
@@ -456,6 +466,13 @@
         mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl }
       };
       if (pageDesc) blogLd.description = pageDesc;
+      if (meta.author) {
+        blogLd.author = {
+          '@type': 'Person',
+          name: meta.author
+        };
+        if (meta.authorUrl) blogLd.author.url = meta.authorUrl;
+      }
       if (publishedIso) {
         blogLd.datePublished = publishedIso;
         blogLd.dateModified = modifiedIso || publishedIso;
@@ -475,8 +492,14 @@
         : '';
       const words = body.trim().split(/\s+/).length;
       const readingTime = Math.max(1, Math.ceil(words / 200)) + ' min read';
+      const authorHtml = meta.author
+        ? (meta.authorUrl
+            ? `<span class="text-sm text-slate-400 dark:text-slate-500">By <a href="${escapeHtml(meta.authorUrl)}" target="_blank" rel="noopener noreferrer" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors no-underline">${escapeHtml(meta.author)}</a></span><span class="text-slate-300 dark:text-slate-700">·</span>`
+            : `<span class="text-sm text-slate-400 dark:text-slate-500">By ${escapeHtml(meta.author)}</span><span class="text-slate-300 dark:text-slate-700">·</span>`)
+        : '';
 
       document.getElementById('post-meta').innerHTML = `
+        ${authorHtml}
         ${meta.date ? `<span class="text-sm text-slate-400 dark:text-slate-500">${formatDate(meta.date)}</span><span class="text-slate-300 dark:text-slate-700">·</span>` : ''}
         <span class="text-sm text-slate-400 dark:text-slate-500">${readingTime}</span>
         ${tags ? `<span class="text-slate-300 dark:text-slate-700">·</span>${tags}` : ''}

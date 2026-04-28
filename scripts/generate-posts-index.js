@@ -38,6 +38,8 @@ const posts = files
       date: meta.date || '',
       description: meta.description || '',
       tags: meta.tags ? meta.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
+      author: meta.author || '',
+      authorUrl: meta.authorUrl || '',
       readingTime: readingTime(body),
       heroImage: meta.heroImage || null,
     };

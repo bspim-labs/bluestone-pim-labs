@@ -36,7 +36,7 @@ Bluestone PIM Labs welcomes blog posts from customers, partners, and builders. G
 To add a post:
 
 1. Create a Markdown file in `posts/your-post-slug.md`.
-2. Add frontmatter with `title`, `date`, `description`, and `tags`:
+2. Add frontmatter with `title`, `date`, `description`, `tags`, and author details:
 
 ```markdown
 ---
@@ -44,6 +44,8 @@ title: Your Post Title
 date: 2026-04-28
 description: One sentence describing the post.
 tags: mcp, integration, community
+author: Your Name
+authorUrl: https://github.com/your-handle
 ---
 ```
 

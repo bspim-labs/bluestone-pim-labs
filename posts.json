@@ -9,6 +9,8 @@
       "ai",
       "examples"
     ],
+    "author": "Viktor Lövgren",
+    "authorUrl": "https://github.com/leafleaf90/",
     "readingTime": "8 min read",
     "heroImage": "/public/posts/trying-the-bluestone-pim-mcp-server-on-a-real-catalog/banner.webp"
   },
@@ -21,6 +23,8 @@
       "meta",
       "community"
     ],
+    "author": "Viktor Lövgren",
+    "authorUrl": "https://github.com/leafleaf90/",
     "readingTime": "3 min read",
     "heroImage": "/public/posts/welcome-to-bluestone-labs/banner.webp"
   }

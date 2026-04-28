@@ -3,6 +3,8 @@ title: Welcome to Bluestone PIM Labs
 date: 2026-04-17
 description: What Labs is, why it exists, and what you can look forward to as we keep building.
 tags: meta, community
+author: Viktor Lövgren
+authorUrl: https://github.com/leafleaf90/
 heroImage: /public/posts/welcome-to-bluestone-labs/banner.webp
 ---
 

@@ -58,6 +58,13 @@ function buildBlogPostingJsonLd(slug, meta, pageUrl, ogImage) {
     mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl }
   };
   if (meta.description) o.description = meta.description;
+  if (meta.author) {
+    o.author = {
+      '@type': 'Person',
+      name: meta.author
+    };
+    if (meta.authorUrl) o.author.url = meta.authorUrl;
+  }
   if (meta.date) {
     o.datePublished = `${meta.date}T12:00:00.000Z`;
     o.dateModified = `${(meta.updated || meta.date)}T12:00:00.000Z`;
@@ -128,7 +135,13 @@ function buildHtml(slug, meta, bodyHtml, ogImage, allPosts) {
     : '';
 
   const rt = readingTime(bodyHtml);
+  const authorHtml = meta.author
+    ? (meta.authorUrl
+        ? `<span class="text-sm text-slate-400 dark:text-slate-500">By <a href="${esc(meta.authorUrl)}" target="_blank" rel="noopener noreferrer" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors no-underline">${esc(meta.author)}</a></span>`
+        : `<span class="text-sm text-slate-400 dark:text-slate-500">By ${esc(meta.author)}</span>`)
+    : '';
   const metaRow = [
+    authorHtml ? `${authorHtml}<span class="text-slate-300 dark:text-slate-700">·</span>` : '',
     meta.date ? `<span class="text-sm text-slate-400 dark:text-slate-500">${formatDate(meta.date)}</span><span class="text-slate-300 dark:text-slate-700">·</span>` : '',
     `<span class="text-sm text-slate-400 dark:text-slate-500">${rt}</span>`,
     tags ? `<span class="text-slate-300 dark:text-slate-700">·</span>${tags}` : '',

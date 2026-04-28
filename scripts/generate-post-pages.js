@@ -117,7 +117,7 @@ async function generateOgImage(title, outputPath) {
 
 function buildHtml(slug, meta, bodyHtml, ogImage, allPosts) {
   const title    = meta.title || slug;
-  const pageTitle = `${title} — Bluestone PIM Labs`;
+  const pageTitle = `${title} - Bluestone PIM Labs`;
   const pageUrl  = `${BASE_URL}/blog/${slug}`;
   const desc     = meta.description || '';
 
@@ -144,6 +144,17 @@ function buildHtml(slug, meta, bodyHtml, ogImage, allPosts) {
   const idx   = allPosts.findIndex(p => p.slug === slug);
   const older = allPosts[idx + 1] || null;
   const newer = allPosts[idx - 1] || null;
+  const contributeUrl = 'https://github.com/bspim-labs/bluestone-pim-labs/blob/main/CONTRIBUTING.md';
+  const contributeHtml = `
+      <section class="mt-14 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900 p-6">
+        <p class="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-2">Contribute</p>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-3">Want to contribute a blog post to Bluestone PIM Labs?</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">If you have built something useful around Bluestone PIM, learned something while integrating with it, or want to share a pattern others can reuse, open a PR with a post. Labs is meant to be a shared space for customers, partners, and builders.</p>
+        <a href="${contributeUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 font-medium no-underline">
+          Open a PR
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </section>`;
   const navHtml = (older || newer) ? `
       <nav class="mt-14 pt-8 border-t border-slate-200 dark:border-slate-800">
         <div class="grid grid-cols-2 gap-6">
@@ -283,6 +294,8 @@ ${articleMeta}${jsonLd}  <link rel="icon" type="image/png" href="/public/bluesto
       <div id="post-body" class="prose text-slate-700 dark:text-slate-300">
         ${bodyHtml}
       </div>
+
+      ${contributeHtml}
 
       ${navHtml}
     </article>

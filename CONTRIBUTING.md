@@ -29,6 +29,36 @@ The project card links to `url` if provided, otherwise falls back to `github`. I
 
 Not ready to open a PR? [Open an issue](https://github.com/bspim-labs/bluestone-pim-labs/issues/new/choose) using the project submission template instead.
 
+## Contributing a blog post
+
+Bluestone PIM Labs welcomes blog posts from customers, partners, and builders. Good topics include tools you have built around Bluestone PIM, reusable integration patterns, lessons from an implementation, or experiments with MCP, AI agents, imports, enrichment, and publishing workflows.
+
+To add a post:
+
+1. Create a Markdown file in `posts/your-post-slug.md`.
+2. Add frontmatter with `title`, `date`, `description`, and `tags`:
+
+```markdown
+---
+title: Your Post Title
+date: 2026-04-28
+description: One sentence describing the post.
+tags: mcp, integration, community
+---
+```
+
+3. Put any images in `public/posts/your-post-slug/`.
+4. If you add a hero image, use WebP and reference it in the frontmatter:
+
+```markdown
+heroImage: /public/posts/your-post-slug/banner.webp
+```
+
+5. Run `npm run build` to regenerate `posts.json`, `blog/`, `sitemap.xml`, and OG images.
+6. Open a pull request.
+
+Keep the post practical and useful. Labs is a dev log and community notebook, not a marketing channel.
+
 ## What gets listed
 
 Any project that relates to Bluestone PIM in a useful way. Customers, SI partners, and independent builders are all welcome. The only requirement is that the project is real and accessible via the URL you provide.

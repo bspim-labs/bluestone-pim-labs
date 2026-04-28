@@ -1,7 +1,7 @@
 ---
-title: Trying The Bluestone MCP Server On A Real Catalog
+title: Trying The Bluestone PIM MCP Server On A Real Catalog
 date: 2026-04-28
-description: What happens when an AI assistant can browse Bluestone catalogs, compare draft and published data, switch language context, and fetch product images.
+description: What happens when an AI assistant can browse Bluestone PIM catalogs, compare draft and published data, switch language context, and fetch product images.
 tags: mcp, ai, examples
 heroImage: /public/posts/trying-the-bluestone-mcp-server-on-a-real-catalog/banner.webp
 ---
@@ -113,7 +113,7 @@ It also surfaces a practical distinction for builders: read tools should be clea
 
 ## Fetch a product image
 
-The `get_product_image` tool was added so an assistant can fetch a product image from the Bluestone CDN:
+The `get_product_image` tool was added so an assistant can fetch a product image from the Bluestone PIM CDN:
 
 ```text
 User: Show me the product image from Bluestone PIM
@@ -126,7 +126,7 @@ That kind of detail matters when designing MCP tools. You are not only shaping d
 
 ## Why this matters for partners and customers
 
-The shared server is intentionally modest. It proves the connection pattern: OAuth, encrypted session tokens, a remote MCP endpoint, tool descriptions, response shaping, and a few working Bluestone operations.
+The shared server is intentionally modest. It proves the connection pattern: OAuth, encrypted session tokens, a remote MCP endpoint, tool descriptions, response shaping, and a few working Bluestone PIM operations.
 
 The interesting part is what a team can build from there:
 

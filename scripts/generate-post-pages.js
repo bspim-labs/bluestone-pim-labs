@@ -250,14 +250,18 @@ ${articleMeta}${jsonLd}  <link rel="icon" type="image/png" href="/public/bluesto
   <div id="reading-progress"></div>
 
   <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-10">
-    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-      <a href="/" class="flex items-center gap-3 no-underline shrink-0">
-        <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-8 w-auto object-contain">
+    <div class="max-w-4xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between gap-2 sm:gap-4">
+      <a href="/" class="flex items-center gap-2 sm:gap-3 no-underline min-w-0 shrink-0">
+        <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-7 sm:h-8 w-auto object-contain">
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-[11px] leading-tight sm:hidden">
+          <span class="block">Bluestone PIM</span>
+          <span class="block">Labs 🧪</span>
+        </span>
         <span class="font-semibold text-slate-900 dark:text-slate-100 text-sm hidden sm:inline">Bluestone PIM Labs 🧪</span>
       </a>
-      <nav class="flex items-center gap-1 mr-1">
-        <a href="/" class="text-sm px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Projects</a>
-        <a href="/blog" class="text-sm px-3 py-1.5 rounded-lg font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">Blog</a>
+      <nav class="flex items-center gap-0.5 sm:gap-1 ml-auto sm:mr-1 shrink-0">
+        <a href="/" class="text-sm px-2 sm:px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Projects</a>
+        <a href="/blog" class="text-sm px-2 sm:px-3 py-1.5 rounded-lg font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">Blog</a>
       </nav>
       <button id="theme-toggle" aria-label="Toggle dark mode" class="p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
         <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>

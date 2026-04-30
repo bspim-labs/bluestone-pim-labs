@@ -39,7 +39,7 @@ That is the only requirement to appear on the Labs index. The bar for this is in
 First-class projects (like the MCP server) meet a higher bar:
 
 - Repo lives under the org
-- Has a `CLAUDE.md`
+- Has maintainer/development guidance
 - Has a setup or connect page (can be a README or a hosted page)
 - Includes an unofficial disclaimer
 

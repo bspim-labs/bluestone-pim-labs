@@ -23,7 +23,7 @@ The [Site Template](https://github.com/leafleaf90/bluestone-pim-labs-site-templa
 - `index.html`: single file, Tailwind CSS from CDN
 - `projects.json`: project data, rendered at page load
 - `blog/`: static blog post pages generated at build time
-- Production hosting is **AWS Amplify** (app settings live in the console, not in this repo; see [CLAUDE.md](CLAUDE.md))
+- Production hosting is **AWS Amplify** (app settings live in the console, not in this repo; see [DEVELOPMENT.md](DEVELOPMENT.md))
 
 ## Local development
 
@@ -31,7 +31,7 @@ The [Site Template](https://github.com/leafleaf90/bluestone-pim-labs-site-templa
 npm run serve
 ```
 
-Opens at `http://localhost:8000`. Do not use `python3 -m http.server` for full routing parity (see [CLAUDE.md](CLAUDE.md)).
+Opens at `http://localhost:8000`. Do not use `python3 -m http.server` for full routing parity (see [DEVELOPMENT.md](DEVELOPMENT.md)).
 
 ## Code of conduct
 

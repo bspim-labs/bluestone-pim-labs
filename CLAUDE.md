@@ -11,12 +11,12 @@ A stakeholder mockup / community landing page. Single static HTML file, no frame
 
 ## Related projects
 
-- **MCP Server** — the first Labs project, design reference for this page
+- **MCP Server**: the first Labs project, design reference for this page
   - Site: https://bluestone-mcp-unofficial.vercel.app/connect
   - GitHub: https://github.com/leafleaf90/bluestone-pim-unofficial-mcp
   - The `public/connect/index.html` in that repo is the visual reference for this page: same color palette, card patterns, disclaimer banner, and Tailwind setup. When making design changes here, check alignment with that file.
 
-- **Site Template** — single-file documentation site template for Labs projects
+- **Site Template**: single-file documentation site template for Labs projects
   - Site: https://bluestone-pim-labs-site-template.vercel.app
   - GitHub: https://github.com/leafleaf90/bluestone-pim-labs-site-template
 
@@ -61,8 +61,8 @@ The page always renders at least 3 cards, filling with placeholders if fewer pro
 ## Content constraints
 
 - No em dashes anywhere (use commas or colons instead)
-- No "not just X, it is Y" constructions
-- No filler phrases like "In summary" or "To summarize"
+- No AI-filler contrast constructions
+- No trailing AI-filler summary paragraphs
 
 ## Assets
 
@@ -78,7 +78,7 @@ If the domain changes, update the absolute URLs in the `og:image`, `twitter:imag
 npm run serve
 ```
 
-Open http://localhost:8000. Handles clean URLs and blog routing locally. Do NOT use `python3 -m http.server` — it doesn't handle hosting rewrites, so `/blog/...` will not work like production.
+Open http://localhost:8000. Handles clean URLs and blog routing locally. Do NOT use `python3 -m http.server`: it doesn't handle hosting rewrites, so `/blog/...` will not work like production.
 
 ## Deploy
 
@@ -102,7 +102,7 @@ To add a post:
 1. Write `posts/your-slug.md`
 2. Drop images in `public/posts/your-slug/`, run `node scripts/optimize-images.js` (needs `npm install` once for sharp)
 3. Run `npm run build` to regenerate `posts.json`, `public/og-image.jpg`, and `blog/{slug}/index.html` (static page with baked-in meta for crawlers)
-4. Push to main — commit the generated `blog/` and `public/posts/` files alongside the post
+4. Push to main, committing the generated `blog/` and `public/posts/` files alongside the post
 
 `posts.json` is also regenerated automatically on each Amplify build via the `build` script.
 

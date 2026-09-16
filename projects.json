@@ -1,5 +1,14 @@
 [
   {
+    "name": "AI DevKit",
+    "description": "Agent skill that makes Cursor, Claude, or similar coding agents fluent in native Bluestone PIM: FAMILY/GROUP/VARIANT, CLA vs VLA, MAPI/PAPI, and PBC plugins.",
+    "github": "https://github.com/leafleaf90/bluestone-pim-ai-devkit-public",
+    "author": "Viktor Lövgren",
+    "authorUrl": "https://github.com/leafleaf90",
+    "status": "live",
+    "icon": "skill"
+  },
+  {
     "name": "MCP Server",
     "description": "Connect Claude, Cursor, or ChatGPT to your Bluestone PIM organisation. Query products, read categories, and enrich data through natural language, live against your actual catalogue.",
     "url": "https://bluestone-mcp-unofficial.vercel.app/connect",
@@ -20,15 +29,6 @@
     "status": "live",
     "cta": "See an example",
     "icon": "template"
-  },
-  {
-    "name": "AI DevKit",
-    "description": "Agent skill that makes Cursor, Claude, or similar coding agents fluent in native Bluestone PIM: FAMILY/GROUP/VARIANT, CLA vs VLA, MAPI/PAPI, and PBC plugins.",
-    "github": "https://github.com/leafleaf90/bluestone-pim-ai-devkit-public",
-    "author": "Viktor Lövgren",
-    "authorUrl": "https://github.com/leafleaf90",
-    "status": "live",
-    "icon": "builder"
   },
   {
     "name": "MCP UI Builder",

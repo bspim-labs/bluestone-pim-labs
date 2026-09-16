@@ -22,6 +22,15 @@
     "icon": "template"
   },
   {
+    "name": "AI DevKit",
+    "description": "Agent skill that makes Cursor, Claude, or similar coding agents fluent in native Bluestone PIM: FAMILY/GROUP/VARIANT, CLA vs VLA, MAPI/PAPI, and PBC plugins.",
+    "github": "https://github.com/leafleaf90/bluestone-pim-ai-devkit-public",
+    "author": "Viktor Lövgren",
+    "authorUrl": "https://github.com/leafleaf90",
+    "status": "live",
+    "icon": "builder"
+  },
+  {
     "name": "MCP UI Builder",
     "description": "Skill for building single-file, persona-shaped demo UIs on top of the Bluestone PIM MCP server. Quick prototypes for merchandiser, supplier, and exec dashboard demos.",
     "github": "https://github.com/mortings/bluestone_pim_mcp_ui_builder",

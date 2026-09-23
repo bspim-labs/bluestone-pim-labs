@@ -1,5 +1,14 @@
 [
   {
+    "name": "PIM Theme",
+    "description": "Unofficial Chrome extension that applies Forest, Dusk, Night, and Space themes to the Bluestone PIM interface. Load the folder unpacked in Chrome. There is no build step.",
+    "github": "https://github.com/leafleaf90/bluestone-pim-theme",
+    "author": "Viktor Lövgren",
+    "authorUrl": "https://github.com/leafleaf90",
+    "status": "live",
+    "icon": "browser"
+  },
+  {
     "name": "AI DevKit",
     "description": "Agent skill that makes Cursor, Claude, or similar coding agents fluent in native Bluestone PIM: FAMILY/GROUP/VARIANT, CLA vs VLA, MAPI/PAPI, and PBC plugins.",
     "github": "https://github.com/leafleaf90/bluestone-pim-ai-devkit-public",

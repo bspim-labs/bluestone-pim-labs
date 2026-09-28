@@ -1,5 +1,14 @@
 [
   {
+    "name": "Activout.Blue5",
+    "description": "Unofficial read-only .NET client for the Public API (PAPI): typed product attributes, lazy cursor streaming of the whole catalogue, and a blue5 CLI for inspecting products and exporting NDJSON.",
+    "github": "https://github.com/activout/Activout.Blue5",
+    "author": "David Eriksson",
+    "authorUrl": "https://github.com/twogood",
+    "status": "beta",
+    "icon": "terminal"
+  },
+  {
     "name": "PIM Theme",
     "description": "Unofficial Chrome extension that applies Forest, Dusk, Night, and Space themes to the Bluestone PIM interface. Load the folder unpacked in Chrome. There is no build step.",
     "github": "https://github.com/leafleaf90/bluestone-pim-theme",

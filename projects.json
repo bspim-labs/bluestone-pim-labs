@@ -1,7 +1,7 @@
 [
   {
     "name": "Activout.Blue5",
-    "description": "Unofficial read-only .NET client for the Public API (PAPI): typed product attributes, lazy cursor streaming of the whole catalogue, and a blue5 CLI for inspecting products and exporting NDJSON.",
+    "description": "Unofficial read-only .NET client for the Bluestone PIM Public API (PAPI): typed product attributes, lazy cursor streaming of the whole catalogue, and a blue5 CLI for inspecting products and exporting NDJSON.",
     "github": "https://github.com/activout/Activout.Blue5",
     "author": "David Eriksson",
     "authorUrl": "https://github.com/twogood",

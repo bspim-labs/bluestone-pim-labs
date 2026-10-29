@@ -1,5 +1,16 @@
 [
   {
+    "name": "Terraform Provider",
+    "description": "Manage your Bluestone PIM data model as code: attribute definitions, attribute groups, categories, contexts, relations and webhooks. Review changes in pull requests and promote the same configuration from test to production.",
+    "url": "https://registry.terraform.io/providers/labd/bluestonepim/latest/docs",
+    "github": "https://github.com/labd/terraform-provider-bluestonepim",
+    "author": "Lab Digital",
+    "authorUrl": "https://www.labdigital.nl",
+    "status": "live",
+    "cta": "Documentation",
+    "icon": "terminal"
+  },
+  {
     "name": "PIM Theme",
     "description": "Unofficial Chrome extension that applies Forest, Dusk, Night, and Space themes to the Bluestone PIM interface. Load the folder unpacked in Chrome. There is no build step.",
     "github": "https://github.com/leafleaf90/bluestone-pim-theme",

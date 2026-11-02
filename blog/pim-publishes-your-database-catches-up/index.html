@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="SrPQ-t1ZwwZnENad1yjV7GCiBOjb5IMjMNvYBvI-UcU" />
+  <title>PIM Publishes. Your Database Catches Up. - Bluestone PIM Labs</title>
+  <meta name="description" content="A product page usually wants your own shape, joined with data PIM does not own. How and where should you maintain that? The solutions are as many as there are developers, but here is an overview of one way to solve this.">
+  <link rel="canonical" href="https://labs.bluestonepim.com/blog/pim-publishes-your-database-catches-up">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Bluestone PIM Labs">
+  <meta property="og:title" content="PIM Publishes. Your Database Catches Up. - Bluestone PIM Labs">
+  <meta property="og:description" content="A product page usually wants your own shape, joined with data PIM does not own. How and where should you maintain that? The solutions are as many as there are developers, but here is an overview of one way to solve this.">
+  <meta property="og:url" content="https://labs.bluestonepim.com/blog/pim-publishes-your-database-catches-up">
+  <meta property="og:image" content="https://labs.bluestonepim.com/public/posts/pim-publishes-your-database-catches-up/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PIM Publishes. Your Database Catches Up. - Bluestone PIM Labs">
+  <meta name="twitter:description" content="A product page usually wants your own shape, joined with data PIM does not own. How and where should you maintain that? The solutions are as many as there are developers, but here is an overview of one way to solve this.">
+  <meta name="twitter:image" content="https://labs.bluestonepim.com/public/posts/pim-publishes-your-database-catches-up/og-image.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-10-21T12:00:00.000Z">
+  <meta property="article:modified_time" content="2026-10-21T12:00:00.000Z">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"PIM Publishes. Your Database Catches Up.","url":"https://labs.bluestonepim.com/blog/pim-publishes-your-database-catches-up","image":"https://labs.bluestonepim.com/public/posts/pim-publishes-your-database-catches-up/og-image.jpg","publisher":{"@type":"Organization","name":"Bluestone PIM Labs","url":"https://labs.bluestonepim.com/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://labs.bluestonepim.com/blog/pim-publishes-your-database-catches-up"},"description":"A product page usually wants your own shape, joined with data PIM does not own. How and where should you maintain that? The solutions are as many as there are developers, but here is an overview of one way to solve this.","author":{"@type":"Person","name":"Viktor Lövgren","url":"https://github.com/leafleaf90/"},"datePublished":"2026-10-21T12:00:00.000Z","dateModified":"2026-10-21T12:00:00.000Z"}</script>
+  <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
+  <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <link id="hljs-dark"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" disabled>
+  <script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('hljs-light').disabled = true;
+        document.getElementById('hljs-dark').disabled  = false;
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="/public/hljs-hcl.js"></script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2R8GDJ9');</script>
+  <!-- End Google Tag Manager -->
+  <style>
+    html { scroll-behavior: smooth; }
+    #reading-progress { position:fixed; top:0; left:0; height:2px; width:0%; background:#3b82f6; z-index:50; transition:width 0.1s linear; }
+    .prose { max-width:68ch; color:inherit; line-height:1.8; }
+    .prose > * + * { margin-top:1.25em; }
+    .prose h2 { font-size:1.45em; font-weight:700; line-height:1.3; margin-top:2.25em; margin-bottom:0.6em; color:inherit; padding-bottom:0.3em; border-bottom:1px solid #e2e8f0; }
+    .dark .prose h2 { border-bottom-color:#1e293b; }
+    .prose h3 { font-size:1.2em; font-weight:600; line-height:1.4; margin-top:2em; margin-bottom:0.4em; color:inherit; }
+    .prose h4 { font-size:1em; font-weight:600; margin-top:1.75em; margin-bottom:0.3em; color:inherit; }
+    .prose p { margin-bottom:0; }
+    .prose a { color:#2563eb; text-decoration:underline; text-underline-offset:2px; text-decoration-color:#93c5fd; transition:color 0.15s; }
+    .dark .prose a { color:#60a5fa; text-decoration-color:#1e3a5f; }
+    .prose a:hover { color:#1d4ed8; }
+    .dark .prose a:hover { color:#93c5fd; }
+    .prose strong { font-weight:600; }
+    .prose em { font-style:italic; }
+    .prose ul { list-style-type:disc; padding-left:1.5em; margin-top:0.75em; margin-bottom:0.75em; }
+    .prose ol { list-style-type:decimal; padding-left:1.5em; margin-top:0.75em; margin-bottom:0.75em; }
+    .prose li { line-height:1.7; }
+    .prose li + li { margin-top:0.3em; }
+    .prose code:not(pre code) { font-family:ui-monospace,'Cascadia Code','Fira Code',monospace; font-size:0.875em; background:#f1f5f9; color:#0f172a; padding:0.15em 0.45em; border-radius:4px; border:1px solid #e2e8f0; }
+    .dark .prose code:not(pre code) { background:#1e293b; color:#e2e8f0; border-color:#334155; }
+    .prose pre { border-radius:10px; overflow-x:auto; font-size:0.875em; line-height:1.7; border:1px solid #e2e8f0; margin-top:1.5em; margin-bottom:1.5em; position:relative; }
+    .dark .prose pre { border-color:#1e293b; }
+    .prose pre > code.hljs { padding:1.25em 1.5em; border-radius:10px; }
+    .prose pre code { font-family:ui-monospace,'Cascadia Code','Fira Code',monospace; font-size:inherit; }
+    .copy-btn { position:absolute; top:0.6rem; right:0.6rem; font-size:11px; font-weight:500; padding:3px 9px; border-radius:5px; cursor:pointer; font-family:system-ui,sans-serif; transition:background 0.15s,color 0.15s; background:rgba(0,0,0,0.07); color:#64748b; border:1px solid rgba(0,0,0,0.10); line-height:1.6; }
+    .dark .copy-btn { background:rgba(255,255,255,0.08); color:#94a3b8; border-color:rgba(255,255,255,0.10); }
+    .copy-btn:hover { background:rgba(0,0,0,0.13); color:#334155; }
+    .dark .copy-btn:hover { background:rgba(255,255,255,0.15); color:#e2e8f0; }
+    .prose blockquote { border-left:3px solid #3b82f6; padding:0.5em 0 0.5em 1.25em; color:#475569; font-style:italic; margin-top:1.5em; margin-bottom:1.5em; }
+    .dark .prose blockquote { color:#94a3b8; }
+    .prose hr { border:none; border-top:1px solid #e2e8f0; margin-top:3em; margin-bottom:3em; }
+    .dark .prose hr { border-top-color:#1e293b; }
+    .prose img { max-width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-top:1.5em; margin-bottom:1.5em; display:block; }
+    .dark .prose img { border-color:#1e293b; }
+    .prose table { width:100%; border-collapse:collapse; font-size:0.9em; margin-top:1.75em; margin-bottom:1.75em; display:block; overflow-x:auto; }
+    .prose th { text-align:left; padding:0.5em 1em; border-bottom:2px solid #e2e8f0; font-weight:600; white-space:nowrap; }
+    .dark .prose th { border-bottom-color:#334155; }
+    .prose td { padding:0.5em 1em; border-bottom:1px solid #f1f5f9; }
+    .dark .prose td { border-bottom-color:#1e293b; }
+    .prose tr:last-child td { border-bottom:none; }
+    .prose h2 .anchor, .prose h3 .anchor { opacity:0; margin-left:0.4em; color:#94a3b8; text-decoration:none; font-weight:400; font-size:0.85em; transition:opacity 0.15s; }
+    .prose h2:hover .anchor, .prose h3:hover .anchor { opacity:1; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2R8GDJ9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div id="reading-progress"></div>
+
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between gap-2 sm:gap-4">
+      <a href="/" class="flex items-center gap-2 sm:gap-3 no-underline min-w-0 shrink-0">
+        <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-7 sm:h-8 w-auto object-contain">
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-[11px] leading-tight sm:hidden">
+          <span class="block">Bluestone PIM</span>
+          <span class="block">Labs 🧪</span>
+        </span>
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-sm hidden sm:inline">Bluestone PIM Labs 🧪</span>
+      </a>
+      <nav class="flex items-center gap-0.5 sm:gap-1 ml-auto sm:mr-1 shrink-0">
+        <a href="/" class="text-sm px-2 sm:px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Projects</a>
+        <a href="/blog" class="text-sm px-2 sm:px-3 py-1.5 rounded-lg font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">Blog</a>
+      </nav>
+      <button id="theme-toggle" aria-label="Toggle dark mode" class="p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="block dark:hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/60">
+    <div class="max-w-4xl mx-auto px-6 py-2 flex items-start gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+      <p class="text-sm text-slate-500 dark:text-slate-400">A Bluestone PIM Labs community project. Not an official product. No SLA, no support commitments. Contributions and forks welcome.</p>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors mb-10 no-underline group">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+
+    <article>
+      <div class="mb-10"><img src="/public/posts/pim-publishes-your-database-catches-up/banner.webp" alt="PIM Publishes. Your Database Catches Up." class="w-full rounded-xl object-cover border border-slate-200 dark:border-slate-700/60" style="max-height:420px;" loading="eager"></div>
+      <header class="mb-10">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="text-sm text-slate-400 dark:text-slate-500">By <a href="https://github.com/leafleaf90/" target="_blank" rel="noopener noreferrer" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors no-underline">Viktor Lövgren</a></span><span class="text-slate-300 dark:text-slate-700">·</span>
+        <span class="text-sm text-slate-400 dark:text-slate-500">21 Oct 2026</span><span class="text-slate-300 dark:text-slate-700">·</span>
+        <span class="text-sm text-slate-400 dark:text-slate-500">12 min read</span>
+        <span class="text-slate-300 dark:text-slate-700">·</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">papi</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">integration</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">publishing</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 leading-tight mb-4">PIM Publishes. Your Database Catches Up.</h1>
+        <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">A product page usually wants your own shape, joined with data PIM does not own. How and where should you maintain that? The solutions are as many as there are developers, but here is an overview of one way to solve this.</p>
+      </header>
+
+      <div class="border-t border-slate-200 dark:border-slate-800 mb-10"></div>
+
+      <div id="post-body" class="prose text-slate-700 dark:text-slate-300">
+        <p>All data for a real product page rarely lives solely in Bluestone PIM. More often you need <strong>your own projection of it</strong>, joined with data PIM does not own, like stock, a regional price list, or a search index.</p>
+<p>PIM is a good place to manage edits, and a painful place to render a page from. What has worked for me is keeping a copy in a database I control, and letting a publication update that copy. The host and the database can be whatever you already run. I use different pairings depending on the requirements, but Vercel and Neon Postgres would be one example.</p>
+<h2>Why the frontend should not read PAPI live</h2>
+<p>PAPI hands you the published product in Bluestone&#39;s own shape, but the page usually wants something tailored: a clean slug, a spec table in an order you chose, or values you calculated on the way in. Rather than doing that work on every request, you run the transform once when the publication arrives, store the result, and let the page read your row.</p>
+<p>When you then add your second and third (and beyond) frontend, it makes this even more pertinent. A website, a partner catalogue, and a product feed do not want the same shape. If each one calls PAPI itself, each one grows its own transform, and an attribute rename has to be taught three times. One copy, updated when someone publishes, is what those front ends should read from.</p>
+<p>The other half is data that never lived in PIM at all. Your price, your stock, a warehouse feed. In practice those join cleanly once the product copy sits in the same database. If the frontend reads PAPI live, it still has to call those other sources and stitch them together against a payload you do not control.</p>
+<p>Here is where an admin rename hurts if you skipped the copy. When someone renames an attribute in PIM, that new name lands in one transform, and I would rather fix the job than teach every client what it is called now.</p>
+<h2>What a PAPI sync is</h2>
+<p>Saving a product in the PIM UI or via the Bluestone PIM Management API does not update your external database, at least if this is for downstream systems. Someone has to publish the PIM changes, and that publication is what Bluestone PIM calls a sync. At that point, the working-state data gets published and accessible via the Public API. A webhook event is sent from Bluestone PIM, providing the sync id.</p>
+<p>The &quot;New sync done&quot; webhook even carries the sync id, and your application then asks PAPI what changed. Each returned row is a product id plus <code>ADD</code>, <code>CHANGE</code>, or <code>DELETE</code>.</p>
+<h2>How a publication becomes rows</h2>
+<p>You will want two ways to notice a sync, and one function that applies it. I call the table <code>pim_syncs</code>. Both paths insert a row, then call the same processor, so seeing the same sync twice does nothing the second time.</p>
+<pre><code>Editor publishes in PIM
+        │
+        ├─ Bluestone calls your webhook  ──┐
+        │                                   ├─ insert pim_syncs (pending)
+        └─ Scheduled job lists closed syncs ┘
+                                            │
+                                            ▼
+                         one worker per sync id
+                                            │
+              GET diffs → POST products by id → upsert your copy
+              DELETE → mark your row discontinued
+</code></pre>
+<p>Webhooks are the fast path. When Bluestone hits your endpoint, something like <code>POST /api/hooks/pim</code>, verify the signature, insert the <code>pim_syncs</code> row as <code>pending</code>, and return <code>200</code>. That is the accept. Fetching and applying products happens after the response. On this host that continuation is <code>waitUntil</code>. <a href="https://docs.api.bluestonepim.com/docs/webhook-events-and-delivery">Bluestone&#39;s delivery guide</a> says to return a successful 2xx only after the message is safely accepted, with the signature checked and the payload stored or queued, and to answer quickly.</p>
+<p>So a handler that tries to apply 400 products before it answers will get a second delivery, then a third, and so on. What happens next depends on the status:</p>
+<table>
+<thead>
+<tr>
+<th>Your response</th>
+<th>What Bluestone does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2xx</td>
+<td>Success. Delivery stops.</td>
+</tr>
+<tr>
+<td>401 or 403</td>
+<td>No retry. Use these for a permanent authentication or authorization failure, such as a bad signature.</td>
+</tr>
+<tr>
+<td>429 or 503</td>
+<td>Retry after the <code>Retry-After</code> header. If that header is missing, no retry.</td>
+</tr>
+<tr>
+<td>Any other non-success status, such as 500</td>
+<td>Two retries, ten minutes apart.</td>
+</tr>
+</tbody></table>
+<p>Enough failed deliveries can block the webhook for a while. The threshold and the block duration vary by environment. Retries reuse <code>x-bs-notification</code>, so a delivery you have already stored should get <code>200</code> again and stop. The sync id insert no-ops, so the same publication is not applied twice.</p>
+<p>If the host kills that work after the <code>200</code>, the row should still be sitting there as <code>pending</code>, or stuck in <code>processing</code>. That is what the poll is for.</p>
+<p>The poll is a scheduled read, not a full catalogue reload. Every 30 minutes is a sane cadence: short enough that you are likely to beat diff retention, and long enough that you will not notice it when the webhook is healthy. It does two things.</p>
+<p>First it discovers. You read the newest sync time you have stored and ask PAPI for <code>CLOSED</code> syncs created after that. If the table is empty, look back 24 hours. New ids go in as <code>pending</code>. If the context is one you do not serve, store it as <code>skipped</code> so you stop discovering it.</p>
+<p>Then it drains. Anything <code>pending</code> gets processed, and so does anything that has been <code>processing</code> for more than five minutes, because five minutes means the last attempt died. Leave <code>error</code> rows alone until a person retries them. A retry sets the row back to <code>pending</code> and runs the publication again from the start.</p>
+<p>Most polls find nothing, and that is the job working. The poll exists for the delivery your webhook handler did not finish.</p>
+<p>You also want one worker per sync. On Postgres, an advisory lock keyed by the sync id is enough, held until the job finishes or gives up. If the lock is already taken, skip. The webhook and the poll will both see a busy minute, and only one of them should write products. On another database, a row lock or a lease follows the same rule.</p>
+<p>In practice the processor is dull, which is what you want:</p>
+<ol>
+<li><code>GET /syncs/{id}</code>. Defer if the state is not ready. Stop on <code>CANCELLED</code>. A 404 means PAPI has already thrown the sync away.</li>
+<li>Page through <code>GET /differences/sync/{id}/products</code>. If a product shows up twice, the last operation wins.</li>
+<li>For <code>ADD</code> and <code>CHANGE</code>, call <code>POST /products/by-ids</code> and upsert your shape.</li>
+<li>For <code>DELETE</code>, mark your row discontinued. There is nothing to fetch.</li>
+<li>Write <code>completed</code> or <code>error</code> on the sync row, with counts.</li>
+</ol>
+<p>If one product fails, record that failure on the product and leave the ones you already committed. A publication is a batch of independent upserts, not one sacred transaction.</p>
+<p>It is better to store your own shape than the raw PAPI document. The transform is the only place that should know Bluestone&#39;s current payload, and your pages read columns you named.</p>
+<p>You will want the PIM product id, <code>Product.id</code>, as the primary key, because that is the identifier PAPI treats as stable. Item numbers and barcodes live as attribute values. They are handy for search and for matching a spreadsheet, and they are a bad primary key, because PIM will happily contain two products with the same code. If your app needs one of those codes to be unique, enforce it in your database and flag the collision, then let the rest of the publication land.</p>
+<p>Images and video can stay on <code>media.bluestonepim.com</code>, with the URLs stored on your row. Otherwise you are running an asset pipeline just to hold bytes Bluestone is already serving.</p>
+<h2>The only webhook event this needs</h2>
+<p>The event to subscribe to is <strong>New sync done</strong>, and the payload type is <code>PRODUCT_SYNC_DONE</code>. Other events exist, and they do not belong in this processor. A category change or an asset change is a different contract. If you route one of those through the sync-id path, you will apply the wrong thing, or nothing, with great confidence.</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>What you do with it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>x-bs-signature</code></td>
+<td><code>sha256=</code> plus HMAC-SHA256 of the raw body, using the webhook secret. Verify this before you parse JSON.</td>
+</tr>
+<tr>
+<td><code>x-bs-notification</code></td>
+<td>Delivery id. Retries reuse it. If you have already stored it, return <code>200</code> and stop.</td>
+</tr>
+<tr>
+<td><code>x-bs-event</code></td>
+<td>A hint. Decide from <code>events[].changes.eventType</code>.</td>
+</tr>
+</tbody></table>
+<p>You will want to reject a missing secret, a bad signature, and a body that is not JSON, and compare the signature in constant time. If you parse the JSON, re-serialize it, and hash that, the signature will not match, and you will think Bluestone is sending garbage. They are sending bytes. Hash the bytes.</p>
+<p><code>events</code> is an array, and one delivery can carry more than one. For <code>PRODUCT_SYNC_DONE</code>, the sync id is <code>events[].changes.syncDoneData.value</code> when <code>syncDoneData.field</code> is <code>PAPI_SYNC_ID</code>. <code>entityIds</code> is empty, so do not get clever and treat it as a product list. <code>syncDoneData.context</code> is the language context. Contexts you do not serve can be recorded as <code>skipped</code>.</p>
+<pre><code class="language-json">{
+  &quot;timestamp&quot;: 1776829908820,
+  &quot;events&quot;: [
+    {
+      &quot;changes&quot;: {
+        &quot;eventType&quot;: &quot;PRODUCT_SYNC_DONE&quot;,
+        &quot;entityIds&quot;: [],
+        &quot;syncDoneData&quot;: {
+          &quot;field&quot;: &quot;PAPI_SYNC_ID&quot;,
+          &quot;value&quot;: &quot;69e845ce2f03537a6cf6be9a&quot;,
+          &quot;context&quot;: &quot;en&quot;
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<p>The insert should be <code>pending</code>, and it should do nothing if that sync id already exists, because the poll may have written it first. Then you start the processor.</p>
+<h2>The PAPI calls, in the order you will actually make them</h2>
+<p>The base URL is <code>https://api.bluestonepim.com/v1/</code>. You send <code>x-api-key</code> and a <code>context</code> header for the context you serve. The docs are at <a href="https://docs.api.bluestonepim.com">docs.api.bluestonepim.com</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Why you make it</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GET /syncs/{id}</code></td>
+<td>State and context, when the webhook arrives and again when processing starts. Any 2xx with a JSON body is the record. I have seen this succeed as 201.</td>
+</tr>
+<tr>
+<td><code>GET /syncs</code></td>
+<td>Poll discovery. <code>createdAfter</code> is epoch milliseconds, <code>publishStates=CLOSED</code>, <code>itemsOnPage=50</code>, <code>pageNo</code> from 0. Ask for 100 and PAPI rejects it.</td>
+</tr>
+<tr>
+<td><code>GET /differences/sync/{id}/products</code></td>
+<td>The change list. <code>pageNo</code> from 0.</td>
+</tr>
+<tr>
+<td><code>POST /products/by-ids</code></td>
+<td>The documents for adds and changes. You will want to batch them.</td>
+</tr>
+</tbody></table>
+<p>A first load, or a repair after a sync that 404&#39;d, is <code>POST /products/list</code> with whatever filter selects your catalogue, again with <code>pageNo</code> from 0. That is a run you start on purpose. It is separate from the webhook and from the poll.</p>
+<p>You do not need the Management API to receive publications. You reach for it when you also read or edit attribute definitions. That API is <code>https://api.bluestonepim.com/pim</code>, and it wants a service token from <code>POST https://idp.bluestonepim.com/op/token</code>. The PAPI key will not open it.</p>
+<h2>One way to host it</h2>
+<p>The flow above does not care where it runs. Vercel with Neon Postgres is a convenient pair for a smaller app, when you want a quick setup and do not care to optimize every part or roll the infrastructure yourself. You can put the same jobs on another platform and another database.</p>
+<p>On Neon I use two connection strings. The pooled URL is for page reads, and the direct URL is for the publication job, because that job holds a Postgres advisory lock across a lot of statements. A pooled HTTP call does not keep one session for the whole job. If your database cannot do that, hold the lock on a connection that outlives a single query.</p>
+<p>Vercel functions in this setup are allowed 300 seconds, and a fat publication can still die halfway. <code>waitUntil</code> keeps working after the webhook returns <code>200</code>, which is also how you find out your host has opinions about how long &quot;after&quot; is allowed to be. Treat the poll as the plan. A host that promises to finish the work after the response will still cut it off.</p>
+<p>Vercel Cron is what hits the poll route here. Any scheduler can do the same job.</p>
+<h2>FAQ</h2>
+<h3>Can I just fetch the product from PAPI in the page component?</h3>
+<p>You can, for a demo that only shows PIM attributes. The moment the page needs your own shape, or a join with price, stock, or some other feed, you are assembling that in the browser on top of a payload you do not own. It is worth building the copy on purpose.</p>
+<h3>What if Bluestone retries the webhook?</h3>
+<p>A 2xx stops delivery. 401 and 403 are not retried. 429 and 503 are retried only when you send <code>Retry-After</code>. Any other non-success status is retried twice, ten minutes apart. You will see the same <code>x-bs-notification</code> and the same sync id. Return <code>200</code> if you have already stored the delivery, and let the insert on sync id no-op.</p>
+<h3>The diff endpoint returned 404. Is the pipeline broken?</h3>
+<p>Maybe the sync was garbage-collected. PAPI will not reconstruct a diff it has thrown away, so the recovery is a full <code>POST /products/list</code> for the catalogue you keep, and a tighter poll if this keeps happening. Also check the boring failure first: did anyone publish?</p>
+<h2>If a product is missing</h2>
+<p>Before you tail a log, check whether the product was published. PAPI will not show editor state, and this pipeline will not invent it.</p>
+<p>If it was published and your database is still old, you have a sync id to find: a webhook row, a poll row, or a 404 that means you were late. That is a smaller debugging surface than a frontend that sometimes calls Bluestone.</p>
+
+      </div>
+
+      
+      <section class="mt-14 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900 p-6">
+        <p class="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-2">Contribute</p>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-3">Want to contribute a blog post to Bluestone PIM Labs?</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">If you have built something useful around Bluestone PIM, learned something while integrating with it, or want to share a pattern others can reuse, open a PR with a post. Labs is meant to be a shared space for customers, partners, and builders.</p>
+        <a href="https://github.com/bspim-labs/bluestone-pim-labs/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 font-medium no-underline">
+          Open a PR
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </section>
+
+      
+      <nav class="mt-14 pt-8 border-t border-slate-200 dark:border-slate-800">
+        <div class="grid grid-cols-2 gap-6">
+          <div><a href="/blog/cla-vla-and-validation-reads-unofficial-pim-mcp" class="group block no-underline"><div class="text-xs text-slate-400 dark:text-slate-500 mb-1">← Older</div><div class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">CLA, VLA, and Validation Reads in the Unofficial Bluestone PIM MCP Server</div></a></div>
+          <div class="text-right"><a href="/blog/managing-your-bluestone-pim-data-model-with-terraform" class="group block no-underline"><div class="text-xs text-slate-400 dark:text-slate-500 mb-1">Newer →</div><div class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">Managing Your Bluestone PIM Data Model with Terraform</div></a></div>
+        </div>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 mt-16">
+    <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <p class="text-sm text-slate-400 dark:text-slate-600">Bluestone PIM Labs &middot; Community projects, not official products</p>
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode
+    const themeBtn  = document.getElementById('theme-toggle');
+    const hljsLight = document.getElementById('hljs-light');
+    const hljsDark  = document.getElementById('hljs-dark');
+    themeBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      hljsLight.disabled = isDark;
+      hljsDark.disabled  = !isDark;
+    });
+
+    // Reading progress
+    window.addEventListener('scroll', () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      document.getElementById('reading-progress').style.width =
+        (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+    }, { passive: true });
+
+    // Syntax highlight
+    document.querySelectorAll('#post-body pre code').forEach(el => hljs.highlightElement(el));
+
+    // Copy buttons
+    document.querySelectorAll('#post-body pre').forEach(pre => {
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(pre.querySelector('code').textContent).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        }).catch(() => {
+          btn.textContent = 'Failed';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        });
+      });
+      pre.appendChild(btn);
+    });
+
+    // Lazy images
+    document.querySelectorAll('#post-body img').forEach(img => { img.loading = 'lazy'; });
+
+    // Anchor links on headings
+    function slugify(t) { return t.toLowerCase().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').trim(); }
+    document.querySelectorAll('#post-body h2, #post-body h3').forEach(h => {
+      h.id = slugify(h.textContent);
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.className = 'anchor';
+      a.setAttribute('aria-hidden', 'true');
+      a.textContent = '#';
+      h.appendChild(a);
+    });
+  </script>
+</body>
+</html>

@@ -16,6 +16,21 @@
     "heroImage": null
   },
   {
+    "slug": "pim-publishes-your-database-catches-up",
+    "title": "PIM Publishes. Your Database Catches Up.",
+    "date": "2026-10-21",
+    "description": "A product page usually wants your own shape, joined with data PIM does not own. How and where should you maintain that? The solutions are as many as there are developers, but here is an overview of one way to solve this.",
+    "tags": [
+      "papi",
+      "integration",
+      "publishing"
+    ],
+    "author": "Viktor Lövgren",
+    "authorUrl": "https://github.com/leafleaf90/",
+    "readingTime": "12 min read",
+    "heroImage": "/public/posts/pim-publishes-your-database-catches-up/banner.webp"
+  },
+  {
     "slug": "cla-vla-and-validation-reads-unofficial-pim-mcp",
     "title": "CLA, VLA, and Validation Reads in the Unofficial Bluestone PIM MCP Server",
     "date": "2026-05-27",

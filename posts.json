@@ -1,5 +1,21 @@
 [
   {
+    "slug": "managing-your-bluestone-pim-data-model-with-terraform",
+    "title": "Managing Your Bluestone PIM Data Model with Terraform",
+    "date": "2026-10-29",
+    "description": "The Terraform provider for Bluestone PIM now covers the full data model. Why we built it, what it manages, and how to start using it on an existing organization.",
+    "tags": [
+      "terraform",
+      "infrastructure-as-code",
+      "data-model",
+      "integration"
+    ],
+    "author": "Michael van Tellingen",
+    "authorUrl": "https://www.labdigital.nl",
+    "readingTime": "8 min read",
+    "heroImage": null
+  },
+  {
     "slug": "cla-vla-and-validation-reads-unofficial-pim-mcp",
     "title": "CLA, VLA, and Validation Reads in the Unofficial Bluestone PIM MCP Server",
     "date": "2026-05-27",

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="SrPQ-t1ZwwZnENad1yjV7GCiBOjb5IMjMNvYBvI-UcU" />
+  <title>Managing Your Bluestone PIM Data Model with Terraform - Bluestone PIM Labs</title>
+  <meta name="description" content="The Terraform provider for Bluestone PIM now covers the full data model. Why we built it, what it manages, and how to start using it on an existing organization.">
+  <link rel="canonical" href="https://labs.bluestonepim.com/blog/managing-your-bluestone-pim-data-model-with-terraform">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Bluestone PIM Labs">
+  <meta property="og:title" content="Managing Your Bluestone PIM Data Model with Terraform - Bluestone PIM Labs">
+  <meta property="og:description" content="The Terraform provider for Bluestone PIM now covers the full data model. Why we built it, what it manages, and how to start using it on an existing organization.">
+  <meta property="og:url" content="https://labs.bluestonepim.com/blog/managing-your-bluestone-pim-data-model-with-terraform">
+  <meta property="og:image" content="https://labs.bluestonepim.com/public/posts/managing-your-bluestone-pim-data-model-with-terraform/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Managing Your Bluestone PIM Data Model with Terraform - Bluestone PIM Labs">
+  <meta name="twitter:description" content="The Terraform provider for Bluestone PIM now covers the full data model. Why we built it, what it manages, and how to start using it on an existing organization.">
+  <meta name="twitter:image" content="https://labs.bluestonepim.com/public/posts/managing-your-bluestone-pim-data-model-with-terraform/og-image.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-10-29T12:00:00.000Z">
+  <meta property="article:modified_time" content="2026-10-29T12:00:00.000Z">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Managing Your Bluestone PIM Data Model with Terraform","url":"https://labs.bluestonepim.com/blog/managing-your-bluestone-pim-data-model-with-terraform","image":"https://labs.bluestonepim.com/public/posts/managing-your-bluestone-pim-data-model-with-terraform/og-image.jpg","publisher":{"@type":"Organization","name":"Bluestone PIM Labs","url":"https://labs.bluestonepim.com/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://labs.bluestonepim.com/blog/managing-your-bluestone-pim-data-model-with-terraform"},"description":"The Terraform provider for Bluestone PIM now covers the full data model. Why we built it, what it manages, and how to start using it on an existing organization.","author":{"@type":"Person","name":"Michael van Tellingen","url":"https://www.labdigital.nl"},"datePublished":"2026-10-29T12:00:00.000Z","dateModified":"2026-10-29T12:00:00.000Z"}</script>
+  <link rel="icon" type="image/png" href="/public/bluestone_pim_logo.png">
+  <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <link id="hljs-dark"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" disabled>
+  <script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('hljs-light').disabled = true;
+        document.getElementById('hljs-dark').disabled  = false;
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="/public/hljs-hcl.js"></script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2R8GDJ9');</script>
+  <!-- End Google Tag Manager -->
+  <style>
+    html { scroll-behavior: smooth; }
+    #reading-progress { position:fixed; top:0; left:0; height:2px; width:0%; background:#3b82f6; z-index:50; transition:width 0.1s linear; }
+    .prose { max-width:68ch; color:inherit; line-height:1.8; }
+    .prose > * + * { margin-top:1.25em; }
+    .prose h2 { font-size:1.45em; font-weight:700; line-height:1.3; margin-top:2.25em; margin-bottom:0.6em; color:inherit; padding-bottom:0.3em; border-bottom:1px solid #e2e8f0; }
+    .dark .prose h2 { border-bottom-color:#1e293b; }
+    .prose h3 { font-size:1.2em; font-weight:600; line-height:1.4; margin-top:2em; margin-bottom:0.4em; color:inherit; }
+    .prose h4 { font-size:1em; font-weight:600; margin-top:1.75em; margin-bottom:0.3em; color:inherit; }
+    .prose p { margin-bottom:0; }
+    .prose a { color:#2563eb; text-decoration:underline; text-underline-offset:2px; text-decoration-color:#93c5fd; transition:color 0.15s; }
+    .dark .prose a { color:#60a5fa; text-decoration-color:#1e3a5f; }
+    .prose a:hover { color:#1d4ed8; }
+    .dark .prose a:hover { color:#93c5fd; }
+    .prose strong { font-weight:600; }
+    .prose em { font-style:italic; }
+    .prose ul { list-style-type:disc; padding-left:1.5em; margin-top:0.75em; margin-bottom:0.75em; }
+    .prose ol { list-style-type:decimal; padding-left:1.5em; margin-top:0.75em; margin-bottom:0.75em; }
+    .prose li { line-height:1.7; }
+    .prose li + li { margin-top:0.3em; }
+    .prose code:not(pre code) { font-family:ui-monospace,'Cascadia Code','Fira Code',monospace; font-size:0.875em; background:#f1f5f9; color:#0f172a; padding:0.15em 0.45em; border-radius:4px; border:1px solid #e2e8f0; }
+    .dark .prose code:not(pre code) { background:#1e293b; color:#e2e8f0; border-color:#334155; }
+    .prose pre { border-radius:10px; overflow-x:auto; font-size:0.875em; line-height:1.7; border:1px solid #e2e8f0; margin-top:1.5em; margin-bottom:1.5em; position:relative; }
+    .dark .prose pre { border-color:#1e293b; }
+    .prose pre > code.hljs { padding:1.25em 1.5em; border-radius:10px; }
+    .prose pre code { font-family:ui-monospace,'Cascadia Code','Fira Code',monospace; font-size:inherit; }
+    .copy-btn { position:absolute; top:0.6rem; right:0.6rem; font-size:11px; font-weight:500; padding:3px 9px; border-radius:5px; cursor:pointer; font-family:system-ui,sans-serif; transition:background 0.15s,color 0.15s; background:rgba(0,0,0,0.07); color:#64748b; border:1px solid rgba(0,0,0,0.10); line-height:1.6; }
+    .dark .copy-btn { background:rgba(255,255,255,0.08); color:#94a3b8; border-color:rgba(255,255,255,0.10); }
+    .copy-btn:hover { background:rgba(0,0,0,0.13); color:#334155; }
+    .dark .copy-btn:hover { background:rgba(255,255,255,0.15); color:#e2e8f0; }
+    .prose blockquote { border-left:3px solid #3b82f6; padding:0.5em 0 0.5em 1.25em; color:#475569; font-style:italic; margin-top:1.5em; margin-bottom:1.5em; }
+    .dark .prose blockquote { color:#94a3b8; }
+    .prose hr { border:none; border-top:1px solid #e2e8f0; margin-top:3em; margin-bottom:3em; }
+    .dark .prose hr { border-top-color:#1e293b; }
+    .prose img { max-width:100%; height:auto; border-radius:10px; border:1px solid #e2e8f0; margin-top:1.5em; margin-bottom:1.5em; display:block; }
+    .dark .prose img { border-color:#1e293b; }
+    .prose table { width:100%; border-collapse:collapse; font-size:0.9em; margin-top:1.75em; margin-bottom:1.75em; display:block; overflow-x:auto; }
+    .prose th { text-align:left; padding:0.5em 1em; border-bottom:2px solid #e2e8f0; font-weight:600; white-space:nowrap; }
+    .dark .prose th { border-bottom-color:#334155; }
+    .prose td { padding:0.5em 1em; border-bottom:1px solid #f1f5f9; }
+    .dark .prose td { border-bottom-color:#1e293b; }
+    .prose tr:last-child td { border-bottom:none; }
+    .prose h2 .anchor, .prose h3 .anchor { opacity:0; margin-left:0.4em; color:#94a3b8; text-decoration:none; font-weight:400; font-size:0.85em; transition:opacity 0.15s; }
+    .prose h2:hover .anchor, .prose h3:hover .anchor { opacity:1; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2R8GDJ9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div id="reading-progress"></div>
+
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700/60 sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between gap-2 sm:gap-4">
+      <a href="/" class="flex items-center gap-2 sm:gap-3 no-underline min-w-0 shrink-0">
+        <img src="/public/bluestone_pim_logo.png" alt="Bluestone PIM" class="h-7 sm:h-8 w-auto object-contain">
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-[11px] leading-tight sm:hidden">
+          <span class="block">Bluestone PIM</span>
+          <span class="block">Labs 🧪</span>
+        </span>
+        <span class="font-semibold text-slate-900 dark:text-slate-100 text-sm hidden sm:inline">Bluestone PIM Labs 🧪</span>
+      </a>
+      <nav class="flex items-center gap-0.5 sm:gap-1 ml-auto sm:mr-1 shrink-0">
+        <a href="/" class="text-sm px-2 sm:px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Projects</a>
+        <a href="/blog" class="text-sm px-2 sm:px-3 py-1.5 rounded-lg font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">Blog</a>
+      </nav>
+      <button id="theme-toggle" aria-label="Toggle dark mode" class="p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="block dark:hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/60">
+    <div class="max-w-4xl mx-auto px-6 py-2 flex items-start gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+      <p class="text-sm text-slate-500 dark:text-slate-400">A Bluestone PIM Labs community project. Not an official product. No SLA, no support commitments. Contributions and forks welcome.</p>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <a href="/blog" class="inline-flex items-center gap-1.5 text-sm text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors mb-10 no-underline group">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+
+    <article>
+      
+      <header class="mb-10">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="text-sm text-slate-400 dark:text-slate-500">By <a href="https://www.labdigital.nl" target="_blank" rel="noopener noreferrer" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors no-underline">Michael van Tellingen</a></span><span class="text-slate-300 dark:text-slate-700">·</span>
+        <span class="text-sm text-slate-400 dark:text-slate-500">29 Oct 2026</span><span class="text-slate-300 dark:text-slate-700">·</span>
+        <span class="text-sm text-slate-400 dark:text-slate-500">8 min read</span>
+        <span class="text-slate-300 dark:text-slate-700">·</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">terraform</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">infrastructure-as-code</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">data-model</span><span class="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 uppercase tracking-wide">integration</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 leading-tight mb-4">Managing Your Bluestone PIM Data Model with Terraform</h1>
+        <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">The Terraform provider for Bluestone PIM now covers the full data model. Why we built it, what it manages, and how to start using it on an existing organization.</p>
+      </header>
+
+      <div class="border-t border-slate-200 dark:border-slate-800 mb-10"></div>
+
+      <div id="post-body" class="prose text-slate-700 dark:text-slate-300">
+        <p>At Lab Digital we have been building Terraform providers for SaaS platforms since 2018, starting with <a href="https://github.com/labd/terraform-provider-commercetools">commercetools</a>. The reason has always been the same: the configuration of a platform belongs in version control, next to the code that depends on it. Bluestone PIM is no different, so we built a <a href="https://github.com/labd/terraform-provider-bluestonepim">Terraform provider for Bluestone PIM</a> as well.</p>
+<p>The first version appeared in 2024 and covered the basics: attribute definitions, categories, category attributes, contexts and webhooks. With version 1.0 the provider now covers the full data model, so you can manage everything you would otherwise configure by hand in the Bluestone PIM settings.</p>
+<h2>Why Terraform for a PIM?</h2>
+<p>Most Bluestone PIM implementations have more than one organization: a test environment, an acceptance environment and production. The data model has to be the same in all of them. Your integrations, your import jobs and your storefront all depend on attribute numbers, select values and category structures being exactly where they expect them.</p>
+<p>Keeping that in sync by hand works fine for the first month. After that someone adds an attribute in production and forgets test, or a select value gets a slightly different number in acceptance, and an import breaks in a way that takes a day to track down.</p>
+<p>With Terraform the data model is described in code. A change goes through a pull request, somebody reviews it, and <code>terraform apply</code> rolls out the exact same change to every environment. You also get an audit trail for free: Git tells you who added that attribute, when, and why.</p>
+<h2>What it looks like</h2>
+<p>Below is a small example. It creates a Dutch context, an attribute group with two attributes, a category and a mandatory category attribute.</p>
+<pre><code class="language-hcl">terraform {
+  required_providers {
+    bluestonepim = {
+      source  = &quot;labd/bluestonepim&quot;
+      version = &quot;~&gt; 1.0&quot;
+    }
+  }
+}
+
+# Credentials are read from BP_CLIENT_ID and BP_CLIENT_SECRET
+provider &quot;bluestonepim&quot; {}
+
+resource &quot;bluestonepim_context&quot; &quot;nl&quot; {
+  name        = &quot;Dutch&quot;
+  locale      = &quot;nl-NL&quot;
+  fallback_id = &quot;en&quot;
+}
+
+resource &quot;bluestonepim_attribute_group&quot; &quot;frame&quot; {
+  name   = &quot;Frame&quot;
+  number = &quot;frame&quot;
+}
+
+resource &quot;bluestonepim_attribute_definition&quot; &quot;frame_size&quot; {
+  name      = &quot;Frame size&quot;
+  number    = &quot;frame-size&quot;
+  data_type = &quot;single_select&quot;
+  group_id  = bluestonepim_attribute_group.frame.id
+
+  restrictions = {
+    enum = {
+      type = &quot;text&quot;
+      values = [
+        { value = &quot;S&quot;, number = &quot;s&quot; },
+        { value = &quot;M&quot;, number = &quot;m&quot; },
+        { value = &quot;L&quot;, number = &quot;l&quot; },
+      ]
+    }
+  }
+}
+
+resource &quot;bluestonepim_attribute_definition&quot; &quot;frame_material&quot; {
+  name      = &quot;Frame material&quot;
+  number    = &quot;frame-material&quot;
+  data_type = &quot;text&quot;
+  group_id  = bluestonepim_attribute_group.frame.id
+}
+
+resource &quot;bluestonepim_attribute_definition_context&quot; &quot;frame_material_nl&quot; {
+  definition_id = bluestonepim_attribute_definition.frame_material.id
+  context_id    = bluestonepim_context.nl.id
+  name          = &quot;Framemateriaal&quot;
+}
+
+resource &quot;bluestonepim_category&quot; &quot;bikes&quot; {
+  name = &quot;Bikes&quot;
+}
+
+resource &quot;bluestonepim_category_attribute&quot; &quot;bikes_frame_size&quot; {
+  category_id             = bluestonepim_category.bikes.id
+  attribute_definition_id = bluestonepim_attribute_definition.frame_size.id
+  mandatory               = true
+  propagate               = true
+}
+</code></pre>
+<p>Run <code>terraform plan</code> and Terraform shows you what it is going to create. Run <code>terraform apply</code> and it is there. Point the same configuration at another organization by switching the credentials, and you get the same data model there.</p>
+<p>The nice part is that references between resources are explicit. Terraform knows the category attribute depends on the category and the attribute definition, so it creates them in the right order, and it uses the IDs Bluestone generates without you having to copy them around.</p>
+<h2>Connecting Bluestone PIM to the rest of your stack</h2>
+<p>That last point gets more interesting once other services are involved. A PIM rarely lives on its own: product data has to go to a commerce platform, a search index or a storefront, and webhooks are usually how that starts.</p>
+<p>In the example below we configure a webhook that calls an AWS Lambda function every time a product sync is done. Bluestone PIM signs every webhook message with a secret, so we generate that secret in Terraform and store it in AWS SSM, where the Lambda function can read it to verify the <code>x-bs-signature</code> header.</p>
+<pre><code class="language-hcl">resource &quot;random_password&quot; &quot;webhook_secret&quot; {
+  length  = 32
+  special = false
+}
+
+resource &quot;aws_ssm_parameter&quot; &quot;webhook_secret&quot; {
+  name  = &quot;/pim-sync/webhook-secret&quot;
+  type  = &quot;SecureString&quot;
+  value = random_password.webhook_secret.result
+}
+
+# The pim-sync function itself is omitted for readability
+resource &quot;aws_lambda_function_url&quot; &quot;pim_sync&quot; {
+  function_name      = &quot;pim-sync&quot;
+  authorization_type = &quot;NONE&quot;
+}
+
+resource &quot;bluestonepim_webhook&quot; &quot;pim_sync&quot; {
+  url    = aws_lambda_function_url.pim_sync.function_url
+  secret = random_password.webhook_secret.result
+  active = true
+  event_types = [
+    &quot;PRODUCT_SYNC_DONE&quot;,
+  ]
+}
+</code></pre>
+<p>One <code>terraform apply</code> sets up both sides and connects them. Rotating the secret is a matter of replacing <code>random_password</code>, and Terraform updates the webhook and the SSM parameter in the same run. The same works with Azure Functions, Google Cloud or any other service that has a Terraform provider, which is pretty much all of them.</p>
+<h2>What the provider manages</h2>
+<p>The provider uses the Bluestone PIM Management API (MAPI) and covers:</p>
+<ul>
+<li>Attribute definitions of all types, including select values, restrictions and units, plus dedicated resources for column, matrix, dictionary and compound attributes</li>
+<li>Dictionary values</li>
+<li>Attribute groups, and the order of groups and of the definitions within a group</li>
+<li>Categories and category level attributes, including value, <code>mandatory</code>, <code>propagate</code> and <code>locked</code></li>
+<li>Contexts with their fallback, and the names and descriptions of attributes, groups and categories per context</li>
+<li>Product relation types</li>
+<li>Webhooks</li>
+</ul>
+<p>It does not manage products. Product data is content, maintained by the people working in the PIM every day. The data model those products live in is configuration, and that is where Terraform is a good fit.</p>
+<h2>Being careful with a live data model</h2>
+<p>A PIM data model is not like a load balancer you can throw away and recreate. Delete an attribute definition and the values on every product go with it. We spent a good part of the 1.0 work on making sure the provider does not do anything destructive by accident:</p>
+<ul>
+<li>Changing the <code>data_type</code> of an attribute is rejected at plan time. Normally Terraform would replace the resource, which in Bluestone PIM means removing the attribute and all its values. If you really want that, you use <code>terraform apply -replace</code> deliberately.</li>
+<li>The same goes for <code>context_aware</code>: it can&#39;t be changed on an existing definition, so the provider tells you during the plan instead of failing halfway through an apply.</li>
+<li>Select values keep their <code>value_id</code> when you add, remove or reorder them. Values are matched on their ID or number, never on the label.</li>
+<li>A relation type that is still used by product connections is only deleted when you set <code>force_destroy = true</code>.</li>
+<li>Restrictions and content types are validated against the data type during <code>terraform plan</code>, so you find mistakes before anything is sent to Bluestone PIM.</li>
+</ul>
+<p>Large configurations also run into the API rate limit at some point. The provider retries rate limited requests with backoff, so large plans don&#39;t fail halfway through.</p>
+<h2>Starting from an existing organization</h2>
+<p>Very few teams start with an empty PIM. Usually there is a data model already, built up over months or years in the UI. You don&#39;t have to recreate that: every resource in the provider supports import. With an <code>import</code> block you tell Terraform which existing object belongs to which resource:</p>
+<pre><code class="language-hcl">import {
+  to = bluestonepim_attribute_definition.frame_size
+  id = &quot;&lt;attribute definition id&gt;&quot;
+}
+</code></pre>
+<p>Running <code>terraform plan -generate-config-out=generated.tf</code> writes a first version of the configuration for you. That is a good start, but you still have to find the IDs of everything you want to import, and the generated code contains those IDs hardcoded instead of references between resources.</p>
+<p>This is where an AI coding assistant like Claude Code helps a lot. Give it the MAPI credentials of the organization and ask it to bring the existing data model under Terraform:</p>
+<pre><code class="language-text">Using the bluestonepim Terraform provider, import the existing data model of this
+organization: contexts, attribute groups, attribute definitions, categories and
+category attributes. Write import blocks and the matching resources, use references
+instead of hardcoded IDs, and run terraform plan until it shows no changes.
+</code></pre>
+<p>Claude reads the data model through the API, writes the import blocks and the resources, and keeps running <code>terraform plan</code> to compare its code with what is actually in Bluestone PIM. When the plan shows no changes, the code describes your organization exactly. This works for a test environment, but just as well for a production organization that has been running for years.</p>
+<p>We used to need a tool like Terraformer for this kind of reverse engineering, and then only for the platforms it supported. With import blocks and an assistant that can read an API and write HCL, you can do it for any Terraform provider, Bluestone PIM included.</p>
+<p>Importing doesn&#39;t change anything in Bluestone PIM, but the first <code>terraform apply</code> after it will if the code doesn&#39;t match. So make sure the plan is clean before you apply anything, especially on production. From there you commit the code, and from that moment on changes go through pull requests. You can do this gradually, starting with the part of the data model your integrations depend on most.</p>
+<h2>Getting started</h2>
+<p>You need a MAPI client ID and secret for your organization. Set them as environment variables:</p>
+<pre><code class="language-sh">export BP_CLIENT_ID=...
+export BP_CLIENT_SECRET=...
+</code></pre>
+<p>Then add the provider to your configuration as shown above and run <code>terraform init</code>. The <a href="https://registry.terraform.io/providers/labd/bluestonepim/latest/docs">documentation on the Terraform registry</a> has an example for every resource.</p>
+<p>The provider is open source and built on our <a href="https://github.com/labd/bluestonepim-go-sdk">Go SDK for Bluestone PIM</a>. If you run into a bug or miss something, open an issue or a pull request on <a href="https://github.com/labd/terraform-provider-bluestonepim">GitHub</a>. And if you want help setting it up in your organization, you can reach us at <a href="mailto:opensource@labdigital.nl">opensource@labdigital.nl</a>.</p>
+
+      </div>
+
+      
+      <section class="mt-14 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900 p-6">
+        <p class="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-2">Contribute</p>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-3">Want to contribute a blog post to Bluestone PIM Labs?</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">If you have built something useful around Bluestone PIM, learned something while integrating with it, or want to share a pattern others can reuse, open a PR with a post. Labs is meant to be a shared space for customers, partners, and builders.</p>
+        <a href="https://github.com/bspim-labs/bluestone-pim-labs/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 font-medium no-underline">
+          Open a PR
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </section>
+
+      
+      <nav class="mt-14 pt-8 border-t border-slate-200 dark:border-slate-800">
+        <div class="grid grid-cols-2 gap-6">
+          <div><a href="/blog/cla-vla-and-validation-reads-unofficial-pim-mcp" class="group block no-underline"><div class="text-xs text-slate-400 dark:text-slate-500 mb-1">← Older</div><div class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">CLA, VLA, and Validation Reads in the Unofficial Bluestone PIM MCP Server</div></a></div>
+          <div class="text-right"></div>
+        </div>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 mt-16">
+    <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <p class="text-sm text-slate-400 dark:text-slate-600">Bluestone PIM Labs &middot; Community projects, not official products</p>
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode
+    const themeBtn  = document.getElementById('theme-toggle');
+    const hljsLight = document.getElementById('hljs-light');
+    const hljsDark  = document.getElementById('hljs-dark');
+    themeBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      hljsLight.disabled = isDark;
+      hljsDark.disabled  = !isDark;
+    });
+
+    // Reading progress
+    window.addEventListener('scroll', () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      document.getElementById('reading-progress').style.width =
+        (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+    }, { passive: true });
+
+    // Syntax highlight
+    document.querySelectorAll('#post-body pre code').forEach(el => hljs.highlightElement(el));
+
+    // Copy buttons
+    document.querySelectorAll('#post-body pre').forEach(pre => {
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(pre.querySelector('code').textContent).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        }).catch(() => {
+          btn.textContent = 'Failed';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        });
+      });
+      pre.appendChild(btn);
+    });
+
+    // Lazy images
+    document.querySelectorAll('#post-body img').forEach(img => { img.loading = 'lazy'; });
+
+    // Anchor links on headings
+    function slugify(t) { return t.toLowerCase().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').trim(); }
+    document.querySelectorAll('#post-body h2, #post-body h3').forEach(h => {
+      h.id = slugify(h.textContent);
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.className = 'anchor';
+      a.setAttribute('aria-hidden', 'true');
+      a.textContent = '#';
+      h.appendChild(a);
+    });
+  </script>
+</body>
+</html>

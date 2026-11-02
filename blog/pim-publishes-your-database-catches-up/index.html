@@ -158,7 +158,7 @@
 <p>The other half is data that never lived in PIM at all. Your price, your stock, a warehouse feed. In practice those join cleanly once the product copy sits in the same database. If the frontend reads PAPI live, it still has to call those other sources and stitch them together against a payload you do not control.</p>
 <p>Here is where an admin rename hurts if you skipped the copy. When someone renames an attribute in PIM, that new name lands in one transform, and I would rather fix the job than teach every client what it is called now.</p>
 <h2>What a PAPI sync is</h2>
-<p>Saving a product in the PIM UI or via the Bluestone PIM Management API does not update your external database, at least if this is for downstream systems. Someone has to publish the PIM changes, and that publication is what Bluestone PIM calls a sync. At that point, the working-state data gets published and accessible via the Public API. A webhook event is sent from Bluestone PIM, providing the sync id.</p>
+<p>Saving a product in the PIM UI or via the Bluestone PIM Management API does not update your external database, at least if this is for downstream systems. Someone has to publish the PIM changes, and that publication is what Bluestone PIM calls a sync. At that point, the working-state data gets published and accessible via the Public API. If you have subscribed to the webhook, Bluestone sends an event with the sync id. The poll later in this post is what notices the publication when that subscription is not there.</p>
 <p>The &quot;New sync done&quot; webhook even carries the sync id, and your application then asks PAPI what changed. Each returned row is a product id plus <code>ADD</code>, <code>CHANGE</code>, or <code>DELETE</code>.</p>
 <h2>How a publication becomes rows</h2>
 <p>You will want two ways to notice a sync, and one function that applies it. I call the table <code>pim_syncs</code>. Both paths insert a row, then call the same processor, so seeing the same sync twice does nothing the second time.</p>
@@ -175,7 +175,7 @@
               DELETE → mark your row discontinued
 </code></pre>
 <p>Webhooks are the fast path. When Bluestone hits your endpoint, something like <code>POST /api/hooks/pim</code>, verify the signature, insert the <code>pim_syncs</code> row as <code>pending</code>, and return <code>200</code>. That is the accept. Fetching and applying products happens after the response. On this host that continuation is <code>waitUntil</code>. <a href="https://docs.api.bluestonepim.com/docs/webhook-events-and-delivery">Bluestone&#39;s delivery guide</a> says to return a successful 2xx only after the message is safely accepted, with the signature checked and the payload stored or queued, and to answer quickly.</p>
-<p>So a handler that tries to apply 400 products before it answers will get a second delivery, then a third, and so on. What happens next depends on the status:</p>
+<p>A handler that tries to apply 400 products before it answers has not accepted the message. Whether Bluestone delivers it again depends on the status you return:</p>
 <table>
 <thead>
 <tr>
@@ -215,6 +215,8 @@
 <li>For <code>DELETE</code>, mark your row discontinued. There is nothing to fetch.</li>
 <li>Write <code>completed</code> or <code>error</code> on the sync row, with counts.</li>
 </ol>
+<p>Those steps only apply product diffs. The same sync also lists category, attribute, and relation changes: <code>GET /differences/sync/{id}/categories</code>, <code>GET /differences/sync/{id}/attributes</code>, and <code>GET /differences/sync/{id}/relations</code>. The <a href="https://help.bluestonepim.com/sync-product-information">help center</a> says catalog structure, attribute definitions, and relations are updated in PAPI when a product is published. If you keep a category tree, read those diffs too. A copy that is only product rows can skip them.</p>
+<p><code>POST /products/by-ids</code> is in the OpenAPI. The <a href="https://help.bluestonepim.com/typical-usage-scenarios">help center example</a> fetches the same products with <code>POST /products/list</code> and an <code>ids</code> array. Both work.</p>
 <p>If one product fails, record that failure on the product and leave the ones you already committed. A publication is a batch of independent upserts, not one sacred transaction.</p>
 <p>It is better to store your own shape than the raw PAPI document. The transform is the only place that should know Bluestone&#39;s current payload, and your pages read columns you named.</p>
 <p>You will want the PIM product id, <code>Product.id</code>, as the primary key, because that is the identifier PAPI treats as stable. Item numbers and barcodes live as attribute values. They are handy for search and for matching a spreadsheet, and they are a bad primary key, because PIM will happily contain two products with the same code. If your app needs one of those codes to be unique, enforce it in your database and flag the collision, then let the rest of the publication land.</p>
@@ -276,15 +278,15 @@
 </tr>
 <tr>
 <td><code>GET /syncs</code></td>
-<td>Poll discovery. <code>createdAfter</code> is epoch milliseconds, <code>publishStates=CLOSED</code>, <code>itemsOnPage=50</code>, <code>pageNo</code> from 0. Ask for 100 and PAPI rejects it.</td>
+<td>Poll discovery. <code>createdAfter</code> is epoch milliseconds, <code>publishStates=CLOSED</code>, <code>itemsOnPage</code> capped at 50, <code>pageNo</code> from 0.</td>
 </tr>
 <tr>
 <td><code>GET /differences/sync/{id}/products</code></td>
-<td>The change list. <code>pageNo</code> from 0.</td>
+<td>The product change list. <code>pageNo</code> from 0. Category, attribute, and relation diffs are separate calls on the same sync id.</td>
 </tr>
 <tr>
 <td><code>POST /products/by-ids</code></td>
-<td>The documents for adds and changes. You will want to batch them.</td>
+<td>The documents for adds and changes. Batch them. The help center example is <code>POST /products/list</code> with an <code>ids</code> array. Both work.</td>
 </tr>
 </tbody></table>
 <p>A first load, or a repair after a sync that 404&#39;d, is <code>POST /products/list</code> with whatever filter selects your catalogue, again with <code>pageNo</code> from 0. That is a run you start on purpose. It is separate from the webhook and from the poll.</p>

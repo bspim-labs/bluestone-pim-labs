@@ -24,7 +24,7 @@ Here is where an admin rename hurts if you skipped the copy. When someone rename
 
 ## What a PAPI sync is
 
-Saving a product in the PIM UI or via the Bluestone PIM Management API does not update your external database, at least if this is for downstream systems. Someone has to publish the PIM changes, and that publication is what Bluestone PIM calls a sync. At that point, the working-state data gets published and accessible via the Public API. A webhook event is sent from Bluestone PIM, providing the sync id.
+Saving a product in the PIM UI or via the Bluestone PIM Management API does not update your external database, at least if this is for downstream systems. Someone has to publish the PIM changes, and that publication is what Bluestone PIM calls a sync. At that point, the working-state data gets published and accessible via the Public API. If you have subscribed to the webhook, Bluestone sends an event with the sync id. The poll later in this post is what notices the publication when that subscription is not there.
 
 The "New sync done" webhook even carries the sync id, and your application then asks PAPI what changed. Each returned row is a product id plus `ADD`, `CHANGE`, or `DELETE`.
 
@@ -48,7 +48,7 @@ Editor publishes in PIM
 
 Webhooks are the fast path. When Bluestone hits your endpoint, something like `POST /api/hooks/pim`, verify the signature, insert the `pim_syncs` row as `pending`, and return `200`. That is the accept. Fetching and applying products happens after the response. On this host that continuation is `waitUntil`. [Bluestone's delivery guide](https://docs.api.bluestonepim.com/docs/webhook-events-and-delivery) says to return a successful 2xx only after the message is safely accepted, with the signature checked and the payload stored or queued, and to answer quickly.
 
-So a handler that tries to apply 400 products before it answers will get a second delivery, then a third, and so on. What happens next depends on the status:
+A handler that tries to apply 400 products before it answers has not accepted the message. Whether Bluestone delivers it again depends on the status you return:
 
 | Your response | What Bluestone does |
 |---|---|
@@ -78,6 +78,10 @@ In practice the processor is dull, which is what you want:
 3. For `ADD` and `CHANGE`, call `POST /products/by-ids` and upsert your shape.
 4. For `DELETE`, mark your row discontinued. There is nothing to fetch.
 5. Write `completed` or `error` on the sync row, with counts.
+
+Those steps only apply product diffs. The same sync also lists category, attribute, and relation changes: `GET /differences/sync/{id}/categories`, `GET /differences/sync/{id}/attributes`, and `GET /differences/sync/{id}/relations`. The [help center](https://help.bluestonepim.com/sync-product-information) says catalog structure, attribute definitions, and relations are updated in PAPI when a product is published. If you keep a category tree, read those diffs too. A copy that is only product rows can skip them.
+
+`POST /products/by-ids` is in the OpenAPI. The [help center example](https://help.bluestonepim.com/typical-usage-scenarios) fetches the same products with `POST /products/list` and an `ids` array. Both work.
 
 If one product fails, record that failure on the product and leave the ones you already committed. A publication is a batch of independent upserts, not one sacred transaction.
 
@@ -129,9 +133,9 @@ The base URL is `https://api.bluestonepim.com/v1/`. You send `x-api-key` and a `
 | Call | Why you make it |
 |---|---|
 | `GET /syncs/{id}` | State and context, when the webhook arrives and again when processing starts. Any 2xx with a JSON body is the record. I have seen this succeed as 201. |
-| `GET /syncs` | Poll discovery. `createdAfter` is epoch milliseconds, `publishStates=CLOSED`, `itemsOnPage=50`, `pageNo` from 0. Ask for 100 and PAPI rejects it. |
-| `GET /differences/sync/{id}/products` | The change list. `pageNo` from 0. |
-| `POST /products/by-ids` | The documents for adds and changes. You will want to batch them. |
+| `GET /syncs` | Poll discovery. `createdAfter` is epoch milliseconds, `publishStates=CLOSED`, `itemsOnPage` capped at 50, `pageNo` from 0. |
+| `GET /differences/sync/{id}/products` | The product change list. `pageNo` from 0. Category, attribute, and relation diffs are separate calls on the same sync id. |
+| `POST /products/by-ids` | The documents for adds and changes. Batch them. The help center example is `POST /products/list` with an `ids` array. Both work. |
 
 A first load, or a repair after a sync that 404'd, is `POST /products/list` with whatever filter selects your catalogue, again with `pageNo` from 0. That is a run you start on purpose. It is separate from the webhook and from the poll.
 

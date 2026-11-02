@@ -21,6 +21,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://labs.bluestonepim.com/blog/pim-publishes-your-database-catches-up</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://labs.bluestonepim.com/blog/cla-vla-and-validation-reads-unofficial-pim-mcp</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

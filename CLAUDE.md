@@ -53,7 +53,7 @@ Edit `projects.json` and open a PR. The `.github/workflows/validate-projects.yml
 }
 ```
 
-Required: `name`, `description`, `github`, `status`. The card links to `url` if provided, otherwise falls back to `github`. Optional `cta` labels the website link (defaults to **Project website**).
+Required: `name`, `description`, `github`, `status`. The card links to `url` if provided, otherwise falls back to `github`. Optional `cta` labels the website link (defaults to **Project website**). Optional `requestOnly: true` plus `requestEmail` makes the card open a request dialog instead of linking out. `requestEmail` is required when the flag is true.
 
 Available icons: `terminal`, `template` (layout grid), `builder` (sparkles), `skill` (open book), `browser` (window), `default` (plus icon). Add more in the `icons` object in `index.html`.
 The grid lists all projects from the file plus one open **Your project here** card. Put the newest project first so it appears top-left.

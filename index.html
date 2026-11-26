@@ -78,6 +78,10 @@
     .dark .tag-request { background: #78350f; color: #fcd34d; }
 
     .placeholder-card { border-style: dashed; }
+
+    .no-scrollbar { scrollbar-width: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    [data-project-slug] { cursor: pointer; }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen">
@@ -215,6 +219,15 @@
       </div>
     </div>
   </footer>
+
+  <div id="project-dialog" class="hidden fixed inset-0 z-40" hidden role="dialog" aria-modal="true" aria-labelledby="project-dialog-title">
+    <div class="absolute inset-0 bg-slate-950/60" data-project-close></div>
+    <div class="relative z-10 flex min-h-full items-end sm:items-center justify-center sm:p-6" data-project-close>
+      <div data-project-panel class="w-full sm:max-w-2xl max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-t-xl sm:rounded-xl p-5 sm:p-6 shadow-xl">
+        <div id="project-dialog-content"></div>
+      </div>
+    </div>
+  </div>
 
   <div id="request-dialog" class="hidden fixed inset-0 z-50" hidden role="dialog" aria-modal="true" aria-labelledby="request-dialog-title">
     <div class="absolute inset-0 bg-slate-950/60" data-request-close></div>
@@ -372,27 +385,268 @@
           </div>`;
     }
 
+    function slugFor(p) {
+      return p.slug || String(p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    function screenshotsOf(p) {
+      return Array.isArray(p.screenshots) ? p.screenshots.slice(0, 5).filter(s => s && s.src) : [];
+    }
+
     function projectTitleHtml(p) {
-      const classes = 'font-semibold text-slate-900 dark:text-slate-100 mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors no-underline';
-      if (isRequestOnly(p)) {
-        return `<button type="button" ${requestAccessAttrs(p)} class="text-left ${classes}">${escapeHtml(p.name)}</button>`;
-      }
-      return `<a href="${escapeHtml(p.url || p.github)}" target="_blank" rel="noopener noreferrer" class="${classes}">${escapeHtml(p.name)}</a>`;
+      const classes = 'text-left font-semibold text-slate-900 dark:text-slate-100 mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors no-underline';
+      return `<button type="button" data-project-open class="${classes}">${escapeHtml(p.name)}</button>`;
+    }
+
+    function screenshotCountHtml(p) {
+      const count = screenshotsOf(p).length;
+      if (!count) return '';
+      return `<div class="flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span>${count} ${count === 1 ? 'screenshot' : 'screenshots'}</span>
+          </div>`;
     }
 
     function projectCard(p) {
+      const hasShots = screenshotsOf(p).length > 0;
       return `
-        <div class="card-hover group flex flex-col h-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl p-5">
+        <div data-project-slug="${escapeHtml(slugFor(p))}" class="card-hover group flex flex-col h-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl p-5">
           <div class="flex items-start justify-between gap-3 mb-3">
             ${projectMarkHtml(p)}
             ${projectStatusTag(p)}
           </div>
           ${projectTitleHtml(p)}
           ${projectAuthorHtml(p)}
-          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1 mb-4">${escapeHtml(p.description)}</p>
+          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1 ${hasShots ? 'mb-3' : 'mb-4'}">${escapeHtml(p.description)}</p>
+          ${screenshotCountHtml(p)}
           ${projectFooterHtml(p)}
         </div>`;
     }
+
+    // Project detail modal
+    const chevron = dir => `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="${dir === 'prev' ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'}"/></svg>`;
+    const carouselBtn = 'absolute top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow hover:text-blue-600 dark:hover:text-blue-400 transition-colors';
+
+    function carouselHtml(p) {
+      const shots = screenshotsOf(p);
+      if (!shots.length) return '';
+      const slides = shots.map((s, i) => `
+          <figure class="snap-center shrink-0 w-full m-0" data-slide>
+            <a href="${escapeHtml(s.src)}" target="_blank" rel="noopener noreferrer" class="block">
+              <img src="${escapeHtml(s.src)}" alt="${escapeHtml(s.alt)}" ${i === 0 ? '' : 'loading="lazy"'} class="w-full aspect-video object-contain bg-slate-100 dark:bg-slate-800">
+            </a>
+            ${s.caption ? `<figcaption class="text-xs text-slate-500 dark:text-slate-400 mt-2">${escapeHtml(s.caption)}</figcaption>` : ''}
+          </figure>`).join('');
+      return `
+        <div data-carousel class="relative mb-5" aria-roledescription="carousel" aria-label="Screenshots of ${escapeHtml(p.name)}">
+          <div data-track class="no-scrollbar flex overflow-x-auto snap-x snap-mandatory rounded-lg border border-slate-200 dark:border-slate-700/60">${slides}</div>
+          <button type="button" data-carousel-prev aria-label="Previous screenshot" class="${carouselBtn} left-2" style="top:calc(50% - 1rem)">${chevron('prev')}</button>
+          <button type="button" data-carousel-next aria-label="Next screenshot" class="${carouselBtn} right-2" style="top:calc(50% - 1rem)">${chevron('next')}</button>
+          <div data-carousel-nav class="flex items-center justify-center gap-3 mt-3">
+            <div data-dots class="flex items-center gap-1.5"></div>
+            <span data-counter class="text-xs text-slate-400 dark:text-slate-500 tabular-nums"></span>
+          </div>
+        </div>`;
+    }
+
+    function setupCarousel(root) {
+      const track = root.querySelector('[data-track]');
+      const slides = () => Array.from(track.querySelectorAll('[data-slide]'));
+      const dots = root.querySelector('[data-dots]');
+      const counter = root.querySelector('[data-counter]');
+      const prev = root.querySelector('[data-carousel-prev]');
+      const next = root.querySelector('[data-carousel-next]');
+      const nav = root.querySelector('[data-carousel-nav]');
+
+      function index() {
+        return Math.max(0, Math.min(slides().length - 1, Math.round(track.scrollLeft / (track.clientWidth || 1))));
+      }
+      function goTo(i) {
+        const n = slides().length;
+        track.scrollTo({ left: Math.max(0, Math.min(n - 1, i)) * track.clientWidth, behavior: 'smooth' });
+      }
+      function update() {
+        const n = slides().length;
+        const i = index();
+        const multiple = n > 1;
+        prev.hidden = next.hidden = nav.hidden = !multiple;
+        prev.disabled = i === 0;
+        next.disabled = i === n - 1;
+        prev.classList.toggle('opacity-40', i === 0);
+        next.classList.toggle('opacity-40', i === n - 1);
+        counter.textContent = `${i + 1} / ${n}`;
+        Array.from(dots.children).forEach((d, k) => {
+          d.className = `w-2 h-2 rounded-full transition-colors ${k === i ? 'bg-blue-600 dark:bg-blue-400' : 'bg-slate-300 dark:bg-slate-600'}`;
+          d.setAttribute('aria-current', k === i ? 'true' : 'false');
+        });
+      }
+      function build() {
+        const n = slides().length;
+        if (!n) { root.remove(); return; }
+        dots.innerHTML = Array.from({ length: n }, (_, k) =>
+          `<button type="button" data-dot="${k}" aria-label="Screenshot ${k + 1} of ${n}"></button>`).join('');
+        update();
+      }
+
+      slides().forEach(slide => {
+        slide.querySelector('img').addEventListener('error', () => { slide.remove(); build(); }, { once: true });
+      });
+      prev.addEventListener('click', () => goTo(index() - 1));
+      next.addEventListener('click', () => goTo(index() + 1));
+      dots.addEventListener('click', e => {
+        const dot = e.target.closest('[data-dot]');
+        if (dot) goTo(Number(dot.dataset.dot));
+      });
+      track.addEventListener('scroll', update, { passive: true });
+      root.carouselGo = delta => goTo(index() + delta);
+      build();
+    }
+
+    function projectDialogHtml(p) {
+      const slug = slugFor(p);
+      const paragraphs = String(p.details || p.description || '')
+        .split(/\n\s*\n/).map(t => t.trim()).filter(Boolean)
+        .map(t => `<p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">${escapeHtml(t).replace(/\n/g, '<br>')}</p>`).join('');
+      const primary = 'inline-flex items-center gap-2 bg-slate-900 dark:bg-slate-100 text-slate-100 dark:text-slate-900 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-700 dark:hover:bg-white transition-colors no-underline';
+      const secondary = 'inline-flex items-center gap-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg text-sm font-medium hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors no-underline';
+      const actions = [];
+      if (isRequestOnly(p)) {
+        actions.push(`<button type="button" ${requestAccessAttrs(p)} data-from-project class="${primary}">Request access</button>`);
+      } else if (p.url) {
+        actions.push(`<a href="${escapeHtml(p.url)}" target="_blank" rel="noopener noreferrer" class="${primary}">${escapeHtml(p.cta || 'Project website')} ${ctaArrowHtml()}</a>`);
+      }
+      if (p.github && !isRequestOnly(p)) {
+        actions.push(`<a href="${escapeHtml(p.github)}" target="_blank" rel="noopener noreferrer" class="${p.url ? secondary : primary}">View on GitHub</a>`);
+      }
+      actions.push(`<button type="button" data-copy-link="${escapeHtml(slug)}" class="${secondary} ml-auto"><span>Copy link</span></button>`);
+
+      return `
+        <div class="flex items-start gap-3 mb-5">
+          ${projectMarkHtml(p)}
+          <div class="min-w-0 flex-1">
+            <h2 id="project-dialog-title" class="text-lg font-semibold text-slate-900 dark:text-slate-100 leading-snug">${escapeHtml(p.name)}</h2>
+            ${projectAuthorHtml(p).replace('mb-2', 'mb-0')}
+          </div>
+          ${projectStatusTag(p)}
+          <button type="button" data-project-close data-project-initial-focus aria-label="Close"
+            class="p-1.5 -mr-1.5 -mt-1 rounded-lg text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        ${carouselHtml(p)}
+        <div class="mb-5">${paragraphs}</div>
+        <div class="flex flex-wrap items-center gap-3">${actions.join('')}</div>`;
+    }
+
+    const projectDialog = document.getElementById('project-dialog');
+    const projectDialogContent = document.getElementById('project-dialog-content');
+    const baseTitle = document.title;
+    let projectsBySlug = {};
+    let activeProjectSlug = null;
+    let projectTrigger = null;
+    let projectPushedEntry = false;
+
+    function openProject(slug, { push = false, trigger = null } = {}) {
+      const p = projectsBySlug[slug];
+      if (!p) return;
+      projectDialogContent.innerHTML = projectDialogHtml(p);
+      const carousel = projectDialogContent.querySelector('[data-carousel]');
+      if (carousel) setupCarousel(carousel);
+      activeProjectSlug = slug;
+      projectTrigger = trigger || projectTrigger;
+      projectDialog.hidden = false;
+      projectDialog.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      document.title = `${p.name} · Bluestone PIM Labs`;
+      if (push && location.hash !== `#${slug}`) {
+        history.pushState(null, '', `#${slug}`);
+        projectPushedEntry = true;
+      }
+      projectDialog.querySelector('[data-project-panel]').scrollTop = 0;
+      projectDialogContent.querySelector('[data-project-initial-focus]').focus();
+    }
+
+    function hideProjectDialog() {
+      if (projectDialog.hidden) return;
+      projectDialog.hidden = true;
+      projectDialog.classList.add('hidden');
+      if (requestDialog.hidden) document.body.classList.remove('overflow-hidden');
+      document.title = baseTitle;
+      projectDialogContent.innerHTML = '';
+      activeProjectSlug = null;
+      projectPushedEntry = false;
+      if (projectTrigger && document.contains(projectTrigger)) projectTrigger.focus();
+      projectTrigger = null;
+    }
+
+    function closeProjectDialog() {
+      if (projectDialog.hidden) return;
+      const pushed = projectPushedEntry;
+      hideProjectDialog();
+      if (pushed) history.back();
+      else if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    }
+
+    function syncProjectFromHash() {
+      let slug = '';
+      try { slug = decodeURIComponent(location.hash.slice(1)); } catch (e) { /* malformed hash */ }
+      if (slug && projectsBySlug[slug]) {
+        if (projectDialog.hidden || activeProjectSlug !== slug) openProject(slug);
+      } else {
+        hideProjectDialog();
+      }
+    }
+
+    projectDialog.addEventListener('click', event => {
+      const panel = projectDialog.querySelector('[data-project-panel]');
+      const copy = event.target.closest('[data-copy-link]');
+      if (copy) {
+        const url = `${location.origin}/#${copy.dataset.copyLink}`;
+        const label = copy.querySelector('span');
+        const done = ok => {
+          label.textContent = ok ? 'Link copied' : 'Copy failed';
+          setTimeout(() => { if (document.contains(label)) label.textContent = 'Copy link'; }, 2000);
+        };
+        (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => done(true), () => done(false));
+        return;
+      }
+      const request = event.target.closest('[data-request-access]');
+      if (request && isEmail(request.dataset.requestEmail)) {
+        const { requestName, requestEmail } = request.dataset;
+        const trigger = projectTrigger;
+        closeProjectDialog();
+        openRequestDialog(requestName, requestEmail, trigger);
+        return;
+      }
+      if (panel.contains(event.target) && !event.target.closest('[data-project-close]')) return;
+      closeProjectDialog();
+    });
+
+    window.addEventListener('popstate', syncProjectFromHash);
+    window.addEventListener('hashchange', syncProjectFromHash);
+
+    document.addEventListener('keydown', event => {
+      if (projectDialog.hidden || !requestDialog.hidden) return;
+      if (event.key === 'Escape') {
+        closeProjectDialog();
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        const carousel = projectDialogContent.querySelector('[data-carousel]');
+        if (carousel && carousel.carouselGo) carousel.carouselGo(event.key === 'ArrowLeft' ? -1 : 1);
+      } else if (event.key === 'Tab') {
+        const focusable = Array.from(projectDialog.querySelectorAll('a[href], button:not([disabled]):not([hidden])'))
+          .filter(el => el.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        else if (!projectDialog.contains(document.activeElement)) { event.preventDefault(); first.focus(); }
+      }
+    });
 
     function contributeCard() {
       const href = 'https://github.com/bspim-labs/bluestone-pim-labs/blob/main/CONTRIBUTING.md';
@@ -494,15 +748,31 @@
     const projectsGrid = document.getElementById('projects-grid');
     projectsGrid.addEventListener('click', event => {
       const trigger = event.target.closest('[data-request-access]');
-      if (!trigger || !isEmail(trigger.dataset.requestEmail)) return;
-      openRequestDialog(trigger.dataset.requestName, trigger.dataset.requestEmail, trigger);
+      if (trigger) {
+        if (isEmail(trigger.dataset.requestEmail)) {
+          openRequestDialog(trigger.dataset.requestName, trigger.dataset.requestEmail, trigger);
+        }
+        return;
+      }
+      // Real links and buttons (website, GitHub, author) keep their own behavior
+      const interactive = event.target.closest('a, button');
+      if (interactive && !interactive.hasAttribute('data-project-open')) return;
+      if (String(window.getSelection()).length) return;
+      const card = event.target.closest('[data-project-slug]');
+      if (!card) return;
+      openProject(card.dataset.projectSlug, { push: true, trigger: interactive || card.querySelector('[data-project-open]') });
     });
 
     fetch('projects.json')
       .then(r => r.json())
       .then(projects => {
+        projects.forEach(p => {
+          const slug = slugFor(p);
+          if (slug && !projectsBySlug[slug]) projectsBySlug[slug] = p;
+        });
         projectsGrid.innerHTML =
           projects.map(projectCard).join('') + contributeCard();
+        syncProjectFromHash();
       });
   </script>
 

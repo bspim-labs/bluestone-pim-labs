@@ -22,13 +22,29 @@
 
 The project card links to `url` if provided, otherwise falls back to `github`. Include `url` if your project has a separate landing page or documentation site. If the source is not public, leave out `github` and set only `url`: the card then links to the site and shows no GitHub icon.
 
-**Optional fields:** `author`, `authorUrl`, `cta`, `icon`, `logo`, `url`, `requestOnly`, `requestEmail`
+**Optional fields:** `author`, `authorUrl`, `cta`, `icon`, `logo`, `url`, `slug`, `details`, `screenshots`, `requestOnly`, `requestEmail`
+
+Clicking a card opens a detail modal with the description (or `details`), screenshots, and links. The website link, GitHub icon, and author link on the card still go straight to their targets.
 
 When `url` is set, the footer shows `cta` (defaults to **Project website** if omitted) plus a GitHub icon. GitHub-only projects show the icon on the right (title links to the repo).
 
 Set `logo` to `github` to use the GitHub owner's avatar in place of the line icon. That is the mark shown beside the repository name on GitHub. Set `logo` to an `https://` image URL when the mark lives somewhere else.
 
 Set `requestOnly` to `true` and `requestEmail` to a contact address when the project is available on request. The card then shows **Request access** and opens a dialog with that email instead of linking to the site or repository. `requestEmail` is required when `requestOnly` is `true`.
+
+Set `details` to a longer text for the modal. Blank lines start a new paragraph. It is plain text: no HTML or markdown. Without it the modal shows `description`.
+
+Set `screenshots` to up to 5 images shown in a carousel in the modal. Each entry needs `src` and `alt`, and can have a `caption`:
+
+```json
+"screenshots": [
+  { "src": "/public/projects/your-project/overview.webp", "alt": "Overview page", "caption": "Optional caption" }
+]
+```
+
+`src` is either an `https://` URL or a file in this repo under `/public/projects/<your-project>/`. For repo files, drop JPG or PNG images in that folder and run `node scripts/optimize-images.js` (converts to WebP, max 1200px wide), then commit the `.webp` files.
+
+Each project can be linked directly with `https://labs.bluestonepim.com/#slug`, which opens its modal. The slug defaults to the project name in lowercase with dashes (`Ecom Lab` becomes `ecom-lab`). Set `slug` (lowercase letters, digits, dashes) to pin it so renaming the project never breaks shared links. Slugs must be unique, and CI checks that.
 
 If `author` is omitted, the card shows the GitHub repo owner as `@username`, linked to their profile.
 

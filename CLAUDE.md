@@ -55,6 +55,8 @@ Edit `projects.json` and open a PR. The `.github/workflows/validate-projects.yml
 
 Required: `name`, `description`, `status`, and at least one of `github` or `url`. The card links to `url` if provided, otherwise falls back to `github`. A project with only `url` shows no GitHub icon. Optional `cta` labels the website link (defaults to **Project website**). Optional `logo: "github"` uses the GitHub owner's avatar instead of the line icon. Set `logo` to an `https://` image URL to use a custom mark. If the image fails to load, the card falls back to the line icon. Optional `requestOnly: true` plus `requestEmail` makes the card open a request dialog instead of linking out. `requestEmail` is required when the flag is true.
 
+Optional modal fields: `slug` (stable `#slug` deep link, defaults to kebab-case of `name`, must be unique, checked in CI), `details` (longer plain text, blank line = new paragraph), `screenshots` (max 5 of `{src, alt, caption?}`, `src` is `https://` or `/public/projects/<slug>/...`). Clicking a card opens the modal; the card's website, GitHub, and author links still go straight out.
+
 Available icons: `terminal`, `template` (layout grid), `builder` (sparkles), `skill` (open book), `browser` (window), `default` (plus icon). Add more in the `icons` object in `index.html`.
 The grid lists all projects from the file plus one open **Your project here** card. Put the newest project first so it appears top-left.
 

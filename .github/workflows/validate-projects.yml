@@ -15,3 +15,15 @@ jobs:
           python-version: "3.x"
       - run: pip install check-jsonschema
       - run: check-jsonschema --schemafile .github/projects.schema.json projects.json
+      - name: Check project slugs are unique
+        run: |
+          python3 - <<'PY'
+          import json, re, sys
+          seen = {}
+          for p in json.load(open("projects.json")):
+              slug = p.get("slug") or re.sub(r"^-+|-+$", "", re.sub(r"[^a-z0-9]+", "-", p["name"].lower()))
+              if slug in seen:
+                  sys.exit(f"Duplicate slug '{slug}' ({seen[slug]} and {p['name']}). Set an explicit unique 'slug'.")
+              seen[slug] = p["name"]
+          print(f"{len(seen)} unique slugs")
+          PY

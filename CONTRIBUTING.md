@@ -18,13 +18,15 @@
 }
 ```
 
-**Required fields:** `name`, `description`, `github`, `status`
+**Required fields:** `name`, `description`, `status`, and at least one of `github` or `url`
 
-The project card links to `url` if provided, otherwise falls back to `github`. Include `url` only if your project has a separate landing page or documentation site.
+The project card links to `url` if provided, otherwise falls back to `github`. Include `url` if your project has a separate landing page or documentation site. If the source is not public, leave out `github` and set only `url`: the card then links to the site and shows no GitHub icon.
 
-**Optional fields:** `author`, `authorUrl`, `cta`, `icon`, `url`, `requestOnly`, `requestEmail`
+**Optional fields:** `author`, `authorUrl`, `cta`, `icon`, `logo`, `url`, `requestOnly`, `requestEmail`
 
 When `url` is set, the footer shows `cta` (defaults to **Project website** if omitted) plus a GitHub icon. GitHub-only projects show the icon on the right (title links to the repo).
+
+Set `logo` to `github` to use the GitHub owner's avatar in place of the line icon. That is the mark shown beside the repository name on GitHub. Set `logo` to an `https://` image URL when the mark lives somewhere else.
 
 Set `requestOnly` to `true` and `requestEmail` to a contact address when the project is available on request. The card then shows **Request access** and opens a dialog with that email instead of linking to the site or repository. `requestEmail` is required when `requestOnly` is `true`.
 

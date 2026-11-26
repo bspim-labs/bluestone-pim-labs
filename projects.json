@@ -15,7 +15,8 @@
     "author": "David Eriksson",
     "authorUrl": "https://github.com/twogood",
     "status": "live",
-    "icon": "terminal"
+    "icon": "terminal",
+    "logo": "github"
   },
   {
     "name": "Terraform Provider",
@@ -26,7 +27,8 @@
     "authorUrl": "https://www.labdigital.nl",
     "status": "live",
     "cta": "Documentation",
-    "icon": "terminal"
+    "icon": "terminal",
+    "logo": "github"
   },
   {
     "name": "PIM Theme",

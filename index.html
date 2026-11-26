@@ -622,7 +622,9 @@
         openRequestDialog(requestName, requestEmail, trigger);
         return;
       }
-      if (panel.contains(event.target) && !event.target.closest('[data-project-close]')) return;
+      // Only a close control inside the panel (the X) closes; the backdrop wrapper is an ancestor of the panel
+      const closer = event.target.closest('[data-project-close]');
+      if (panel.contains(event.target) && !(closer && panel.contains(closer))) return;
       closeProjectDialog();
     });
 

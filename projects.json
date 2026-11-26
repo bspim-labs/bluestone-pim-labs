@@ -1,7 +1,7 @@
 [
   {
     "name": "Ecom Lab",
-    "description": "Teaching storefront over Bluestone PIM. Browse a catalog as Draft (MAPI), Live (PAPI) or Compare, then use Inspect to see where each value lives in PIM, edit it, sync it to live and upload images. Connect with your own API keys; nothing is stored on the server.",
+    "description": "Storefront and inspector for Bluestone PIM. Browse a catalog as Draft, Live or Compare, click any value to see where it lives in PIM, then edit it, sync it to live or upload an image.",
     "url": "https://ecom-pim-lab.vercel.app",
     "author": "Viktor Lövgren",
     "authorUrl": "https://github.com/leafleaf90",

@@ -254,6 +254,19 @@
       default:  `<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>`
     };
 
+    function projectMarkHtml(p) {
+      const owner = githubOwner(p.github);
+      const githubLogo = p.logo === 'github' && owner
+        ? `https://github.com/${encodeURIComponent(owner)}.png?size=80`
+        : '';
+      const src = githubLogo || (typeof p.logo === 'string' && p.logo.startsWith('https://') ? p.logo : '');
+      const fallback = `<div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center shrink-0">
+              ${svgIcon(p.icon || 'default', 'w-5 h-5 text-blue-600 dark:text-blue-400')}
+            </div>`;
+      if (!src) return fallback;
+      return `<img src="${escapeHtml(src)}" alt="" width="40" height="40" data-fallback="${escapeHtml(fallback)}" onerror="this.onerror=null;this.outerHTML=this.dataset.fallback" class="w-10 h-10 rounded-lg object-cover shrink-0 bg-slate-100 dark:bg-slate-800">`;
+    }
+
     function svgIcon(key, classes) {
       return `<svg xmlns="http://www.w3.org/2000/svg" class="${classes}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">${icons[key] || icons.default}</svg>`;
     }
@@ -371,9 +384,7 @@
       return `
         <div class="card-hover group flex flex-col h-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl p-5">
           <div class="flex items-start justify-between gap-3 mb-3">
-            <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center shrink-0">
-              ${svgIcon(p.icon || 'default', 'w-5 h-5 text-blue-600 dark:text-blue-400')}
-            </div>
+            ${projectMarkHtml(p)}
             ${projectStatusTag(p)}
           </div>
           ${projectTitleHtml(p)}

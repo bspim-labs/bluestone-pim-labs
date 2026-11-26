@@ -1,5 +1,15 @@
 [
   {
+    "name": "Ecom Lab",
+    "description": "Teaching storefront over Bluestone PIM. Browse a catalog as Draft (MAPI), Live (PAPI) or Compare, then use Inspect to see where each value lives in PIM, edit it, sync it to live and upload images. Connect with your own API keys; nothing is stored on the server.",
+    "url": "https://ecom-pim-lab.vercel.app",
+    "author": "Viktor Lövgren",
+    "authorUrl": "https://github.com/leafleaf90",
+    "status": "beta",
+    "cta": "Open the storefront",
+    "icon": "browser"
+  },
+  {
     "name": "PIM Lens",
     "description": "Unofficial Chrome extension that marks each fact on a product page as coming from Bluestone PIM or not, with a click to change the value or send a suggestion as a task. Test environment only: load the ext folder unpacked in Chrome, there is no build step.",
     "github": "https://github.com/mortings/bluestone-pim-lens",

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 // Run: npm install  (once, to get sharp)
 // Then: node scripts/optimize-images.js
-// Processes public/posts/**/*.{jpg,jpeg,png} -> WebP + deletes originals
+// Processes public/posts/** and public/projects/** *.{jpg,jpeg,png} -> WebP + deletes originals
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const INPUT_DIR = path.join(__dirname, '..', 'public', 'posts');
+const INPUT_DIRS = ['posts', 'projects'].map(d => path.join(__dirname, '..', 'public', d));
 const MAX_WIDTH = 1200;
 const EXTS = ['.jpg', '.jpeg', '.png'];
 
@@ -19,13 +19,13 @@ function walk(dir) {
 }
 
 async function run() {
-  const files = walk(INPUT_DIR).filter(f => {
+  const files = INPUT_DIRS.flatMap(walk).filter(f => {
     const ext = path.extname(f).toLowerCase();
     return EXTS.includes(ext) && !f.includes('.webp');
   });
 
   if (!files.length) {
-    console.log('No images found in public/posts/ — drop images there and re-run.');
+    console.log('No images found in public/posts/ or public/projects/ — drop images there and re-run.');
     return;
   }
 

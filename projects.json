@@ -1,6 +1,7 @@
 [
   {
     "name": "Ecom Lab",
+    "slug": "ecom-lab",
     "description": "Storefront and inspector for Bluestone PIM. Browse a catalog as Draft, Live or Compare, click any value to see where it lives in PIM, then edit it, sync it to live or upload an image.",
     "url": "https://ecom-pim-lab.vercel.app",
     "author": "Viktor Lövgren",
@@ -8,7 +9,29 @@
     "status": "beta",
     "cta": "Open the storefront",
     "icon": "browser",
-    "logo": "https://github.com/leafleaf90.png?size=80"
+    "logo": "https://github.com/leafleaf90.png?size=80",
+    "screenshots": [
+      {
+        "src": "/public/projects/ecom-lab/home.webp",
+        "alt": "Ecom Lab storefront home page with a hero banner and category cards",
+        "caption": "Browse a catalog as a storefront, in Draft or Live."
+      },
+      {
+        "src": "/public/projects/ecom-lab/compare.webp",
+        "alt": "Compare view showing a product's draft and live values side by side",
+        "caption": "Compare draft against live and sync changed products."
+      },
+      {
+        "src": "/public/projects/ecom-lab/inspect.webp",
+        "alt": "Inspect panel showing where a product attribute lives in Bluestone PIM",
+        "caption": "Click any value to see where it lives in PIM."
+      },
+      {
+        "src": "/public/projects/ecom-lab/edit.webp",
+        "alt": "Inspect panel with a field open for editing a new value",
+        "caption": "Edit a value and review the change before it is saved to the draft."
+      }
+    ]
   },
   {
     "name": "PIM Lens",

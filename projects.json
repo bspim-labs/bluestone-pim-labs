@@ -1,5 +1,15 @@
 [
   {
+    "name": "Ecom Lab",
+    "description": "Teaching storefront over Bluestone PIM. Browse a catalog as Draft (MAPI), Live (PAPI) or Compare, then use Inspect to see where each value lives in PIM, edit it, sync it to live and upload images. Connect with your own API keys; nothing is stored on the server.",
+    "url": "https://ecom-pim-lab.vercel.app",
+    "author": "Viktor Lövgren",
+    "authorUrl": "https://github.com/leafleaf90",
+    "status": "beta",
+    "cta": "Open the storefront",
+    "icon": "browser"
+  },
+  {
     "name": "Activout.Blue5",
     "description": "Unofficial read-only .NET client for the Bluestone PIM Public API (PAPI): typed product attributes, lazy cursor streaming of the whole catalogue, and a blue5 CLI for inspecting products and exporting NDJSON.",
     "github": "https://github.com/activout/Activout.Blue5",

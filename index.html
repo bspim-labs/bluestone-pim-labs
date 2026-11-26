@@ -739,7 +739,8 @@
 
     requestDialog.addEventListener('click', event => {
       const panel = requestDialog.querySelector('[data-request-panel]');
-      if (panel.contains(event.target) && !event.target.closest('[data-request-close]')) return;
+      const closer = event.target.closest('[data-request-close]');
+      if (panel.contains(event.target) && !(closer && panel.contains(closer))) return;
       closeRequestDialog();
     });
 
